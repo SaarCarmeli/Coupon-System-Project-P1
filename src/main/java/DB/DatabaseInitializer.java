@@ -1,7 +1,7 @@
 package DB;
 
-import Exceptions.DBInitError;
 import Exceptions.DBException;
+import Exceptions.DBInitError;
 
 
 import java.sql.Connection;
@@ -48,14 +48,14 @@ public class DatabaseInitializer {
     }
 
     public static void createCompaniesTable() throws DBException {
-        String sql = "CREATE TABLE IF NOT EXISTS `companies` (\n" +
-                "  `id` bigint NOT NULL AUTO_INCREMENT,\n" +
-                "  `name` varchar(45) NOT NULL,\n" +
-                "  `email` varchar(45) NOT NULL,\n" +
-                "  `password` bigint NOT NULL,\n" +
-                "  PRIMARY KEY (`id`),\n" +
-                "  UNIQUE KEY `name_UNIQUE` (`name`),\n" +
-                "  UNIQUE KEY `email_UNIQUE` (`email`)\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS `companies` (" +
+                "  `id` bigint NOT NULL AUTO_INCREMENT," +
+                "  `name` varchar(45) NOT NULL," +
+                "  `email` varchar(45) NOT NULL," +
+                "  `password` bigint NOT NULL," +
+                "  PRIMARY KEY (`id`)," +
+                "  UNIQUE KEY `name_UNIQUE` (`name`)," +
+                "  UNIQUE KEY `email_UNIQUE` (`email`)" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -66,14 +66,14 @@ public class DatabaseInitializer {
     }
 
     public static void createCustomersTable() throws DBException {
-        String sql = "CREATE TABLE IF NOT EXISTS `customers` (\n" +
-                "  `id` bigint NOT NULL AUTO_INCREMENT,\n" +
-                "  `first_name` varchar(45) NOT NULL,\n" +
-                "  `last_name` varchar(45) NOT NULL,\n" +
-                "  `email` varchar(45) NOT NULL,\n" +
-                "  `password` bigint NOT NULL,\n" +
-                "  PRIMARY KEY (`id`),\n" +
-                "  UNIQUE KEY `email_UNIQUE` (`email`)\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS `customers` (" +
+                "  `id` bigint NOT NULL AUTO_INCREMENT," +
+                "  `first_name` varchar(45) NOT NULL," +
+                "  `last_name` varchar(45) NOT NULL," +
+                "  `email` varchar(45) NOT NULL," +
+                "  `password` bigint NOT NULL," +
+                "  PRIMARY KEY (`id`)," +
+                "  UNIQUE KEY `email_UNIQUE` (`email`)" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -87,7 +87,7 @@ public class DatabaseInitializer {
         String sql = "CREATE TABLE IF NOT EXISTS `coupons` (" +
                 "  `id` bigint NOT NULL AUTO_INCREMENT," +
                 "  `company_id` bigint NOT NULL," +
-                "  `category_id` bigint NOT NULL," +
+                "  `category` varchar(45) NOT NULL," +
                 "  `title` varchar(45) NOT NULL," +
                 "  `description` varchar(45) DEFAULT NULL," +
                 "  `start_date` date NOT NULL," +
@@ -96,8 +96,7 @@ public class DatabaseInitializer {
                 "  `price` varchar(45) NOT NULL," +
                 "  `image` varchar(45) DEFAULT NULL," +
                 "  PRIMARY KEY (`id`)," +
-                "  CONSTRAINT `category.id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),\n" +
-                "  CONSTRAINT `company_id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)\n" +
+                "  CONSTRAINT `company_id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
