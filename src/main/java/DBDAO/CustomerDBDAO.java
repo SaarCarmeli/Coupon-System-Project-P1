@@ -24,7 +24,6 @@ public class CustomerDBDAO extends UserDAO<Integer, Customer> {
         }
     }
 
-
     @Override
     public Integer create(Customer customer) throws EntityCrudException {
         Connection connection = null;
