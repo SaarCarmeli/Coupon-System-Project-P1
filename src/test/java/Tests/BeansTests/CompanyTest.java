@@ -21,7 +21,7 @@ public class CompanyTest {
     @BeforeClass
     public static void initiation() {
         System.out.println("BeansTests.CompanyTest started...");
-        company1 = new Company("Itzik Inc.", "Itz@Itzmail.com", "Itzik_hamelech1980");
+        company1 = new Company(1,"Itzik Inc.", "Itz@Itzmail.com", "Itzik_hamelech1980");
 //        company2 = new Company("Motti n' Sons Corp.", "motti.sons@mbusiness.com", "92motti1.95motti2.98motti3");
 //        coupon = new Coupon(
 //                2,

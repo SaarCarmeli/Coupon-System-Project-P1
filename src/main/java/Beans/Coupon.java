@@ -11,8 +11,8 @@ public class Coupon {
     private String title, description, image;
     private Date startDate, endDate;
 
-    public Coupon(int companyID, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
-        this.id = null;
+    public Coupon(Integer id, int companyID, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
+        this.id = id;
         setCompanyID(companyID);
         setAmount(amount);
         setPrice(price);

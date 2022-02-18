@@ -9,8 +9,8 @@ public class Company {
     private String name, email, password;
     private List<Coupon> coupons;
 
-    public Company(String name, String email, String password) {
-        this.id = null;
+    public Company(Integer id, String name, String email, String password) {
+        this.id = id;
         setName(name);
         setEmail(email);
         setPassword(password);
@@ -25,6 +25,10 @@ public class Company {
 
     public List<Coupon> getCoupons() {
         return coupons;
+    }
+
+    public void setCoupons(List<Coupon> coupons) {
+        this.coupons = coupons;
     }
 
     public String getName() {

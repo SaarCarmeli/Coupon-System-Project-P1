@@ -18,6 +18,7 @@ public class CouponTest {
     public static void initiation() {
         System.out.println("BeansTests.CouponTest");
         coupon = new Coupon(
+                1,
                 2,
                 150,
                 30.00,

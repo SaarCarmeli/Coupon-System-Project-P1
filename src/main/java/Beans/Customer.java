@@ -9,8 +9,8 @@ public class Customer {
     private String firstName, lastName, email, password;
     private List<Coupon> coupons;
 
-    public Customer(String firstName, String lastName, String email, String password) {
-        this.id = null;
+    public Customer(Integer id, String firstName, String lastName, String email, String password) {
+        this.id = id;
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
@@ -24,6 +24,10 @@ public class Customer {
 
     public List<Coupon> getCoupons() {
         return coupons;
+    }
+
+    public void setCoupons(List<Coupon> coupons) {
+        this.coupons = coupons;
     }
 
     public String getFirstName() {

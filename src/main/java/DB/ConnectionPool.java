@@ -10,7 +10,7 @@ public class ConnectionPool {
 
     public static final String SQL_URL = "jdbc:mysql://localhost:3306/coupon_project";
     public static final String SQL_USER = "root";
-    public static String SQL_PASS = System.getenv("SQL_PASSWORD");// todo initialize environment variable in main run configuration (12345678)
+    public static String SQL_PASS = System.getenv("SQL_PASSWORD");
     private static final int NUMBER_OF_CONNECTIONS = 10;
     private static ConnectionPool instance = null;
     private final Stack<Connection> connections = new Stack<>();

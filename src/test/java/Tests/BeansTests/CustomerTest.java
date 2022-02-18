@@ -17,7 +17,7 @@ public class CustomerTest {
     @BeforeClass
     public static void initiation() {
         System.out.println("BeansTests.CustomerTest");
-        customer1 = new Customer("Moshiko", "Berkowich", "mosh.berko@jmail.com", "`1234567890-=");
+        customer1 = new Customer(1, "Moshiko", "Berkowich", "mosh.berko@jmail.com", "`1234567890-=");
 //        customer2 = new Customer("Super", "man", "emegencies.only@supermail.com", "clark-kent");
 //        coupon = new Coupon(
 //                2,
