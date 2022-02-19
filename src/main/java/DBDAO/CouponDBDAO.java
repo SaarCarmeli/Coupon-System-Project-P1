@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
-    public static final CouponDBDAO instance = new CouponDBDAO();
+    private static CouponDBDAO instance = null;
     private final ConnectionPool connectionPool;
 
     private CouponDBDAO() {
@@ -22,6 +22,17 @@ public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong while getting connection pool instance");
         }
+    }
+
+    public static CouponDBDAO getInstance() {
+        if (instance == null) {
+            synchronized (CouponDBDAO.class) {
+                if (instance == null) {
+                    instance = new CouponDBDAO();
+                }
+            }
+        }
+        return instance;
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDBDAO extends UserDAO<Integer, Customer> {
-    public static final CustomerDBDAO instance = new CustomerDBDAO();
+    private static CustomerDBDAO instance;
     private final ConnectionPool connectionPool;
 
     private CustomerDBDAO() {
@@ -22,6 +22,17 @@ public class CustomerDBDAO extends UserDAO<Integer, Customer> {
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong while getting connection pool instance");
         }
+    }
+
+    public static CustomerDBDAO getInstance() {
+        if (instance == null) {
+            synchronized (CustomerDBDAO.class) {
+                if (instance == null) {
+                    instance = new CustomerDBDAO();
+                }
+            }
+        }
+        return instance;
     }
 
     @Override

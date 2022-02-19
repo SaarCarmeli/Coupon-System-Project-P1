@@ -13,17 +13,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyDBDAO extends UserDAO<Integer, Company> {
-    public static final CompanyDBDAO instance = new CompanyDBDAO();
+    private static CompanyDBDAO instance = null;
 
     private final ConnectionPool connectionPool;
-    private final CouponDBDAO couponDBDAO = CouponDBDAO.instance;
+    private final CouponDBDAO couponDBDAO;
 
     private CompanyDBDAO() {
+        couponDBDAO = CouponDBDAO.getInstance();
         try {
             connectionPool = ConnectionPool.getInstance();
         } catch (SQLException e) {
             throw new RuntimeException("Something went wrong while getting connection pool instance");
         }
+    }
+
+    public static CompanyDBDAO getInstance() {
+        if (instance == null) {
+            synchronized (CompanyDBDAO.class) {
+                if (instance == null) {
+                    instance = new CompanyDBDAO();
+                }
+            }
+        }
+        return instance;
     }
 
     public Integer create(final Company company) throws EntityCrudException {
@@ -68,8 +80,7 @@ public class CompanyDBDAO extends UserDAO<Integer, Company> {
             return ObjectExtractionUtils.resultSetToCompany(result, couponDBDAO.readCouponsByCompanyId(companyId));
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
-        }
-        finally {
+        } finally {
             connectionPool.returnConnection(connection);
         }
     }
