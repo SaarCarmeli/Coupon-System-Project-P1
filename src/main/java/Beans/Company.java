@@ -29,7 +29,7 @@ public class Company {
     /**
      * Returns Company ID number.
      *
-     * @return Company ID
+     * @return Company ID number
      */
     public int getId() {
         return id;
@@ -108,10 +108,10 @@ public class Company {
     }
 
     /**
-     * Method to compare an object value to Company value
+     * Method to compare an Object value to Company value.
      *
-     * @param o Generic object
-     * @return True -> objects are equal, else False
+     * @param o Generic Object
+     * @return True -> Objects are equal, else False
      */
     @Override
     public boolean equals(Object o) {
@@ -122,7 +122,7 @@ public class Company {
     }
 
     /**
-     * Generates distinct hashCode for Company
+     * Generates a distinct hashCode for Company.
      *
      * @return hashCode for Company
      */
@@ -132,7 +132,7 @@ public class Company {
     }
 
     /**
-     * Returns String description of Company attributes
+     * Returns a String description of Company attributes.
      *
      * @return Attribute String for Company
      */
