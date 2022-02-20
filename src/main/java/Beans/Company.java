@@ -9,6 +9,14 @@ public class Company {
     private String name, email, password;
     private List<Coupon> coupons;
 
+    /**
+     * Initiates an instance of Company.
+     *
+     * @param id       Company ID number
+     * @param name     Name of the Company
+     * @param email    Company Email
+     * @param password Login password for the Company
+     */
     public Company(Integer id, String name, String email, String password) {
         this.id = id;
         setName(name);
@@ -18,43 +26,93 @@ public class Company {
     }
 
 
-
+    /**
+     * Returns Company ID number.
+     *
+     * @return Company ID
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Returns a List of the Coupons the Company has.
+     *
+     * @return Company List of Coupons
+     */
     public List<Coupon> getCoupons() {
         return coupons;
     }
 
+    /**
+     * Sets the List of Company Coupons.
+     *
+     * @param coupons A List of Company Coupons
+     */
     public void setCoupons(List<Coupon> coupons) {
         this.coupons = coupons;
     }
 
+    /**
+     * Returns the name of the Company.
+     *
+     * @return Company Name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the name of the Company.
+     *
+     * @param name Company name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Returns the email of the Company
+     *
+     * @return Company email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets the email of the Company
+     *
+     * @param email Company email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Returns the login password of the Company
+     *
+     * @return Login password
+     */
     public String getPassword() {
-        return password;
+        return password; // todo consider deleting
     }
 
+    /**
+     * Sets the login password of the Company
+     *
+     * @param password Login password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Method to compare an object value to Company value
+     *
+     * @param o Generic object
+     * @return True -> objects are equal, else False
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,11 +121,21 @@ public class Company {
         return id == company.id && Objects.equals(name, company.name) && Objects.equals(email, company.email) && Objects.equals(password, company.password) && Objects.equals(coupons, company.coupons);
     }
 
+    /**
+     * Generates distinct hashCode for Company
+     *
+     * @return hashCode for Company
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id, name, email, password, coupons);
     }
 
+    /**
+     * Returns String description of Company attributes
+     *
+     * @return Attribute String for Company
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
