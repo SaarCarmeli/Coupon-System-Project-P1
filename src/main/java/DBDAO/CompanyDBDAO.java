@@ -149,7 +149,7 @@ public class CompanyDBDAO implements CompanyDAO {
         int counter;
         try {
             connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT count(*) FROM companies WHERE name = ? AND email = ?";
+            final String sqlStatement = "SELECT count(*) FROM companies WHERE name = ? OR email = ?";
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
