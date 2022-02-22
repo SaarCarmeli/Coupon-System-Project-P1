@@ -55,7 +55,7 @@ public class Customer {
     }
 
     public String getPassword() {
-        return password;
+        return password; // todo consider deleting
     }
 
     public void setPassword(String password) {

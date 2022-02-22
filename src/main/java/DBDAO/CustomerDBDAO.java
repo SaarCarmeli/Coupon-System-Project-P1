@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDBDAO extends UserDAO<Integer, Customer> {
+public class CustomerDBDAO implements CustomerDAO {
     private static CustomerDBDAO instance;
     private final ConnectionPool connectionPool;
 
@@ -36,7 +36,7 @@ public class CustomerDBDAO extends UserDAO<Integer, Customer> {
     }
 
     @Override
-    public Integer create(Customer customer) throws EntityCrudException {
+    public Integer createCustomer(Customer customer) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -63,9 +63,8 @@ public class CustomerDBDAO extends UserDAO<Integer, Customer> {
         }
     }
 
-
     @Override
-    public Customer readById(Integer customerId) throws EntityCrudException {
+    public Customer readCustomer(Integer customerId) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -86,9 +85,8 @@ public class CustomerDBDAO extends UserDAO<Integer, Customer> {
         }
     }
 
-
     @Override
-    public List<Customer> readAll() throws EntityCrudException {
+    public List<Customer> readAllCustomers() throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -110,7 +108,7 @@ public class CustomerDBDAO extends UserDAO<Integer, Customer> {
     }
 
     @Override
-    public void update(Customer customer) throws EntityCrudException {
+    public void updateCustomer(Customer customer) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -128,9 +126,8 @@ public class CustomerDBDAO extends UserDAO<Integer, Customer> {
         }
     }
 
-
     @Override
-    public void delete(Integer customerId) throws EntityCrudException {
+    public void deleteCustomer(Integer customerId) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -145,7 +142,8 @@ public class CustomerDBDAO extends UserDAO<Integer, Customer> {
         }
     }
 
-    public List<Coupon> readCouponsByCustomerId(final Integer customerId) throws EntityCrudException {
+    @Override
+    public List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -168,22 +166,20 @@ public class CustomerDBDAO extends UserDAO<Integer, Customer> {
     }
 
     @Override
-    public Customer readByEmail(String email) throws EntityCrudException {
+    public boolean isCustomerExist(String email) throws EntityCrudException {
         Connection connection = null;
+        int counter;
         try {
             connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM customers WHERE email = ?";
+            final String sqlStatement = "SELECT count(*) FROM companies WHERE email = ?";
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
             preparedStatement.setString(1, email);
             final ResultSet result = preparedStatement.executeQuery();
-
-            if (!result.next()) {
-                return null;
-            }
-
-            return ObjectExtractionUtils.resultSetToCustomer(result);
+            result.next();
+            counter = result.getInt(1);
+            return counter != 0;
         } catch (Exception e) {
-            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
+            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.COUNT);
         } finally {
             connectionPool.returnConnection(connection);
         }

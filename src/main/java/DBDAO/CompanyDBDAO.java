@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompanyDBDAO extends UserDAO<Integer, Company> {
+public class CompanyDBDAO implements CompanyDAO {
     private static CompanyDBDAO instance = null;
 
     private final ConnectionPool connectionPool;
@@ -38,7 +38,8 @@ public class CompanyDBDAO extends UserDAO<Integer, Company> {
         return instance;
     }
 
-    public Integer create(final Company company) throws EntityCrudException {
+    @Override
+    public Integer createCompany(Company company) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -64,7 +65,8 @@ public class CompanyDBDAO extends UserDAO<Integer, Company> {
         }
     }
 
-    public Company readById(final Integer companyId) throws EntityCrudException {
+    @Override
+    public Company readCompany(Integer companyId) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -85,7 +87,8 @@ public class CompanyDBDAO extends UserDAO<Integer, Company> {
         }
     }
 
-    public List<Company> readAll() throws EntityCrudException {
+    @Override
+    public List<Company> readAllCompanies() throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -106,7 +109,8 @@ public class CompanyDBDAO extends UserDAO<Integer, Company> {
         }
     }
 
-    public void update(final Company company) throws EntityCrudException {
+    @Override
+    public void updateCompany(Company company) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -123,7 +127,8 @@ public class CompanyDBDAO extends UserDAO<Integer, Company> {
         }
     }
 
-    public void delete(final Integer companyId) throws EntityCrudException {
+    @Override
+    public void deleteCompany(Integer companyId) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -138,23 +143,22 @@ public class CompanyDBDAO extends UserDAO<Integer, Company> {
         }
     }
 
-
-    public Company readByEmail(final String email) throws EntityCrudException {
+    @Override
+    public boolean isCompanyExist(String name, String email) throws EntityCrudException {
         Connection connection = null;
+        int counter;
         try {
             connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM companies WHERE email = ?";
+            final String sqlStatement = "SELECT count(*) FROM companies WHERE name = ? AND email = ?";
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, email);
             final ResultSet result = preparedStatement.executeQuery();
-
-            if (!result.next()) {
-                return null;
-            }
-
-            return ObjectExtractionUtils.resultSetToCompany(result);
+            result.next();
+            counter = result.getInt(1);
+            return counter != 0;
         } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
+            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.COUNT);
         } finally {
             connectionPool.returnConnection(connection);
         }

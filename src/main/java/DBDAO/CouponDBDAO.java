@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
+public class CouponDBDAO implements CouponDAO {
     private static CouponDBDAO instance = null;
     private final ConnectionPool connectionPool;
 
@@ -36,7 +36,7 @@ public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
     }
 
     @Override
-    public Integer create(Coupon coupon) throws EntityCrudException {
+    public Integer createCoupon(Coupon coupon) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -69,9 +69,8 @@ public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
         }
     }
 
-
     @Override
-    public Coupon readById(Integer couponId) throws EntityCrudException {
+    public Coupon readCoupon(Integer couponId) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -93,7 +92,7 @@ public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
     }
 
     @Override
-    public List<Coupon> readAll() throws EntityCrudException {
+    public List<Coupon> readAllCoupons() throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -115,7 +114,7 @@ public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
     }
 
     @Override
-    public void update(Coupon coupon) throws EntityCrudException {
+    public void updateCoupon(Coupon coupon) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -139,9 +138,8 @@ public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
         }
     }
 
-
     @Override
-    public void delete(Integer couponID) throws EntityCrudException {
+    public void deleteCoupon(Integer couponID) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
@@ -156,7 +154,7 @@ public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
         }
     }
 
-
+    @Override
     public List<Coupon> readCouponsByCompanyId(final Integer companyId) throws EntityCrudException {
         Connection connection = null;
         try {
@@ -179,6 +177,7 @@ public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
         }
     }
 
+    @Override
     public void addCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException {
         Connection connection = null;
         try {
@@ -196,6 +195,7 @@ public class CouponDBDAO implements CRUDdao<Integer, Coupon> {
         }
     }
 
+    @Override
     public void deleteCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException {
         Connection connection = null;
         try {
