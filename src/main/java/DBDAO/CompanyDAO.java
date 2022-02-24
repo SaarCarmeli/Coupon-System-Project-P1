@@ -1,8 +1,10 @@
 package DBDAO;
 
 import Beans.Company;
+import Beans.Coupon;
 import Exceptions.EntityCrudException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface CompanyDAO {
@@ -12,4 +14,8 @@ public interface CompanyDAO {
     void updateCompany(final Company company) throws EntityCrudException;
     void deleteCompany(final Integer companyId) throws EntityCrudException;
     boolean isCompanyExist(final String name, final String email) throws EntityCrudException;
+    public void deleteAllCouponsByCompanyId(Integer companyId) throws EntityCrudException;
+    public List<Coupon> readAllCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException;
+    public List<Coupon> readAllCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException;
+    public List<Coupon> getAllCouponsByCompanyId(Integer companyId) throws EntityCrudException;
 }

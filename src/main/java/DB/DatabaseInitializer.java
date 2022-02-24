@@ -107,7 +107,7 @@ public class DatabaseInitializer {
     }
 
     public static void createCustomerToCouponTable() throws DBException {
-        String sql = "CREATE TABLE IF NOT EXISTS `customer_to_coupon` (\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS `customer_to_coupon` (" +
                 "  `customer_id` bigint NOT NULL," +
                 "  `coupon_id` bigint NOT NULL," +
                 "  KEY `customer.id_idx` (`customer_id`)," +

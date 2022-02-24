@@ -1,6 +1,8 @@
 package DBDAO;
 
 
+import Beans.Category;
+import Beans.Company;
 import Beans.Coupon;
 import DB.ConnectionPool;
 import DB.Util.ObjectExtractionUtils;
@@ -91,6 +93,7 @@ public class CouponDBDAO implements CouponDAO {
         }
     }
 
+
     @Override
     public List<Coupon> readAllCoupons() throws EntityCrudException {
         Connection connection = null;
@@ -107,7 +110,7 @@ public class CouponDBDAO implements CouponDAO {
 
             return coupons;
         } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         } finally {
             connectionPool.returnConnection(connection);
         }
@@ -143,6 +146,7 @@ public class CouponDBDAO implements CouponDAO {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
+            deleteCouponHistory(couponID);
             final String sqlStatement = "DELETE FROM coupons WHERE id = ?";
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
             preparedStatement.setInt(1, couponID);
@@ -205,6 +209,22 @@ public class CouponDBDAO implements CouponDAO {
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
             preparedStatement.setInt(1, customerId);
             preparedStatement.setInt(2, couponId);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public void deleteCouponHistory(Integer couponID) throws EntityCrudException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "DELETE FROM customer_to_coupons WHERE id = ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, couponID);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);

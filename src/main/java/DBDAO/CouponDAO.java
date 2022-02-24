@@ -3,6 +3,7 @@ package DBDAO;
 import Beans.Coupon;
 import Exceptions.EntityCrudException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface CouponDAO {
@@ -14,4 +15,5 @@ public interface CouponDAO {
     List<Coupon> readCouponsByCompanyId(final Integer companyId) throws EntityCrudException;
     void addCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException;
     void deleteCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException;
+    public void deleteCouponHistory(Integer couponID) throws EntityCrudException;
 }
