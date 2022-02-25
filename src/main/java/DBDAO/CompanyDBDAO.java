@@ -115,11 +115,10 @@ public class CompanyDBDAO implements CompanyDAO {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
-            final String sqlStatement = "UPDATE companies SET name = ?, email = ?, password = ?";
+            final String sqlStatement = "UPDATE companies SET email = ?, password = ?";
             PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setString(1, company.getName());
-            preparedStatement.setString(2, company.getEmail());
-            preparedStatement.setString(3, company.getPassword());
+            preparedStatement.setString(1, company.getEmail());
+            preparedStatement.setString(2, company.getPassword());
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.UPDATE);
@@ -145,6 +144,14 @@ public class CompanyDBDAO implements CompanyDAO {
         }
     }
 
+    /**
+     * Checks whether the Company corresponding to the name or email arguments exists in MySQL database
+     *
+     * @param name  Company name
+     * @param email Company email
+     * @return true -> company exists, false -> company does not exist
+     * @throws EntityCrudException
+     */
     @Override
     public boolean isCompanyExist(String name, String email) throws EntityCrudException {
         Connection connection = null;
@@ -176,11 +183,11 @@ public class CompanyDBDAO implements CompanyDAO {
             final String sqlStatement = "SELECT FROM customer_to_coupon WHERE coupon_id = ? AND SELECT FROM coupons WHERE company_id = ?";
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
             preparedStatement.setInt(1, companyId);
-    } catch (Exception e) {
-        throw new EntityCrudException(EntityType.COMPANY, CrudOperation.DELETE);
-    } finally {
-        connectionPool.returnConnection(connection);
-    }
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.DELETE);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
         //todo:create a help method to check if coupon_id inside customer_to_coupons equals in coupons to company_id that we want to delete;
     }
 

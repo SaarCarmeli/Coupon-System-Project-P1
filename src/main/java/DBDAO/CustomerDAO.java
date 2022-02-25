@@ -15,7 +15,7 @@ public interface CustomerDAO {
     void deleteCustomer(final Integer customerId) throws EntityCrudException;
     List<Coupon> readCouponsByCustomerId(final Integer customerId) throws EntityCrudException;
     boolean isCustomerExist(final String email) throws EntityCrudException;
-    public void deleteCouponPurchaseHistory(Integer customerId) throws EntityCrudException;
-    public List<Coupon> readAllCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException, SQLException;
-    public List<Coupon> readAllCouponsByCustomerIdAndMaxPrice(Integer customerId, String price) throws EntityCrudException, SQLException;
+    void deleteCouponPurchaseHistory(Integer customerId) throws EntityCrudException;
+    List<Coupon> readAllCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException, SQLException;
+    List<Coupon> readAllCouponsByCustomerIdAndMaxPrice(Integer customerId, String price) throws EntityCrudException, SQLException;
 }

@@ -22,17 +22,19 @@ public class AdminFacade implements AdminFacadeDAO {
     }
 
     @Override
-    public void updateCompany(Company company) {
-
+    public void updateCompany(Company company) throws EntityCrudException {
+        CompanyDBDAO.getInstance().updateCompany(company);
     }
 
     @Override
-    public void deleteCompany(int companyId) {
-
+    public void deleteCompany(Integer companyId) throws EntityCrudException {
+        CompanyDBDAO.getInstance().deleteAllCouponsByCompanyId(companyId);
+        CompanyDBDAO.getInstance().deleteCompanyPurchaseHistory(companyId);
+        CompanyDBDAO.getInstance().deleteCompany(companyId);
     }
 
     @Override
-    public Company readCompany(int companyId) throws EntityCrudException {
+    public Company readCompany(Integer companyId) throws EntityCrudException {
         return CompanyDBDAO.getInstance().readCompany(companyId);
     }
 
@@ -50,17 +52,18 @@ public class AdminFacade implements AdminFacadeDAO {
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
-
+    public void updateCustomer(Customer customer) throws EntityCrudException {
+        CustomerDBDAO.getInstance().updateCustomer(customer);
     }
 
     @Override
-    public void deleteCustomer(int customerId) {
-
+    public void deleteCustomer(Integer customerId) throws EntityCrudException {
+        CustomerDBDAO.getInstance().deleteCouponPurchaseHistory(customerId);
+        CustomerDBDAO.getInstance().deleteCustomer(customerId);
     }
 
     @Override
-    public Customer readCustomer(int customerId) throws EntityCrudException {
+    public Customer readCustomer(Integer customerId) throws EntityCrudException {
         return CustomerDBDAO.getInstance().readCustomer(customerId);
     }
 
