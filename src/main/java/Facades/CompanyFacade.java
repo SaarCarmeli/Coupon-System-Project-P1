@@ -3,25 +3,32 @@ package Facades;
 import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
+import DBDAO.CompanyDBDAO;
+import DBDAO.CouponDBDAO;
+import Exceptions.EntityCrudException;
 
 import java.util.ArrayList;
 
 public class CompanyFacade implements CompanyFacadeDAO {
     private final int companyId;
+    private final Company company; // todo: is necessary?
 
-    public CompanyFacade(int companyId) {
+    public CompanyFacade(int companyId) throws EntityCrudException {
         this.companyId = companyId;
-    }
-
-    // todo implement methods:
-    @Override
-    public void addCoupon(Coupon coupon) {
-
+        this.company = CompanyDBDAO.getInstance().readCompany(companyId); // todo: is necessary?
     }
 
     @Override
-    public void updateCoupon(Coupon coupon) {
+    public void addCoupon(Coupon coupon) throws Exception {
+        if (CouponDBDAO.getInstance().isCouponExistByCompanyId(this.companyId, coupon.getTitle())) {
+            throw new Exception(); //todo custom exception
+        }
+        CouponDBDAO.getInstance().createCoupon(coupon);
+    }
 
+    @Override
+    public void updateCoupon(Coupon coupon) throws EntityCrudException {
+        CouponDBDAO.getInstance().updateCoupon(coupon);
     }
 
     @Override
@@ -30,8 +37,8 @@ public class CompanyFacade implements CompanyFacadeDAO {
     }
 
     @Override
-    public ArrayList<Coupon> getCompanyCoupons() {
-        return null;
+    public ArrayList<Coupon> getCompanyCoupons() throws EntityCrudException {
+        return (ArrayList<Coupon>) CouponDBDAO.getInstance().readCouponsByCompanyId(this.companyId);
     }
 
     @Override
@@ -46,6 +53,6 @@ public class CompanyFacade implements CompanyFacadeDAO {
 
     @Override
     public Company getCompanyDetails() {
-        return null;
+        return this.company;
     }
 }

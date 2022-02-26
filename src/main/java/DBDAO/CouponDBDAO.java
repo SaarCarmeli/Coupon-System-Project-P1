@@ -121,18 +121,17 @@ public class CouponDBDAO implements CouponDAO {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
-            final String sqlStatement = "UPDATE coupons SET title = ?, company_id = ?, category = ? ,amount = ? ," +
-                    "description = ? ,price = ? ,image = ? , start_date = ? ,end_date ";
+            final String sqlStatement = "UPDATE coupons SET title = ?, category = ? ,amount = ? ," +
+                    "description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ?";
             PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
             preparedStatement.setString(1, coupon.getTitle());
-            preparedStatement.setInt(2, coupon.getCompanyID());
-            preparedStatement.setString(3, coupon.getCategory());
-            preparedStatement.setInt(4, coupon.getAmount());
-            preparedStatement.setString(5, coupon.getDescription());
-            preparedStatement.setDouble(6, coupon.getPrice());
-            preparedStatement.setString(7, coupon.getImage());
-            preparedStatement.setDate(8, coupon.getStartDate());
-            preparedStatement.setDate(9, coupon.getEndDate());
+            preparedStatement.setString(2, coupon.getCategory());
+            preparedStatement.setInt(3, coupon.getAmount());
+            preparedStatement.setString(4, coupon.getDescription());
+            preparedStatement.setDouble(5, coupon.getPrice());
+            preparedStatement.setString(6, coupon.getImage());
+            preparedStatement.setDate(7, coupon.getStartDate());
+            preparedStatement.setDate(8, coupon.getEndDate());
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.UPDATE);
@@ -153,6 +152,35 @@ public class CouponDBDAO implements CouponDAO {
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    /**
+     * Checks whether the Coupon corresponding to the title argument exists in the corresponding Company in MySQL database
+     *
+     * @param companyId ID of the checked Company
+     * @param title     title of the Coupon being checked
+     * @return true -> coupon exists in the company, false -> coupon does not exist in company
+     * @throws EntityCrudException thrown if operation failed
+     */
+    @Override
+    public boolean isCouponExistByCompanyId(Integer companyId, String title) throws EntityCrudException {
+        Connection connection = null;
+        int counter;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT count(*) FROM coupons WHERE company_id = ? AND title = ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, companyId);
+            preparedStatement.setString(2, title);
+            final ResultSet result = preparedStatement.executeQuery();
+            result.next();
+            counter = result.getInt(1);
+            return counter != 0;
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.COUNT);
         } finally {
             connectionPool.returnConnection(connection);
         }

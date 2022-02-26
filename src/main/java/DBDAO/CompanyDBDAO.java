@@ -150,7 +150,7 @@ public class CompanyDBDAO implements CompanyDAO {
      * @param name  Company name
      * @param email Company email
      * @return true -> company exists, false -> company does not exist
-     * @throws EntityCrudException
+     * @throws EntityCrudException thrown if operation failed
      */
     @Override
     public boolean isCompanyExist(String name, String email) throws EntityCrudException {
@@ -191,7 +191,7 @@ public class CompanyDBDAO implements CompanyDAO {
         //todo:create a help method to check if coupon_id inside customer_to_coupons equals in coupons to company_id that we want to delete;
     }
 
-
+    //todo: move to CouponDBDAO
     @Override
     public void deleteAllCouponsByCompanyId(Integer companyId) throws EntityCrudException {
         Connection connection = null;
