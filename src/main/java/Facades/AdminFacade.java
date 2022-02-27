@@ -3,6 +3,7 @@ package Facades;
 import Beans.Company;
 import Beans.Customer;
 import DBDAO.CompanyDBDAO;
+import DBDAO.CouponDBDAO;
 import DBDAO.CustomerDBDAO;
 import Exceptions.EntityCrudException;
 
@@ -28,7 +29,7 @@ public class AdminFacade implements AdminFacadeDAO {
 
     @Override
     public void deleteCompany(Integer companyId) throws EntityCrudException {
-        CompanyDBDAO.getInstance().deleteAllCouponsByCompanyId(companyId);
+        CouponDBDAO.getInstance().deleteAllCouponsByCompanyId(companyId);
         CompanyDBDAO.getInstance().deleteCompanyPurchaseHistory(companyId);
         CompanyDBDAO.getInstance().deleteCompany(companyId);
     }

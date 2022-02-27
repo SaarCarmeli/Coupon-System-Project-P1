@@ -260,4 +260,91 @@ public class CouponDBDAO implements CouponDAO {
             connectionPool.returnConnection(connection);
         }
     }
+
+    @Override
+    public void deleteAllCouponsByCompanyId(Integer companyId) throws EntityCrudException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "DELETE FROM coupons WHERE companies_id = ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, companyId);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public List<Coupon> readAllCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND price <= ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, companyId);
+            preparedStatement.setString(2, price);
+            final ResultSet result = preparedStatement.executeQuery();
+
+            final List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) {
+                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+            }
+
+            return coupons;
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public List<Coupon> readAllCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND category = ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, companyId);
+            preparedStatement.setString(2, category);
+            final ResultSet result = preparedStatement.executeQuery();
+
+            final List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) {
+                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+            }
+
+            return coupons;
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public List<Coupon> getAllCouponsByCompanyId(Integer companyId) throws EntityCrudException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, companyId);
+            final ResultSet result = preparedStatement.executeQuery();
+
+            final List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) {
+                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+            }
+
+            return coupons;
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
 }

@@ -14,8 +14,4 @@ public interface CompanyDAO {
     void updateCompany(final Company company) throws EntityCrudException;
     void deleteCompany(final Integer companyId) throws EntityCrudException;
     boolean isCompanyExist(final String name, final String email) throws EntityCrudException;
-    void deleteAllCouponsByCompanyId(Integer companyId) throws EntityCrudException;
-    List<Coupon> readAllCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException;
-    List<Coupon> readAllCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException;
-    List<Coupon> getAllCouponsByCompanyId(Integer companyId) throws EntityCrudException;
 }
