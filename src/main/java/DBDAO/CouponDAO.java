@@ -14,11 +14,10 @@ public interface CouponDAO {
     void deleteCoupon(Integer couponID) throws EntityCrudException;
     boolean isCouponExistByCompanyId(Integer companyId, String title) throws EntityCrudException;
     List<Coupon> readCouponsByCompanyId(final Integer companyId) throws EntityCrudException;
+    List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException;
+    List<Coupon> readCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException;
     void addCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException;
     void deleteCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException;
     void deleteCouponHistory(Integer couponID) throws EntityCrudException;
     void deleteAllCouponsByCompanyId(Integer companyId) throws EntityCrudException;
-    List<Coupon> readAllCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException;
-    List<Coupon> readAllCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException;
-    List<Coupon> getAllCouponsByCompanyId(Integer companyId) throws EntityCrudException;
 }
