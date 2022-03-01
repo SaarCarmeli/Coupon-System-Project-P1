@@ -6,12 +6,14 @@ public class DBManager {
     public static final String SQL_USER = "root";
     public static final String SQL_PASS = System.getenv("SQL_PASSWORD");
 
+    // todo schema creation
+
     // Table Creation:
     public static final String CREATE_CATEGORIES_TABLE = "CREATE TABLE IF NOT EXISTS `categories` (" +
             "  `id` bigint NOT NULL AUTO_INCREMENT," +
             "  `name` enum('FOOD','ELECTRICITY','RESTAURANT','VACATION') NOT NULL," +
             "  PRIMARY KEY (`id`)" +
-            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
+            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"; // todo do we need categories table?
 
     public static final String CREATE_TABLE_COMPANIES = "CREATE TABLE IF NOT EXISTS `companies` (" +
             "  `id` bigint NOT NULL AUTO_INCREMENT," +
