@@ -43,7 +43,7 @@ public class DatabaseInitializer {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DBException("Failed to create categories table");
+            throw new DBException("Failed to create categories table"); //todo how to integrate new method with existing custom exceptions?
         }
     }
 

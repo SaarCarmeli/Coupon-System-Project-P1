@@ -1,5 +1,7 @@
 package DB;
 
+import DB.Util.DBManager;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,10 +9,6 @@ import java.util.Stack;
 
 
 public class ConnectionPool {
-
-    public static final String SQL_URL = "jdbc:mysql://localhost:3306/coupon_project";
-    public static final String SQL_USER = "root";
-    public static String SQL_PASS = System.getenv("SQL_PASSWORD");
     private static final int NUMBER_OF_CONNECTIONS = 10;
     private static ConnectionPool instance = null;
     private final Stack<Connection> connections = new Stack<>();
@@ -33,7 +31,7 @@ public class ConnectionPool {
 
     private void openAllConnections() throws SQLException {
         for (int counter = 0; counter < NUMBER_OF_CONNECTIONS; counter++) {
-            final Connection connection = DriverManager.getConnection(SQL_URL ,SQL_USER, SQL_PASS);
+            final Connection connection = DriverManager.getConnection(DBManager.SQL_URL ,DBManager.SQL_USER, DBManager.SQL_PASS);
             connections.push(connection);
         }
     }
