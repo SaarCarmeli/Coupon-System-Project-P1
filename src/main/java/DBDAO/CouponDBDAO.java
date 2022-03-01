@@ -157,6 +157,22 @@ public class CouponDBDAO implements CouponDAO {
         }
     }
 
+    @Override
+    public void deleteExpiredCoupons(String date) throws EntityCrudException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            //todo:fix the SQL statement
+            final String sqlStatement = "DELETE FROM coupons WHERE end_date < ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setString(1, date);
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
     /**
      * Checks whether the Coupon corresponding to the title argument exists in the corresponding Company in MySQL database
      *
