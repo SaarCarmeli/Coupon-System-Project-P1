@@ -175,7 +175,7 @@ public class CompanyDBDAO implements CompanyDAO {
         try {
             connection = connectionPool.getConnection();
             //1
-            couponDBDAO.getAllCouponsByCompanyId(companyId);
+            couponDBDAO.readCouponsByCompanyId(companyId);
             //2
             final String sqlStatement = "SELECT FROM customer_to_coupon WHERE coupon_id = ? AND SELECT FROM coupons WHERE company_id = ?";
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
