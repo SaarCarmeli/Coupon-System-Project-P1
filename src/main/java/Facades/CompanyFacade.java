@@ -5,8 +5,11 @@ import Beans.Company;
 import Beans.Coupon;
 import DBDAO.CompanyDBDAO;
 import DBDAO.CouponDBDAO;
+import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;
+import Exceptions.EntityType;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyFacade implements CompanyFacadeDAO {
@@ -19,9 +22,9 @@ public class CompanyFacade implements CompanyFacadeDAO {
     }
 
     @Override
-    public void addCoupon(Coupon coupon) throws Exception {
+    public void addCoupon(Coupon coupon) throws EntityAlreadyExistException, EntityCrudException {
         if (CouponDBDAO.getInstance().isCouponExistByCompanyId(this.companyId, coupon.getTitle())) {
-            throw new Exception(); //todo custom exception
+            throw new EntityAlreadyExistException(EntityType.COUPON);
         }
         CouponDBDAO.getInstance().createCoupon(coupon);
     }
@@ -42,13 +45,15 @@ public class CompanyFacade implements CompanyFacadeDAO {
     }
 
     @Override
-    public ArrayList<Coupon> getCompanyCoupons(Category category) {
-        return null;
+    public ArrayList<Coupon> getCompanyCoupons(Category category) throws SQLException, EntityCrudException {
+        return (ArrayList<Coupon>) CouponDBDAO.getInstance().
+                readCouponsByCompanyIdAndCategory(this.companyId, String.valueOf(category));
     }
 
     @Override
-    public ArrayList<Coupon> getCompanyCoupons(double maxPrice) {
-        return null;
+    public ArrayList<Coupon> getCompanyCoupons(double maxPrice) throws SQLException, EntityCrudException {
+        return (ArrayList<Coupon>) CouponDBDAO.getInstance().
+                readCouponsByCompanyIdAndMaxPrice(this.companyId, String.valueOf(maxPrice)); //todo:check why Price is String in SQL
     }
 
     @Override

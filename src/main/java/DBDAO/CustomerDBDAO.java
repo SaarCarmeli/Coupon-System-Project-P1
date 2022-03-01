@@ -167,42 +167,6 @@ public class CustomerDBDAO implements CustomerDAO {
     }
 
     @Override
-    public boolean isCustomerExist(String email) throws EntityCrudException {
-        Connection connection = null;
-        int counter;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT count(*) FROM companies WHERE email = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setString(1, email);
-            final ResultSet result = preparedStatement.executeQuery();
-            result.next();
-            counter = result.getInt(1);
-            return counter != 0;
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.COUNT);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
-    @Override
-    public void deleteCouponPurchaseHistory(Integer customerId) throws EntityCrudException {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement =
-                    "DELETE FROM customer_to_coupon WHERE customer_id";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, customerId);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-    @Override
     public List<Coupon> readAllCouponsByCustomerIdAndMaxPrice(Integer customerId, String price) throws EntityCrudException, SQLException {
 //todo:check why Price is String in SQL
         Connection connection = null;
@@ -246,6 +210,43 @@ public class CustomerDBDAO implements CustomerDAO {
             return coupons;
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public boolean isCustomerExist(String email) throws EntityCrudException {
+        Connection connection = null;
+        int counter;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT count(*) FROM companies WHERE email = ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setString(1, email);
+            final ResultSet result = preparedStatement.executeQuery();
+            result.next();
+            counter = result.getInt(1);
+            return counter != 0;
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.COUNT);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public void deleteCouponPurchaseHistory(Integer customerId) throws EntityCrudException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement =
+                    "DELETE FROM customer_to_coupon WHERE customer_id";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, customerId);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
         } finally {
             connectionPool.returnConnection(connection);
         }

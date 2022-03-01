@@ -5,7 +5,9 @@ import Beans.Customer;
 import DBDAO.CompanyDBDAO;
 import DBDAO.CouponDBDAO;
 import DBDAO.CustomerDBDAO;
+import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;
+import Exceptions.EntityType;
 
 import java.util.ArrayList;
 
@@ -15,9 +17,9 @@ public class AdminFacade implements AdminFacadeDAO {
     }
 
     @Override
-    public void addCompany(Company company) throws Exception {
+    public void addCompany(Company company) throws EntityAlreadyExistException, EntityCrudException {
         if (CompanyDBDAO.getInstance().isCompanyExist(company.getName(), company.getEmail())) {
-            throw new Exception(); //todo custom exception
+            throw new EntityAlreadyExistException(EntityType.COMPANY);
         }
         CompanyDBDAO.getInstance().createCompany(company);
     }
@@ -45,9 +47,9 @@ public class AdminFacade implements AdminFacadeDAO {
     }
 
     @Override
-    public void addCustomer(Customer customer) throws Exception {
+    public void addCustomer(Customer customer) throws EntityAlreadyExistException, EntityCrudException {
         if (CustomerDBDAO.getInstance().isCustomerExist(customer.getEmail())) {
-            throw new Exception(); //todo custom exception
+            throw new EntityAlreadyExistException(EntityType.CUSTOMER);
         }
         CustomerDBDAO.getInstance().createCustomer(customer);
     }

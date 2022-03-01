@@ -217,7 +217,7 @@ public class CouponDBDAO implements CouponDAO {
             final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND price <= ?";
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
             preparedStatement.setInt(1, companyId);
-            preparedStatement.setString(2, price);
+            preparedStatement.setString(2, price); //todo:check why Price is String in SQL
             final ResultSet result = preparedStatement.executeQuery();
 
             final List<Coupon> coupons = new ArrayList<>();
