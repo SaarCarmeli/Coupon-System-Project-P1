@@ -77,8 +77,8 @@ public class CompanyDBDAO implements CompanyDAO {
      * Returns an instance of Company from MySQL database by company ID number.
      *
      * @param companyId Company ID number
-     * @return Company class from MySQL database
-     * @throws EntityCrudException Thrown if Read was unsuccessful
+     * @return Company instance from MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
     public Company readCompany(Integer companyId) throws EntityCrudException {
@@ -118,8 +118,8 @@ public class CompanyDBDAO implements CompanyDAO {
     /**
      * Returns a List of all Companies from MySQL database
      *
-     * @return List of Companies from MySQL database
-     * @throws EntityCrudException Thrown if Read was unsuccessful
+     * @return List of all Companies from MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
     public List<Company> readAllCompanies() throws EntityCrudException {
@@ -158,6 +158,12 @@ public class CompanyDBDAO implements CompanyDAO {
 //        }
 //    }
 
+    /**
+     * Updates Company record in MySQL database.
+     *
+     * @param company Company instance to update by
+     * @throws EntityCrudException Thrown if update in MySQL was unsuccessful
+     */
     @Override
     public void updateCompany(Company company) throws EntityCrudException {
         Map<Integer, Object> params = new HashMap<>();
@@ -188,50 +194,84 @@ public class CompanyDBDAO implements CompanyDAO {
 //        }
 //    }
 
+    /**
+     * Deletes Company record from MySQL database.
+     *
+     * @param companyId ID number of the Company to be deleted
+     * @throws EntityCrudException Thrown if delete from MySQL was unsuccessful
+     */
     @Override
     public void deleteCompany(Integer companyId) throws EntityCrudException {
-        Connection connection = null;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, companyId);
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "DELETE FROM companies WHERE id = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            System.out.println("Deleted Company: " + DBTools.runQuery(DBManager.DELETE_COMPANY_BY_ID));
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.DELETE);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
 
+//    @Override
+//    public void deleteCompany(Integer companyId) throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "DELETE FROM companies WHERE id = ?";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setInt(1, companyId);
+//            preparedStatement.executeUpdate();
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.DELETE);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
+
     /**
      * Checks whether the Company corresponding to the name or email arguments exists in MySQL database
+     * by counting the companies that meet the criteria.
      *
      * @param name  Company name
      * @param email Company email
      * @return true -> company exists, false -> company does not exist
-     * @throws EntityCrudException thrown if operation failed
+     * @throws EntityCrudException Thrown if count in MySQL was unsuccessful
      */
     @Override
     public boolean isCompanyExist(String name, String email) throws EntityCrudException {
-        Connection connection = null;
         int counter;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, name);
+        params.put(2, email);
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT count(*) FROM companies WHERE name = ? OR email = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, email);
-            final ResultSet result = preparedStatement.executeQuery();
+            ResultSet result = DBTools.runQueryForResult(DBManager.COUNT_COMPANIES_BY_NAME_OR_EMAIL);
             result.next();
             counter = result.getInt(1);
             return counter != 0;
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.COUNT);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
+
+//    @Override
+//    public boolean isCompanyExist(String name, String email) throws EntityCrudException {
+//        Connection connection = null;
+//        int counter;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "SELECT count(*) FROM companies WHERE name = ? OR email = ?";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setString(1, name);
+//            preparedStatement.setString(2, email);
+//            final ResultSet result = preparedStatement.executeQuery();
+//            result.next();
+//            counter = result.getInt(1);
+//            return counter != 0;
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.COUNT);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     public void deleteCompanyPurchaseHistory(Integer companyId) throws EntityCrudException {
         Connection connection = null;

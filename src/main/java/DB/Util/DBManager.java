@@ -64,5 +64,7 @@ public class DBManager {
     public static final String CREATE_COMPANY = "INSERT INTO companies (name, email, password) VALUES(?, ?, ?)";
     public static final String READ_COMPANY_BY_ID = "SELECT * FROM companies WHERE id = ?";
     public static final String READ_ALL_COMPANIES = "SELECT * FROM companies";
-    public static final String UPDATE_COMPANY = "UPDATE companies SET name = ?, email = ?, password = ?";
+    public static final String UPDATE_COMPANY = "UPDATE companies SET name = ?, email = ?, password = ?"; // todo "where id = ?" ???
+    public static final String DELETE_COMPANY_BY_ID = "DELETE FROM companies WHERE id = ?";
+    public static final String COUNT_COMPANIES_BY_NAME_OR_EMAIL = "SELECT count(*) FROM companies WHERE name = ? OR email = ?";
 }
