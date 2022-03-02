@@ -3,7 +3,7 @@ package DB;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
 import Exceptions.DBException;
-import Exceptions.DBInitError;
+import Exceptions.DBInitException;
 
 
 import java.sql.Connection;
@@ -16,31 +16,36 @@ public class DatabaseInitializer {
     private DatabaseInitializer() {
     }
 
-    private static final Connection connection;
+    private static final Connection connection; //todo delete replace with runQuery
 
     static {
         try {
             connection = ConnectionPool.getInstance().getConnection();
         } catch (InterruptedException | SQLException e) {
-            throw new DBInitError();
+            throw new DBInitException();
+            //todo delete
         }
     }
 
     public static void createTables() throws DBException, SQLException {
-        createSchema();
-        createCategoriesTable();
-        createCompaniesTable();
-        createCustomersTable();
-        createCouponsTable();
-        createCustomerToCouponTable();
+        try {
+            createSchema();
+            createCategoriesTable();
+            createCompaniesTable();
+            createCustomersTable();
+            createCouponsTable();
+            createCustomerToCouponTable();
+        } catch (DBInitException e) {
+            e.getMessage();
+        }
         ConnectionPool.getInstance().returnConnection(connection);
     }
 
-    private static void createSchema() {
+    private static void createSchema() throws DBInitException {
         try {
             System.out.println("Created schema: " + DBTools.runQuery(DBManager.CREATE_SCHEMA));
         } catch (SQLException e) {
-            System.out.println("error:"+e.getMessage());//todo
+            throw new DBInitException();
         }
     }
 
