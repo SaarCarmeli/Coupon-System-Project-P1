@@ -1,5 +1,7 @@
 package DB;
 
+import DB.Util.DBManager;
+import DB.Util.DBTools;
 import Exceptions.DBException;
 import Exceptions.DBInitError;
 
@@ -25,12 +27,21 @@ public class DatabaseInitializer {
     }
 
     public static void createTables() throws DBException, SQLException {
+        createSchema();
         createCategoriesTable();
         createCompaniesTable();
         createCustomersTable();
         createCouponsTable();
         createCustomerToCouponTable();
         ConnectionPool.getInstance().returnConnection(connection);
+    }
+
+    private static void createSchema() {
+        try {
+            System.out.println("Created schema: " + DBTools.runQuery(DBManager.CREATE_SCHEMA));
+        } catch (SQLException e) {
+            System.out.println("error:"+e.getMessage());//todo
+        }
     }
 
     public static void createCategoriesTable() throws DBException {

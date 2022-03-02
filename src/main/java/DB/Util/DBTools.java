@@ -11,22 +11,20 @@ public class DBTools {
      *
      * @param sql SQL script for execution
      * @return true if successful, false if failed
+     * @throws SQLException Thrown if SQL statement not executed
      */
-    public static boolean runQuery(String sql) {
-        ConnectionPool connectionPool = null;
+    public static boolean runQuery(String sql) throws SQLException {
         Connection connection = null;
         try {
-            connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.execute();
             return true;
-        } catch (SQLException | InterruptedException e) {
-            System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            System.out.println("Error: " + e.getMessage());
             return false;
         } finally {
-            assert connectionPool != null;
-            connectionPool.returnConnection(connection);
+            ConnectionPool.getInstance().returnConnection(connection);
         }
     }
 
@@ -36,13 +34,12 @@ public class DBTools {
      * @param sql    SQL script for execution
      * @param params parameter input for SQL script
      * @return true if successful, false if failed
+     * @throws SQLException Thrown if SQL statement not executed
      */
-    public static boolean runQuery(String sql, Map<Integer, Object> params) {
-        ConnectionPool connectionPool = null;
+    public static boolean runQuery(String sql, Map<Integer, Object> params) throws SQLException {
         Connection connection = null;
         try {
-            connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             params.forEach((key, value) -> {
                 try {
@@ -69,14 +66,14 @@ public class DBTools {
             });
             statement.execute();
             return true;
-        } catch (SQLException | InterruptedException e) {
-            System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            System.out.println("Error: " + e.getMessage());
             return false;
         } finally {
-            assert connectionPool != null;
-            connectionPool.returnConnection(connection);
+            ConnectionPool.getInstance().returnConnection(connection);
         }
     }
+
 
     /**
      * Generic method for accepting SQL script, parameters and retrieving ResultSet
@@ -84,13 +81,12 @@ public class DBTools {
      * @param sql    SQL script for execution
      * @param params parameter input for SQL script
      * @return ResultSet if successful, else null
+     * @throws SQLException Thrown if SQL statement not executed
      */
-    public static ResultSet runQueryForResult(String sql, Map<Integer, Object> params) {
-        ConnectionPool connectionPool = null;
+    public static ResultSet runQueryForResult(String sql, Map<Integer, Object> params) throws SQLException {
         Connection connection = null;
         try {
-            connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             params.forEach((key, value) -> {
                 try {
@@ -116,12 +112,11 @@ public class DBTools {
                 }
             });
             return statement.executeQuery();
-        } catch (SQLException | InterruptedException e) {
-            System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            System.out.println("Error: " + e.getMessage());
             return null;
         } finally {
-            assert connectionPool != null;
-            connectionPool.returnConnection(connection);
+            ConnectionPool.getInstance().returnConnection(connection);
         }
     }
 }

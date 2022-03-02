@@ -6,14 +6,15 @@ public class DBManager {
     public static final String SQL_USER = "root";
     public static final String SQL_PASS = System.getenv("SQL_PASSWORD");
 
-    // todo schema creation
+    // Schema Creation:
+    public static final String CREATE_SCHEMA = "CREATE SCHEMA IF NOT EXISTS `coupon_project`";
 
     // Table Creation:
-    public static final String CREATE_CATEGORIES_TABLE = "CREATE TABLE IF NOT EXISTS `categories` (" +
+    public static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE IF NOT EXISTS `categories` (" +
             "  `id` bigint NOT NULL AUTO_INCREMENT," +
             "  `name` enum('FOOD','ELECTRICITY','RESTAURANT','VACATION') NOT NULL," +
             "  PRIMARY KEY (`id`)" +
-            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"; // todo do we need categories table?
+            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"; //todo
 
     public static final String CREATE_TABLE_COMPANIES = "CREATE TABLE IF NOT EXISTS `companies` (" +
             "  `id` bigint NOT NULL AUTO_INCREMENT," +
@@ -47,7 +48,7 @@ public class DBManager {
             "  `price` varchar(45) NOT NULL," +
             "  `image` varchar(45) DEFAULT NULL," +
             "  PRIMARY KEY (`id`)," +
-            "  CONSTRAINT `company_id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)" +
+            "  CONSTRAINT `company_id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)" +//todo delete on action
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
 
     public static final String CREATE_TABLE_CUSTOMER_TO_COUPON = "CREATE TABLE IF NOT EXISTS `customer_to_coupon` (" +
