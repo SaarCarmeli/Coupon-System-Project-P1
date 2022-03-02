@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class Coupon {
-    private int companyID, amount;
+    private int companyID, amount; //todo sort
     private Integer id;
     private double price;
     private Category category;
@@ -14,9 +14,9 @@ public class Coupon {
     /**
      * Initiates an instance of Coupon.
      *
-     * @param id          Coupon ID number
      * @param companyID   Name of the issuing Company
      * @param amount      Worth of Coupon discount
+     * @param id          Coupon ID number
      * @param price       Price to purchase the Coupon
      * @param category    Commercial category the Coupon gives discount in
      * @param title       Commercial name of the Coupon
@@ -25,17 +25,17 @@ public class Coupon {
      * @param startDate   Coupon creation date
      * @param endDate     Date of Coupon expiration
      */
-    public Coupon(Integer id, int companyID, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
+    public Coupon(int companyID, int amount, Integer id, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
+        this.companyID = companyID;
+        this.amount = amount;
         this.id = id;
-        setCompanyID(companyID);
-        setAmount(amount);
-        setPrice(price);
-        setCategory(category);
-        setTitle(title);
-        setDescription(description);
-        setImage(image);
+        this.price = price;
+        this.category = category;
+        this.title = title;
+        this.description = description;
+        this.image = image;
         this.startDate = startDate;
-        setEndDate(endDate);
+        this.endDate = endDate;
     }
 
     /**
@@ -54,6 +54,10 @@ public class Coupon {
      */
     public int getCompanyID() {
         return companyID;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
@@ -180,6 +184,15 @@ public class Coupon {
      */
     public Date getStartDate() {
         return startDate;
+    }
+
+    /**
+     * Sets the date of the Coupon creation.
+     *
+     * @param startDate Coupon creation date
+     */
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     /**

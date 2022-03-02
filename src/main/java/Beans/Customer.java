@@ -20,20 +20,28 @@ public class Customer {
      */
     public Customer(Integer id, String firstName, String lastName, String email, String password) {
         this.id = id;
-        setFirstName(firstName);
-        setLastName(lastName);
-        setEmail(email);
-        setPassword(password);
-        this.coupons = new ArrayList<>();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
     }
 
     /**
-     * Returns Customer ID number
+     * Returns Customer ID number.
      *
      * @return Customer ID number
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Sets Customer ID number.
+     *
+     * @param id Customer ID number
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**

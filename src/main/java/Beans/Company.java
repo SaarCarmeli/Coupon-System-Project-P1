@@ -1,5 +1,7 @@
 package Beans;
 
+import Exceptions.MethodNotAllowedException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,12 +21,10 @@ public class Company {
      */
     public Company(Integer id, String name, String email, String password) {
         this.id = id;
-        setName(name);
-        setEmail(email);
-        setPassword(password);
-        this.coupons = new ArrayList<>();
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
-
 
     /**
      * Returns Company ID number.
@@ -33,6 +33,15 @@ public class Company {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Sets Company ID number
+     *
+     * @param id Company ID number
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
@@ -95,7 +104,7 @@ public class Company {
      * @return Login password
      */
     public String getPassword() {
-        return password; // todo consider deleting
+        return password;
     }
 
     /**
@@ -103,8 +112,8 @@ public class Company {
      *
      * @param password Login password
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password) throws MethodNotAllowedException {
+        throw new MethodNotAllowedException("You can not set this parameter");
     }
 
     /**
