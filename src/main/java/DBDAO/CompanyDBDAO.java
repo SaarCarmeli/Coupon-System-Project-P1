@@ -2,7 +2,7 @@ package DBDAO;
 
 import Beans.Company;
 import DB.ConnectionPool;
-import DB.Util.ObjectExtractionUtils;
+import DB.Util.ObjectExtractionUtil;
 import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
 import Exceptions.EntityType;
@@ -78,7 +78,7 @@ public class CompanyDBDAO implements CompanyDAO {
                 return null;
             }
 
-            return ObjectExtractionUtils.resultSetToCompany(result, couponDBDAO.readCouponsByCompanyId(companyId));
+            return ObjectExtractionUtil.resultSetToCompany(result, couponDBDAO.readCouponsByCompanyId(companyId));
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
         } finally {
@@ -97,7 +97,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
             final List<Company> companies = new ArrayList<>();
             while (result.next()) {
-                companies.add(ObjectExtractionUtils.resultSetToCompany(result));
+                companies.add(ObjectExtractionUtil.resultSetToCompany(result));
             }
 
             return companies;

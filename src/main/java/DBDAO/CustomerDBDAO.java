@@ -3,7 +3,7 @@ package DBDAO;
 import Beans.Coupon;
 import Beans.Customer;
 import DB.ConnectionPool;
-import DB.Util.ObjectExtractionUtils;
+import DB.Util.ObjectExtractionUtil;
 import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
 import Exceptions.EntityType;
@@ -77,7 +77,7 @@ public class CustomerDBDAO implements CustomerDAO {
                 return null;
             }
 
-            return ObjectExtractionUtils.resultSetToCustomer(result, readCouponsByCustomerId(customerId));
+            return ObjectExtractionUtil.resultSetToCustomer(result, readCouponsByCustomerId(customerId));
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
         } finally {
@@ -96,7 +96,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
             final List<Customer> customers = new ArrayList<>();
             while (result.next()) {
-                customers.add(ObjectExtractionUtils.resultSetToCustomer(result));
+                customers.add(ObjectExtractionUtil.resultSetToCustomer(result));
             }
 
             return customers;
@@ -155,7 +155,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
             final List<Coupon> coupons = new ArrayList<>();
             while (result.next()) {
-                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
 
             return coupons;
@@ -180,7 +180,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
             final List<Coupon> coupons = new ArrayList<>();
             while (result.next()) {
-                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
 
             return coupons;
@@ -204,7 +204,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
             final List<Coupon> coupons = new ArrayList<>();
             while (result.next()) {
-                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
 
             return coupons;

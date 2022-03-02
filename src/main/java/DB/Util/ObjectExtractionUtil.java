@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ObjectExtractionUtils {
+public class ObjectExtractionUtil {
 
     public static Company resultSetToCompany(final ResultSet result) throws SQLException {
         return new Company(

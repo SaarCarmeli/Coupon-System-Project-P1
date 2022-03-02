@@ -157,22 +157,4 @@ public class Customer {
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, email, password, coupons);
     }
-
-    /**
-     * Returns a String description of Customer attributes.
-     *
-     * @return Attribute String for Customer
-     */
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.
-                append("Company{").
-                append("id=").append(id).
-                append(", firstName='").append(firstName).append('\'').
-                append(", lastName='").append(lastName).append('\'').
-                append(", email='").append(email).append('\'').
-                append(", coupons=").append(coupons.size() == 0 ? "No coupons" : coupons).append('}');
-        return stringBuilder.toString();
-    }
 }

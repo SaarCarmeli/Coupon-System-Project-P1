@@ -139,21 +139,4 @@ public class Company {
     public int hashCode() {
         return Objects.hash(id, name, email, password, coupons);
     }
-
-    /**
-     * Returns a String description of Company attributes.
-     *
-     * @return Attribute String for Company
-     */
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.
-                append("Company{").
-                append("id=").append(id).
-                append(", name='").append(name).append('\'').
-                append(", email='").append(email).append('\'').
-                append(", coupons=").append(coupons.size() == 0 ? "No coupons" : coupons).append('}');
-        return stringBuilder.toString();
-    }
 }

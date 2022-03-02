@@ -1,11 +1,9 @@
 package DBDAO;
 
 
-import Beans.Category;
-import Beans.Company;
 import Beans.Coupon;
 import DB.ConnectionPool;
-import DB.Util.ObjectExtractionUtils;
+import DB.Util.ObjectExtractionUtil;
 import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
 import Exceptions.EntityType;
@@ -85,7 +83,7 @@ public class CouponDBDAO implements CouponDAO {
                 return null;
             }
 
-            return ObjectExtractionUtils.resultSetToCoupon(result);
+            return ObjectExtractionUtil.resultSetToCoupon(result);
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         } finally {
@@ -105,7 +103,7 @@ public class CouponDBDAO implements CouponDAO {
 
             final List<Coupon> coupons = new ArrayList<>();
             while (result.next()) {
-                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
 
             return coupons;
@@ -214,7 +212,7 @@ public class CouponDBDAO implements CouponDAO {
 
             final List<Coupon> coupons = new ArrayList<>();
             while (result.next()) {
-                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
 
             return coupons;
@@ -238,7 +236,7 @@ public class CouponDBDAO implements CouponDAO {
 
             final List<Coupon> coupons = new ArrayList<>();
             while (result.next()) {
-                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
 
             return coupons;
@@ -262,7 +260,7 @@ public class CouponDBDAO implements CouponDAO {
 
             final List<Coupon> coupons = new ArrayList<>();
             while (result.next()) {
-                coupons.add(ObjectExtractionUtils.resultSetToCoupon(result));
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
 
             return coupons;

@@ -241,27 +241,4 @@ public class Coupon {
     public int hashCode() {
         return Objects.hash(id, companyID, amount, price, category, title, description, image, startDate, endDate);
     }
-
-    /**
-     * Returns a String description of Coupon attributes.
-     *
-     * @return Attribute String for Coupon
-     */
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.
-                append("Coupon{").
-                append("id=").append(id).
-                append(", companyID=").append(companyID).
-                append(", amount=").append(amount).
-                append(", price=").append(price).
-                append(", category=").append(category).
-                append(", title='").append(title).append('\'').
-                append(", description='").append(description).append('\'').
-                append(", image='").append(image).append('\'').
-                append(", startDate=").append(startDate).
-                append(", endDate=").append(endDate).append('}');
-        return stringBuilder.toString();
-    }
 }
