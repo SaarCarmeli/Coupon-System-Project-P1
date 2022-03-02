@@ -2,6 +2,8 @@ package DBDAO;
 
 import Beans.Company;
 import DB.ConnectionPool;
+import DB.Util.DBManager;
+import DB.Util.DBTools;
 import DB.Util.ObjectExtractionUtil;
 import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
@@ -9,7 +11,9 @@ import Exceptions.EntityType;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CompanyDBDAO implements CompanyDAO {
     private static CompanyDBDAO instance = null;
@@ -22,10 +26,15 @@ public class CompanyDBDAO implements CompanyDAO {
         try {
             connectionPool = ConnectionPool.getInstance();
         } catch (SQLException e) {
-            throw new RuntimeException("Something went wrong while getting connection pool instance");
+            throw new RuntimeException("Something went wrong while getting connection pool instance");// todo wheres-the-foot !? (wtf !?)
         }
     }
 
+    /**
+     * Static method for retrieving or initiating an instance of CompanyDBDAO.
+     *
+     * @return CompanyDBDAO instance
+     */
     public static CompanyDBDAO getInstance() {
         if (instance == null) {
             synchronized (CompanyDBDAO.class) {
@@ -50,7 +59,7 @@ public class CompanyDBDAO implements CompanyDAO {
             preparedStatement.setString(2, company.getEmail());
             preparedStatement.setString(3, company.getPassword());
             preparedStatement.executeUpdate();
-            final ResultSet generatedKeysResult = preparedStatement.getGeneratedKeys();
+            final ResultSet generatedKeysResult = preparedStatement.getGeneratedKeys(); // todo adapt generic method to return generated-keys
 
             if (!generatedKeysResult.next()) {
                 throw new RuntimeException("No results");
@@ -64,66 +73,120 @@ public class CompanyDBDAO implements CompanyDAO {
         }
     }
 
+    /**
+     * Returns an instance of Company from MySQL database by company ID number.
+     *
+     * @param companyId Company ID number
+     * @return Company class from MySQL database
+     * @throws EntityCrudException Thrown if Read was unsuccessful
+     */
     @Override
     public Company readCompany(Integer companyId) throws EntityCrudException {
-        Connection connection = null;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, companyId);
+        ResultSet result;
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM companies WHERE id = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            if (!result.next()) {
-                return null;
-            }
-
-            return ObjectExtractionUtil.resultSetToCompany(result, couponDBDAO.readCouponsByCompanyId(companyId));
-        } catch (Exception e) {
+            result = DBTools.runQueryForResult(DBManager.READ_COMPANY_BY_ID, params);
+            return ObjectExtractionUtil.resultSetToCompany(result, couponDBDAO.readCouponsByCompanyId(companyId)); //todo check if works
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
 
+//    @Override
+//    public Company readCompany(Integer companyId) throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "SELECT * FROM companies WHERE id = ?";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setInt(1, companyId);
+//            final ResultSet result = preparedStatement.executeQuery();
+//
+//            if (!result.next()) {
+//                return null;
+//            }
+//
+//            return ObjectExtractionUtil.resultSetToCompany(result, couponDBDAO.readCouponsByCompanyId(companyId));
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
+
+    /**
+     * Returns a List of all Companies from MySQL database
+     *
+     * @return List of Companies from MySQL database
+     * @throws EntityCrudException Thrown if Read was unsuccessful
+     */
     @Override
     public List<Company> readAllCompanies() throws EntityCrudException {
-        Connection connection = null;
+        ResultSet result;
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM companies";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Company> companies = new ArrayList<>();
+            result = DBTools.runQueryForResult(DBManager.READ_ALL_COMPANIES);
+            List<Company> companies = new ArrayList<>();
             while (result.next()) {
                 companies.add(ObjectExtractionUtil.resultSetToCompany(result));
             }
-
             return companies;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
+
+//    @Override
+//    public List<Company> readAllCompanies() throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "SELECT * FROM companies";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            final ResultSet result = preparedStatement.executeQuery();
+//
+//            final List<Company> companies = new ArrayList<>();
+//            while (result.next()) {
+//                companies.add(ObjectExtractionUtil.resultSetToCompany(result));
+//            }
+//
+//            return companies;
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     @Override
     public void updateCompany(Company company) throws EntityCrudException {
-        Connection connection = null;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, company.getName());
+        params.put(2, company.getEmail());
+        params.put(3, company.getPassword()); // todo should it be in the database???
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "UPDATE companies SET email = ?, password = ?";
-            PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setString(1, company.getEmail());
-            preparedStatement.setString(2, company.getPassword());
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            System.out.println("Updated Company: " + DBTools.runQuery(DBManager.UPDATE_COMPANY));
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.UPDATE);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
+
+//    @Override
+//    public void updateCompany(Company company) throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "UPDATE companies SET email = ?, password = ?";
+//            PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setString(1, company.getEmail());
+//            preparedStatement.setString(2, company.getPassword());
+//            preparedStatement.executeUpdate();
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.UPDATE);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     @Override
     public void deleteCompany(Integer companyId) throws EntityCrudException {

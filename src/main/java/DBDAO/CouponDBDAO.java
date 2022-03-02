@@ -55,7 +55,7 @@ public class CouponDBDAO implements CouponDAO {
             preparedStatement.setDouble(8, coupon.getPrice());
             preparedStatement.setString(9, coupon.getImage());
             preparedStatement.executeUpdate();
-            final ResultSet generatedKeysResult = preparedStatement.getGeneratedKeys();
+            final ResultSet generatedKeysResult = preparedStatement.getGeneratedKeys(); // todo adapt generic method to return generated-keys
 
             if (!generatedKeysResult.next()) {
                 throw new RuntimeException("Failed to create another coupon");

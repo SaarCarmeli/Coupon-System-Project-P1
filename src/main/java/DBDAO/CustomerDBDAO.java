@@ -49,7 +49,7 @@ public class CustomerDBDAO implements CustomerDAO {
             preparedStatement.setString(3, customer.getEmail());
             preparedStatement.setString(4, customer.getPassword());
             preparedStatement.executeUpdate();
-            final ResultSet generatedKeysResult = preparedStatement.getGeneratedKeys();
+            final ResultSet generatedKeysResult = preparedStatement.getGeneratedKeys(); // todo adapt generic method to return generated-keys
 
             if (!generatedKeysResult.next()) {
                 throw new RuntimeException("No results");

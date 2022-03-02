@@ -5,9 +5,6 @@ import DB.Util.DBTools;
 import Exceptions.DBException;
 import Exceptions.DBInitException;
 
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
@@ -70,7 +67,7 @@ public class DatabaseInitializer {
 
     public static void createCustomerToCouponTable() throws DBException {
         try {
-            System.out.println("Created \"customer_to_coupon\" table: "+DBTools.runQuery(DBManager.CREATE_TABLE_CUSTOMER_TO_COUPON));
+            System.out.println("Created \"customer_to_coupon\" table: " + DBTools.runQuery(DBManager.CREATE_TABLE_CUSTOMER_TO_COUPON));
         } catch (SQLException e) {
             throw new DBException("Failed to create \"customer_to_coupon\" table");
         }

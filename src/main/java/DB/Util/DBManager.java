@@ -20,7 +20,7 @@ public class DBManager {
             "  `id` bigint NOT NULL AUTO_INCREMENT," +
             "  `name` varchar(45) NOT NULL," +
             "  `email` varchar(45) NOT NULL," +
-            "  `password` bigint NOT NULL," +
+            "  `password` bigint NOT NULL," + // todo should it be in the database???
             "  PRIMARY KEY (`id`)," +
             "  UNIQUE KEY `name_UNIQUE` (`name`)," +
             "  UNIQUE KEY `email_UNIQUE` (`email`)" +
@@ -59,4 +59,10 @@ public class DBManager {
             "  CONSTRAINT `coupon.id` FOREIGN KEY (`coupon_id`) REFERENCES `coupons` (`id`)," +
             "  CONSTRAINT `customer.id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)" +
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
+
+    // Company CRUD:
+    public static final String CREATE_COMPANY = "INSERT INTO companies (name, email, password) VALUES(?, ?, ?)";
+    public static final String READ_COMPANY_BY_ID = "SELECT * FROM companies WHERE id = ?";
+    public static final String READ_ALL_COMPANIES = "SELECT * FROM companies";
+    public static final String UPDATE_COMPANY = "UPDATE companies SET name = ?, email = ?, password = ?";
 }

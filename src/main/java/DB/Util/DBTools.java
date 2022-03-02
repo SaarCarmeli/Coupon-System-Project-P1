@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class DBTools {
     /**
-     * Generic method for accepting SQL script and executing query
+     * Generic method for accepting SQL script and executing query.
      *
      * @param sql SQL script for execution
      * @return true if successful, false if failed
@@ -29,7 +29,7 @@ public class DBTools {
     }
 
     /**
-     * Generic method for accepting SQL script, parameters and executing query
+     * Generic method for accepting SQL script, parameters and executing query.
      *
      * @param sql    SQL script for execution
      * @param params parameter input for SQL script
@@ -74,9 +74,29 @@ public class DBTools {
         }
     }
 
+    /**
+     * Generic method for accepting SQL script and retrieving ResultSet.
+     *
+     * @param sql SQL script for execution
+     * @return ResultSet if successful, else null
+     * @throws SQLException Thrown if SQL statement not executed
+     */
+    public static ResultSet runQueryForResult(String sql) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            return statement.executeQuery();
+        } catch (InterruptedException e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        } finally {
+            ConnectionPool.getInstance().returnConnection(connection);
+        }
+    }
 
     /**
-     * Generic method for accepting SQL script, parameters and retrieving ResultSet
+     * Generic method for accepting SQL script, parameters and retrieving ResultSet.
      *
      * @param sql    SQL script for execution
      * @param params parameter input for SQL script
