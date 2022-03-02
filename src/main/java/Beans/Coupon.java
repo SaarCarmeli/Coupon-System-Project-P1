@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class Coupon {
-    private int companyID, amount; //todo sort
     private Integer id;
+    private int companyID, amount;
     private double price;
     private Category category;
     private String title, description, image;
@@ -14,9 +14,9 @@ public class Coupon {
     /**
      * Initiates an instance of Coupon.
      *
+     * @param id          Coupon ID number
      * @param companyID   Name of the issuing Company
      * @param amount      Worth of Coupon discount
-     * @param id          Coupon ID number
      * @param price       Price to purchase the Coupon
      * @param category    Commercial category the Coupon gives discount in
      * @param title       Commercial name of the Coupon
@@ -25,10 +25,10 @@ public class Coupon {
      * @param startDate   Coupon creation date
      * @param endDate     Date of Coupon expiration
      */
-    public Coupon(int companyID, int amount, Integer id, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
+    public Coupon(Integer id, int companyID, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
+        this.id = id;
         this.companyID = companyID;
         this.amount = amount;
-        this.id = id;
         this.price = price;
         this.category = category;
         this.title = title;
@@ -48,6 +48,15 @@ public class Coupon {
     }
 
     /**
+     * Sets Coupon ID number.
+     *
+     * @param id Coupon ID number
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
      * Returns the ID of the Company that issued the Coupon.
      *
      * @return Issuing Company's ID number
@@ -56,17 +65,13 @@ public class Coupon {
         return companyID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     /**
      * Sets the ID of the Company that issues the Coupon.
      *
      * @param companyID Issuing Company's ID number
      */
     public void setCompanyID(int companyID) {
-        this.companyID = companyID; // todo consider deleting
+        this.companyID = companyID;
     }
 
     /**

@@ -122,7 +122,7 @@ public class Customer {
      * @return Customer login password
      */
     public String getPassword() {
-        return password; // todo consider deleting
+        return password;
     }
 
     /**
