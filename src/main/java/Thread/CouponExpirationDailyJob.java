@@ -12,7 +12,7 @@ import java.util.TimerTask;
 public class CouponExpirationDailyJob {
     private CouponDBDAO couponDBDAO;
     private boolean isRunning;
-    private long dayInMilliseconds = 86_400 * 1000;
+    private final long dayInMilliseconds = 86_400 * 1000;
 
 
     //c'tor
