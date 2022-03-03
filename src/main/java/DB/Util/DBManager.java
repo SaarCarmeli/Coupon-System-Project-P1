@@ -67,4 +67,11 @@ public class DBManager {
     public static final String UPDATE_COMPANY = "UPDATE companies SET name = ?, email = ?, password = ?"; // todo "where id = ?" ???
     public static final String DELETE_COMPANY_BY_ID = "DELETE FROM companies WHERE id = ?";
     public static final String COUNT_COMPANIES_BY_NAME_OR_EMAIL = "SELECT count(*) FROM companies WHERE name = ? OR email = ?";
+
+    // Coupon CRUD:
+
+    // Customer CRUD:
+    public static final String CREATE_CUSTOMER = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
+    public static final String READ_CUSTOMER_BY_ID = "SELECT * FROM customers WHERE id = ?";
+    public static final String READ_ALL_CUSTOMERS = "SELECT * FROM customers";
 }

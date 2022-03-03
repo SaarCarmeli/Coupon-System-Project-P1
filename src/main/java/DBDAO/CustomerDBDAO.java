@@ -3,6 +3,8 @@ package DBDAO;
 import Beans.Coupon;
 import Beans.Customer;
 import DB.ConnectionPool;
+import DB.Util.DBManager;
+import DB.Util.DBTools;
 import DB.Util.ObjectExtractionUtil;
 import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
@@ -10,7 +12,9 @@ import Exceptions.EntityType;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CustomerDBDAO implements CustomerDAO {
     private static CustomerDBDAO instance;
@@ -20,7 +24,7 @@ public class CustomerDBDAO implements CustomerDAO {
         try {
             connectionPool = ConnectionPool.getInstance();
         } catch (SQLException e) {
-            throw new RuntimeException("Something went wrong while getting connection pool instance");
+            throw new RuntimeException("Something went wrong while getting connection pool instance"); // todo wheres-the-foot !? (wtf !?)
         }
     }
 
@@ -63,49 +67,89 @@ public class CustomerDBDAO implements CustomerDAO {
         }
     }
 
+    /**
+     * Returns an instance of Customer from MySQL database by customer ID number.
+     *
+     * @param customerId Customer ID number
+     * @return Customer instance from MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
     @Override
     public Customer readCustomer(Integer customerId) throws EntityCrudException {
-        Connection connection = null;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customerId);
+        ResultSet result;
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM customers WHERE id = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, customerId);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            if (!result.next()) {
-                return null;
-            }
-
+            result = DBTools.runQueryForResult(DBManager.READ_CUSTOMER_BY_ID, params);
             return ObjectExtractionUtil.resultSetToCustomer(result, readCouponsByCustomerId(customerId));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
+//    @Override
+//    public Customer readCustomer(Integer customerId) throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "SELECT * FROM customers WHERE id = ?";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setInt(1, customerId);
+//            final ResultSet result = preparedStatement.executeQuery();
+//
+//            if (!result.next()) {
+//                return null;
+//            }
+//
+//            return ObjectExtractionUtil.resultSetToCustomer(result, readCouponsByCustomerId(customerId));
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
+    /**
+     * Returns a List of all Customers in MySQL database
+     *
+     * @return List of all Customers in MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
     @Override
     public List<Customer> readAllCustomers() throws EntityCrudException {
-        Connection connection = null;
+        ResultSet result;
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM customers";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Customer> customers = new ArrayList<>();
+            result = DBTools.runQueryForResult(DBManager.READ_ALL_CUSTOMERS);
+            List<Customer> customers = new ArrayList<>();
             while (result.next()) {
                 customers.add(ObjectExtractionUtil.resultSetToCustomer(result));
             }
-
             return customers;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
+
+//    @Override
+//    public List<Customer> readAllCustomers() throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "SELECT * FROM customers";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            final ResultSet result = preparedStatement.executeQuery();
+//
+//            final List<Customer> customers = new ArrayList<>();
+//            while (result.next()) {
+//                customers.add(ObjectExtractionUtil.resultSetToCustomer(result));
+//            }
+//
+//            return customers;
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     @Override
     public void updateCustomer(Customer customer) throws EntityCrudException {
@@ -131,7 +175,6 @@ public class CustomerDBDAO implements CustomerDAO {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
-            deleteCouponPurchaseHistory(customerId);
             final String sqlStatement = "DELETE FROM customers WHERE id = ?";
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
             preparedStatement.setInt(1, customerId);
@@ -166,6 +209,7 @@ public class CustomerDBDAO implements CustomerDAO {
         }
     }
 
+    //todo move to coupons
     @Override
     public List<Coupon> readAllCouponsByCustomerIdAndMaxPrice(Integer customerId, String price) throws EntityCrudException, SQLException {
 //todo:check why Price is String in SQL

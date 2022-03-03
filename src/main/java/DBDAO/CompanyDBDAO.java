@@ -26,7 +26,7 @@ public class CompanyDBDAO implements CompanyDAO {
         try {
             connectionPool = ConnectionPool.getInstance();
         } catch (SQLException e) {
-            throw new RuntimeException("Something went wrong while getting connection pool instance");// todo wheres-the-foot !? (wtf !?)
+            throw new RuntimeException("Something went wrong while getting connection pool instance"); // todo wheres-the-foot !? (wtf !?)
         }
     }
 
@@ -66,7 +66,7 @@ public class CompanyDBDAO implements CompanyDAO {
             }
 
             return generatedKeysResult.getInt(1);
-        } catch (final Exception e) {
+        } catch (SQLException | InterruptedException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.CREATE);
         } finally {
             connectionPool.returnConnection(connection);
@@ -116,9 +116,9 @@ public class CompanyDBDAO implements CompanyDAO {
 //    }
 
     /**
-     * Returns a List of all Companies from MySQL database
+     * Returns a List of all Companies in MySQL database
      *
-     * @return List of all Companies from MySQL database
+     * @return List of all Companies in MySQL database
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
@@ -247,7 +247,7 @@ public class CompanyDBDAO implements CompanyDAO {
             result.next();
             counter = result.getInt(1);
             return counter != 0;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.COUNT);
         }
     }
@@ -283,7 +283,7 @@ public class CompanyDBDAO implements CompanyDAO {
             final String sqlStatement = "SELECT FROM customer_to_coupon WHERE coupon_id = ? AND SELECT FROM coupons WHERE company_id = ?";
             final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
             preparedStatement.setInt(1, companyId);
-        } catch (Exception e) {
+        } catch (SQLException | InterruptedException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.DELETE);
         } finally {
             connectionPool.returnConnection(connection);
