@@ -223,25 +223,48 @@ public class CustomerDBDAO implements CustomerDAO {
 //        }
 //    }
 
+    /**
+     * Checks whether the Customer corresponding to the email argument exists in MySQL database
+     * by counting the customers that meet the criteria.
+     *
+     * @param email Customer email
+     * @return true -> customer exists, false -> customer does not exist
+     * @throws EntityCrudException Thrown if count in MySQL was unsuccessful
+     */
     @Override
     public boolean isCustomerExist(String email) throws EntityCrudException {
-        Connection connection = null;
         int counter;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, email);
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT count(*) FROM companies WHERE email = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setString(1, email);
-            final ResultSet result = preparedStatement.executeQuery();
+            ResultSet result = DBTools.runQueryForResult(DBManager.COUNT_CUSTOMERS_BY_EMAIL, params);
             result.next();
             counter = result.getInt(1);
             return counter != 0;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.COUNT);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
+
+//    @Override
+//    public boolean isCustomerExist(String email) throws EntityCrudException {
+//        Connection connection = null;
+//        int counter;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "SELECT count(*) FROM companies WHERE email = ?";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setString(1, email);
+//            final ResultSet result = preparedStatement.executeQuery();
+//            result.next();
+//            counter = result.getInt(1);
+//            return counter != 0;
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.COUNT);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     @Override
     public List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException {
