@@ -40,8 +40,8 @@ public class Company {
      *
      * @param id Company ID number
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer id) throws MethodNotAllowedException {
+        throw new MethodNotAllowedException("You can not set this parameter");
     }
 
     /**
@@ -76,8 +76,8 @@ public class Company {
      *
      * @param name Company name
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) throws MethodNotAllowedException {
+        throw new MethodNotAllowedException("You can not set this parameter");
     }
 
     /**

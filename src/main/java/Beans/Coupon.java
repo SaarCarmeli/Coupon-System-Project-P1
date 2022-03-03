@@ -1,5 +1,7 @@
 package Beans;
 
+import Exceptions.MethodNotAllowedException;
+
 import java.sql.Date;
 import java.util.Objects;
 
@@ -52,8 +54,8 @@ public class Coupon {
      *
      * @param id Coupon ID number
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer id) throws MethodNotAllowedException {
+        throw new MethodNotAllowedException("You can not set this parameter");
     }
 
     /**
@@ -70,8 +72,8 @@ public class Coupon {
      *
      * @param companyID Issuing Company's ID number
      */
-    public void setCompanyID(int companyID) {
-        this.companyID = companyID;
+    public void setCompanyID(int companyID) throws MethodNotAllowedException {
+        throw new MethodNotAllowedException("You can not set this parameter");
     }
 
     /**

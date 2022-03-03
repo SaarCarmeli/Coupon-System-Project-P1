@@ -11,54 +11,64 @@ public class DBManager {
 
     // Table Creation:
     public static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE IF NOT EXISTS `categories` (" +
-            "  `id` bigint NOT NULL AUTO_INCREMENT," +
-            "  `name` enum('FOOD','ELECTRICITY','RESTAURANT','VACATION') NOT NULL," +
-            "  PRIMARY KEY (`id`)" +
-            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"; //todo
+            "   `id` BIGINT NOT NULL AUTO_INCREMENT," +
+            "  `name` VARCHAR(45) NOT NULL," +
+            "  PRIMARY KEY (`id`))"; //todo
 
     public static final String CREATE_TABLE_COMPANIES = "CREATE TABLE IF NOT EXISTS `companies` (" +
-            "  `id` bigint NOT NULL AUTO_INCREMENT," +
-            "  `name` varchar(45) NOT NULL," +
-            "  `email` varchar(45) NOT NULL," +
-            "  `password` bigint NOT NULL," + // todo should it be in the database???
-            "  PRIMARY KEY (`id`)," +
-            "  UNIQUE KEY `name_UNIQUE` (`name`)," +
-            "  UNIQUE KEY `email_UNIQUE` (`email`)" +
-            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
+            "  `id` BIGINT NOT NULL AUTO_INCREMENT," +
+            "  `name` VARCHAR(45) NOT NULL," +
+            "  `email` VARCHAR(45) NOT NULL," +
+            "  `password` VARCHAR(45) NOT NULL," +
+            "  PRIMARY KEY (`id`));";
 
     public static final String CREATE_TABLE_CUSTOMERS = "CREATE TABLE IF NOT EXISTS `customers` (" +
-            "  `id` bigint NOT NULL AUTO_INCREMENT," +
-            "  `first_name` varchar(45) NOT NULL," +
-            "  `last_name` varchar(45) NOT NULL," +
-            "  `email` varchar(45) NOT NULL," +
-            "  `password` bigint NOT NULL," +
-            "  PRIMARY KEY (`id`)," +
-            "  UNIQUE KEY `email_UNIQUE` (`email`)" +
-            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
+            "`id` BIGINT NOT NULL AUTO_INCREMENT," +
+            "  `first_name` VARCHAR(45) NOT NULL," +
+            "  `last_name` VARCHAR(45) NOT NULL," +
+            "  `email` VARCHAR(45) NOT NULL," +
+            "  `password` VARCHAR(45) NOT NULL," +
+            "  PRIMARY KEY (`id`));";
 
     public static final String CREATE_TABLE_COUPONS = "CREATE TABLE IF NOT EXISTS `coupons` (" +
-            "  `id` bigint NOT NULL AUTO_INCREMENT," +
-            "  `company_id` bigint NOT NULL," +
-            "  `category` varchar(45) NOT NULL," +
-            "  `title` varchar(45) NOT NULL," +
-            "  `description` varchar(45) DEFAULT NULL," +
-            "  `start_date` date NOT NULL," +
-            "  `end_date` date NOT NULL," +
-            "  `amount` int NOT NULL," +
-            "  `price` varchar(45) NOT NULL," +
-            "  `image` varchar(45) DEFAULT NULL," +
+            "   `id` BIGINT NOT NULL AUTO_INCREMENT," +
+            "  `company_id` BIGINT NOT NULL," +
+            "  `category_id` BIGINT NOT NULL," +
+            "  `title` VARCHAR(45) NOT NULL," +
+            "  `description` VARCHAR(45) NOT NULL," +
+            "  `start_date` DATE NOT NULL," +
+            "  `end_date` VARCHAR(45) NOT NULL," +
+            "  `amount` INT NOT NULL," +
+            "  `price` DOUBLE NOT NULL," +
+            "  `image` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`)," +
-            "  CONSTRAINT `company_id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)" +//todo delete on action
-            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
+            "  INDEX `category_id_idx` (`category_id` ASC) VISIBLE," +
+            "  CONSTRAINT `company_id`" +
+            "    FOREIGN KEY (`company_id`)" +
+            "    REFERENCES `coupon_project`.`companies` (`id`)" +
+            "    ON DELETE CASCADE" +
+            "    ON UPDATE CASCADE," +
+            "  CONSTRAINT `category_id`" +
+            "    FOREIGN KEY (`category_id`)" +
+            "    REFERENCES `coupon_project`.`categories` (`id`)" +
+            "    ON DELETE CASCADE" +
+            "    ON UPDATE CASCADE);";
 
     public static final String CREATE_TABLE_CUSTOMER_TO_COUPON = "CREATE TABLE IF NOT EXISTS `customer_to_coupon` (" +
-            "  `customer_id` bigint NOT NULL," +
-            "  `coupon_id` bigint NOT NULL," +
-            "  KEY `customer.id_idx` (`customer_id`)," +
-            "  KEY `coupon.id_idx` (`coupon_id`)," +
-            "  CONSTRAINT `coupon.id` FOREIGN KEY (`coupon_id`) REFERENCES `coupons` (`id`)," +
-            "  CONSTRAINT `customer.id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)" +
-            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
+            "  `customer_id` BIGINT NOT NULL," +
+            "  `coupon_id` BIGINT NOT NULL," +
+            "  INDEX `customer_id_idx` (`customer_id` ASC) VISIBLE," +
+            "  INDEX `coupon_id_idx` (`coupon_id` ASC) VISIBLE," +
+            "  CONSTRAINT `customer_id`" +
+            "    FOREIGN KEY (`customer_id`)" +
+            "    REFERENCES `coupon_project`.`customers` (`id`)" +
+            "    ON DELETE CASCADE" + //todo:check maybe it's should be NO ACTION
+            "    ON UPDATE CASCADE," +
+            "  CONSTRAINT `coupon_id`" +
+            "    FOREIGN KEY (`coupon_id`)" +
+            "    REFERENCES `coupon_project`.`coupons` (`id`)" +
+            "    ON DELETE CASCADE" +
+            "    ON UPDATE CASCADE);";
 
     // Company CRUD:
     public static final String CREATE_COMPANY = "INSERT INTO companies (name, email, password) VALUES(?, ?, ?)";

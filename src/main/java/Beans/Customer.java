@@ -1,5 +1,7 @@
 package Beans;
 
+import Exceptions.MethodNotAllowedException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -40,8 +42,8 @@ public class Customer {
      *
      * @param id Customer ID number
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer id) throws MethodNotAllowedException {
+        throw new MethodNotAllowedException("You can not set this parameter");
     }
 
     /**
