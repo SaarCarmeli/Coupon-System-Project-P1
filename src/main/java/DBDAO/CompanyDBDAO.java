@@ -171,7 +171,7 @@ public class CompanyDBDAO implements CompanyDAO {
         params.put(2, company.getEmail());
         params.put(3, company.getPassword()); // todo should it be in the database???
         try {
-            System.out.println("Updated Company: " + DBTools.runQuery(DBManager.UPDATE_COMPANY));
+            System.out.println("Updated Company: " + DBTools.runQuery(DBManager.UPDATE_COMPANY, params));
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.UPDATE);
         }
@@ -205,7 +205,7 @@ public class CompanyDBDAO implements CompanyDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, companyId);
         try {
-            System.out.println("Deleted Company: " + DBTools.runQuery(DBManager.DELETE_COMPANY_BY_ID));
+            System.out.println("Deleted Company: " + DBTools.runQuery(DBManager.DELETE_COMPANY_BY_ID, params));
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.DELETE);
         }
@@ -243,7 +243,7 @@ public class CompanyDBDAO implements CompanyDAO {
         params.put(1, name);
         params.put(2, email);
         try {
-            ResultSet result = DBTools.runQueryForResult(DBManager.COUNT_COMPANIES_BY_NAME_OR_EMAIL);
+            ResultSet result = DBTools.runQueryForResult(DBManager.COUNT_COMPANIES_BY_NAME_OR_EMAIL, params);
             result.next();
             counter = result.getInt(1);
             return counter != 0;

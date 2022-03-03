@@ -75,4 +75,5 @@ public class DBManager {
     public static final String READ_CUSTOMER_BY_ID = "SELECT * FROM customers WHERE id = ?";
     public static final String READ_ALL_CUSTOMERS = "SELECT * FROM customers";
     public static final String UPDATE_CUSTOMER = "UPDATE customers SET first_name = ?,last_name = ?, email = ?, password = ?"; // todo "where id = ?" ???
+    public static final String DELETE_CUSTOMER_BY_ID = "DELETE FROM customers WHERE id = ?";
 }
