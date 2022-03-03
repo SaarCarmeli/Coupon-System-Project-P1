@@ -151,24 +151,43 @@ public class CustomerDBDAO implements CustomerDAO {
 //        }
 //    }
 
+    /**
+     * Updates Customer record in MySQL database.
+     * @param customer Customer instance to update by
+     * @throws EntityCrudException Thrown if update in MySQL was unsuccessful
+     */
     @Override
     public void updateCustomer(Customer customer) throws EntityCrudException {
-        Connection connection = null;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customer.getFirstName());
+        params.put(2, customer.getLastName());
+        params.put(3, customer.getEmail());
+        params.put(4, customer.getPassword()); // todo should it be in the database???
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "UPDATE customers SET first_name = ?,last_name = ?, email = ?, password = ?";
-            PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setString(1, customer.getFirstName());
-            preparedStatement.setString(2, customer.getLastName());
-            preparedStatement.setString(3, customer.getEmail());
-            preparedStatement.setString(4, customer.getPassword());
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            System.out.println("Updated Customer: " + DBTools.runQuery(DBManager.UPDATE_CUSTOMER));
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.UPDATE);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
+
+//    @Override
+//    public void updateCustomer(Customer customer) throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "UPDATE customers SET first_name = ?,last_name = ?, email = ?, password = ?";
+//            PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setString(1, customer.getFirstName());
+//            preparedStatement.setString(2, customer.getLastName());
+//            preparedStatement.setString(3, customer.getEmail());
+//            preparedStatement.setString(4, customer.getPassword());
+//            preparedStatement.executeUpdate();
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.UPDATE);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     @Override
     public void deleteCustomer(Integer customerId) throws EntityCrudException {
