@@ -161,27 +161,45 @@ public class CouponDBDAO implements CouponDAO {
 
     @Override
     public void updateCoupon(Coupon coupon) throws EntityCrudException {
-        Connection connection = null;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, coupon.getTitle());
+        params.put(2, coupon.getCategory());
+        params.put(3, coupon.getAmount());
+        params.put(4, coupon.getDescription());
+        params.put(5, coupon.getPrice());
+        params.put(6, coupon.getImage());
+        params.put(7, coupon.getStartDate());
+        params.put(8, coupon.getEndDate());
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "UPDATE coupons SET title = ?, category = ? ,amount = ? ," +
-                    "description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ?";
-            PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setString(1, coupon.getTitle());
-            preparedStatement.setString(2, coupon.getCategory());
-            preparedStatement.setInt(3, coupon.getAmount());
-            preparedStatement.setString(4, coupon.getDescription());
-            preparedStatement.setDouble(5, coupon.getPrice());
-            preparedStatement.setString(6, coupon.getImage());
-            preparedStatement.setDate(7, coupon.getStartDate());
-            preparedStatement.setDate(8, coupon.getEndDate());
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            System.out.println("Updated Coupon: " + DBTools.runQuery(DBManager.UPDATE_COUPON, params));
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.UPDATE);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
+
+//    @Override
+//    public void updateCoupon(Coupon coupon) throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "UPDATE coupons SET title = ?, category = ? ,amount = ? ," +
+//                    "description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ?";
+//            PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setString(1, coupon.getTitle());
+//            preparedStatement.setString(2, coupon.getCategory());
+//            preparedStatement.setInt(3, coupon.getAmount());
+//            preparedStatement.setString(4, coupon.getDescription());
+//            preparedStatement.setDouble(5, coupon.getPrice());
+//            preparedStatement.setString(6, coupon.getImage());
+//            preparedStatement.setDate(7, coupon.getStartDate());
+//            preparedStatement.setDate(8, coupon.getEndDate());
+//            preparedStatement.executeUpdate();
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.UPDATE);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     @Override
     public void deleteCoupon(Integer couponID) throws EntityCrudException {

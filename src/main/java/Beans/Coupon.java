@@ -196,12 +196,13 @@ public class Coupon {
     }
 
     /**
-     * Sets the date of the Coupon creation.
+     * You can not set this parameter.
      *
      * @param startDate Coupon creation date
+     * @throws MethodNotAllowedException Thrown on use
      */
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartDate(Date startDate) throws MethodNotAllowedException {
+        throw new MethodNotAllowedException("You can not set this parameter");
     }
 
     /**
