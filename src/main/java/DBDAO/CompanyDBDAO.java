@@ -87,6 +87,8 @@ public class CompanyDBDAO implements CompanyDAO {
         ResultSet result;
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COMPANY_BY_ID, params);
+            assert result != null;
+            result.next();//todo needed?
             return ObjectExtractionUtil.resultSetToCompany(result, couponDBDAO.readCouponsByCompanyId(companyId)); //todo check if works
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
@@ -127,7 +129,7 @@ public class CompanyDBDAO implements CompanyDAO {
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_COMPANIES);
             List<Company> companies = new ArrayList<>();
-            while (result.next()) {
+            while (result.next()) { // todo consider asserting
                 companies.add(ObjectExtractionUtil.resultSetToCompany(result));
             }
             return companies;
@@ -244,6 +246,7 @@ public class CompanyDBDAO implements CompanyDAO {
         params.put(2, email);
         try {
             ResultSet result = DBTools.runQueryForResult(DBManager.COUNT_COMPANIES_BY_NAME_OR_EMAIL, params);
+            assert result != null; //todo needed?
             result.next();
             counter = result.getInt(1);
             return counter != 0;

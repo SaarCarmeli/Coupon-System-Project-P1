@@ -79,6 +79,9 @@ public class DBManager {
     public static final String COUNT_COMPANIES_BY_NAME_OR_EMAIL = "SELECT count(*) FROM companies WHERE name = ? OR email = ?";
 
     // Coupon CRUD:
+    public static final String CREATE_COUPON = "INSERT INTO coupons (title, company_id, start_date, end_date, amount, category, description, price, image) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String READ_COUPON_BY_ID = "SELECT * FROM coupons WHERE id = ?";
+    public static final String READ_ALL_COUPONS = "SELECT * FROM coupons";
 
     // Customer CRUD:
     public static final String CREATE_CUSTOMER = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";

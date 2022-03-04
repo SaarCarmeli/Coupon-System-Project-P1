@@ -81,6 +81,8 @@ public class CustomerDBDAO implements CustomerDAO {
         ResultSet result;
         try {
             result = DBTools.runQueryForResult(DBManager.READ_CUSTOMER_BY_ID, params);
+            assert result != null;
+            result.next(); //todo needed?
             return ObjectExtractionUtil.resultSetToCustomer(result, readCouponsByCustomerId(customerId));
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
@@ -120,7 +122,7 @@ public class CustomerDBDAO implements CustomerDAO {
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_CUSTOMERS);
             List<Customer> customers = new ArrayList<>();
-            while (result.next()) {
+            while (result.next()) { // todo consider asserting
                 customers.add(ObjectExtractionUtil.resultSetToCustomer(result));
             }
             return customers;
@@ -164,7 +166,7 @@ public class CustomerDBDAO implements CustomerDAO {
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID, params);
             List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) {
+            while (result.next()) { // todo consider asserting
                 coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
             return coupons;
@@ -283,7 +285,8 @@ public class CustomerDBDAO implements CustomerDAO {
         params.put(1, email);
         try {
             ResultSet result = DBTools.runQueryForResult(DBManager.COUNT_CUSTOMERS_BY_EMAIL, params);
-            result.next();
+            assert result != null;
+            result.next(); //todo needed?
             counter = result.getInt(1);
             return counter != 0;
         } catch (SQLException e) {
