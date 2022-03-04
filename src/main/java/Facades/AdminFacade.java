@@ -31,7 +31,7 @@ public class AdminFacade implements AdminFacadeDAO {
 
     @Override
     public void deleteCompany(Integer companyId) throws EntityCrudException {
-        CouponDBDAO.getInstance().deleteAllCouponsByCompanyId(companyId);
+        CouponDBDAO.getInstance().deleteCouponsByCompanyId(companyId);
         CompanyDBDAO.getInstance().deleteCompanyPurchaseHistory(companyId);
         CompanyDBDAO.getInstance().deleteCompany(companyId);
     }

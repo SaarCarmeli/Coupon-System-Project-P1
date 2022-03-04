@@ -1,17 +1,15 @@
 package DBDAO;
 
 import Beans.Company;
-import Beans.Coupon;
 import Exceptions.EntityCrudException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface CompanyDAO {
-    Integer createCompany(final Company company) throws EntityCrudException;
-    Company readCompany(final Integer companyId) throws EntityCrudException;
+    Integer createCompany(Company company) throws EntityCrudException;
+    Company readCompany(Integer companyId) throws EntityCrudException;
     List<Company> readAllCompanies() throws EntityCrudException;
-    void updateCompany(final Company company) throws EntityCrudException;
-    void deleteCompany(final Integer companyId) throws EntityCrudException;
-    boolean isCompanyExist(final String name, final String email) throws EntityCrudException;
+    void updateCompany(Company company) throws EntityCrudException;
+    void deleteCompany(Integer companyId) throws EntityCrudException;
+    boolean isCompanyExist(String name, String email) throws EntityCrudException;
 }
