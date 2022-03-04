@@ -38,9 +38,10 @@ public class Customer {
     }
 
     /**
-     * Sets Customer ID number.
+     * You can not set this parameter.
      *
      * @param id Customer ID number
+     * @throws MethodNotAllowedException Thrown on use
      */
     public void setId(Integer id) throws MethodNotAllowedException {
         throw new MethodNotAllowedException("You can not set this parameter");
@@ -128,12 +129,13 @@ public class Customer {
     }
 
     /**
-     * Sets Customer login password
+     * You can not set this parameter.
      *
      * @param password Customer login password
+     * @throws MethodNotAllowedException Thrown on use
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password) throws MethodNotAllowedException {
+        throw new MethodNotAllowedException("You can not set this parameter");
     }
 
     /**

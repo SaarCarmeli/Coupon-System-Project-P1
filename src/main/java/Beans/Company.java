@@ -36,9 +36,10 @@ public class Company {
     }
 
     /**
-     * Sets Company ID number
+     * You can not set this parameter.
      *
      * @param id Company ID number
+     * @throws MethodNotAllowedException Thrown on use
      */
     public void setId(Integer id) throws MethodNotAllowedException {
         throw new MethodNotAllowedException("You can not set this parameter");
@@ -72,9 +73,10 @@ public class Company {
     }
 
     /**
-     * Sets the name of the Company.
+     * You can not set this parameter.
      *
-     * @param name Company name
+     * @param name Company Name
+     * @throws MethodNotAllowedException Thrown on use
      */
     public void setName(String name) throws MethodNotAllowedException {
         throw new MethodNotAllowedException("You can not set this parameter");
@@ -108,9 +110,10 @@ public class Company {
     }
 
     /**
-     * Sets the login password of the Company
+     * You can not set this parameter.
      *
      * @param password Login password
+     * @throws MethodNotAllowedException Thrown on use
      */
     public void setPassword(String password) throws MethodNotAllowedException {
         throw new MethodNotAllowedException("You can not set this parameter");

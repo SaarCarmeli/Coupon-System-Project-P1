@@ -50,9 +50,10 @@ public class Coupon {
     }
 
     /**
-     * Sets Coupon ID number.
+     * You can not set this parameter.
      *
      * @param id Coupon ID number
+     * @throws MethodNotAllowedException Thrown on use
      */
     public void setId(Integer id) throws MethodNotAllowedException {
         throw new MethodNotAllowedException("You can not set this parameter");
@@ -68,9 +69,10 @@ public class Coupon {
     }
 
     /**
-     * Sets the ID of the Company that issues the Coupon.
+     * You can not set this parameter.
      *
      * @param companyID Issuing Company's ID number
+     * @throws MethodNotAllowedException Thrown on use
      */
     public void setCompanyID(int companyID) throws MethodNotAllowedException {
         throw new MethodNotAllowedException("You can not set this parameter");
