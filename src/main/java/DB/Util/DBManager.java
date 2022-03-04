@@ -82,8 +82,8 @@ public class DBManager {
     public static final String CREATE_COUPON = "INSERT INTO coupons (title, company_id, start_date, end_date, amount, category, description, price, image) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
     public static final String READ_COUPON_BY_ID = "SELECT * FROM coupons WHERE id = ?";
     public static final String READ_ALL_COUPONS = "SELECT * FROM coupons";
-    public static final String UPDATE_COUPON = "UPDATE coupons SET title = ?, category = ? ,amount = ? ," +
-            "description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ?";
+    public static final String UPDATE_COUPON = "UPDATE coupons SET title = ?, category = ? ,amount = ? ," + "description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ?";
+    public static final String DELETE_COUPON_BY_ID = "DELETE FROM coupons WHERE id = ?";
 
     // Customer CRUD:
     public static final String CREATE_CUSTOMER = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";

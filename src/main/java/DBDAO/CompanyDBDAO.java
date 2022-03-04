@@ -197,7 +197,7 @@ public class CompanyDBDAO implements CompanyDAO {
 //    }
 
     /**
-     * Deletes Company record from MySQL database.
+     * Deletes Company record from MySQL database by company ID number.
      *
      * @param companyId ID number of the Company to be deleted
      * @throws EntityCrudException Thrown if delete from MySQL was unsuccessful

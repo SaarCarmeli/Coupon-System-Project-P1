@@ -207,22 +207,37 @@ public class CouponDBDAO implements CouponDAO {
 //        }
 //    }
 
+    /**
+     * Deletes Coupon record from MySQL database by coupon ID number.
+     * @param couponID ID number of the Coupon to be deleted
+     * @throws EntityCrudException Thrown if delete from MySQL was unsuccessful
+     */
     @Override
     public void deleteCoupon(Integer couponID) throws EntityCrudException {
-        Connection connection = null;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, couponID);
         try {
-            connection = connectionPool.getConnection();
-            deleteCouponHistory(couponID);
-            final String sqlStatement = "DELETE FROM coupons WHERE id = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, couponID);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            System.out.println("Deleted Coupon: " + DBTools.runQuery(DBManager.DELETE_COUPON_BY_ID, params));
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
+
+//    @Override
+//    public void deleteCoupon(Integer couponID) throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "DELETE FROM coupons WHERE id = ?";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setInt(1, couponID);
+//            preparedStatement.executeUpdate();
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     @Override
     public void deleteExpiredCoupons(String date) throws EntityCrudException {

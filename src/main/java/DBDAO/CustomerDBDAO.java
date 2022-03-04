@@ -238,7 +238,7 @@ public class CustomerDBDAO implements CustomerDAO {
 //    }
 
     /**
-     * Deletes Customer record from MySQL database.
+     * Deletes Customer record from MySQL database by customer ID number.
      *
      * @param customerId ID number of the Customer to be deleted
      * @throws EntityCrudException Thrown if delete from MySQL was unsuccessful
