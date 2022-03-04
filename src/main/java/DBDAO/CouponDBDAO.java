@@ -159,6 +159,12 @@ public class CouponDBDAO implements CouponDAO {
 //        }
 //    }
 
+    /**
+     * Updates Coupon record in MySQL database.
+     *
+     * @param coupon Coupon instance to update by
+     * @throws EntityCrudException Thrown if update in MySQL was unsuccessful
+     */
     @Override
     public void updateCoupon(Coupon coupon) throws EntityCrudException {
         Map<Integer, Object> params = new HashMap<>();
