@@ -240,7 +240,7 @@ public class CouponDBDAO implements CouponDAO {
 //    }
 
     @Override
-    public void deleteExpiredCoupons(String date) throws EntityCrudException {
+    public void deleteExpiredCoupons(String date/*todo why string?*/) throws EntityCrudException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
