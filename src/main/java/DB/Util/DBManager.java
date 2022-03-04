@@ -19,7 +19,7 @@ public class DBManager {
             "  `id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `name` VARCHAR(45) NOT NULL," +
             "  `email` VARCHAR(45) NOT NULL," +
-            "  `password` VARCHAR(45) NOT NULL," +
+            "  `password` VARCHAR(45) NOT NULL," + // todo consider if should be in database?
             "  PRIMARY KEY (`id`));";
 
     public static final String CREATE_TABLE_CUSTOMERS = "CREATE TABLE IF NOT EXISTS `customers` (" +
@@ -27,7 +27,7 @@ public class DBManager {
             "  `first_name` VARCHAR(45) NOT NULL," +
             "  `last_name` VARCHAR(45) NOT NULL," +
             "  `email` VARCHAR(45) NOT NULL," +
-            "  `password` VARCHAR(45) NOT NULL," +
+            "  `password` VARCHAR(45) NOT NULL," + // todo consider if should be in database?
             "  PRIMARY KEY (`id`));";
 
     public static final String CREATE_TABLE_COUPONS = "CREATE TABLE IF NOT EXISTS `coupons` (" +
@@ -39,7 +39,7 @@ public class DBManager {
             "  `start_date` DATE NOT NULL," +
             "  `end_date` VARCHAR(45) NOT NULL," +
             "  `amount` INT NOT NULL," +
-            "  `price` DOUBLE NOT NULL," +
+            "  `price` DOUBLE NOT NULL," + // todo change in methods?
             "  `image` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`)," +
             "  INDEX `category_id_idx` (`category_id` ASC) VISIBLE," +
@@ -52,7 +52,7 @@ public class DBManager {
             "    FOREIGN KEY (`category_id`)" +
             "    REFERENCES `coupon_project`.`categories` (`id`)" +
             "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE);";
+            "    ON UPDATE CASCADE);"; // todo maybe add ON CREATE CASCADE?
 
     public static final String CREATE_TABLE_CUSTOMER_TO_COUPON = "CREATE TABLE IF NOT EXISTS `customer_to_coupon` (" +
             "  `customer_id` BIGINT NOT NULL," +
