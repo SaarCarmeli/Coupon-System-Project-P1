@@ -82,9 +82,9 @@ public class CompanyDBDAO implements CompanyDAO {
      */
     @Override
     public Company readCompany(Integer companyId) throws EntityCrudException {
+        ResultSet result;
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, companyId);
-        ResultSet result;
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COMPANY_BY_ID, params);
             assert result != null;
@@ -241,11 +241,12 @@ public class CompanyDBDAO implements CompanyDAO {
     @Override
     public boolean isCompanyExist(String name, String email) throws EntityCrudException {
         int counter;
+        ResultSet result;
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, name);
         params.put(2, email);
         try {
-            ResultSet result = DBTools.runQueryForResult(DBManager.COUNT_COMPANIES_BY_NAME_OR_EMAIL, params);
+            result = DBTools.runQueryForResult(DBManager.COUNT_COMPANIES_BY_NAME_OR_EMAIL, params);
             assert result != null; //todo needed?
             result.next();
             counter = result.getInt(1);

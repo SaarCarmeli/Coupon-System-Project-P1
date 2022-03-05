@@ -94,6 +94,55 @@ public class CouponDBDAO implements CouponDAO {
         }
     }
 
+    @Override
+    public List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, String price) throws EntityCrudException, SQLException {
+//todo:check why Price is String in SQL
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT * FROM coupons WHERE customer_id = ? AND price <= ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, customerId);
+            preparedStatement.setString(2, price);
+            final ResultSet result = preparedStatement.executeQuery();
+
+            final List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) {
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            }
+
+            return coupons;
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException, SQLException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT * FROM coupons WHERE customer_id = ? AND category = ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, customerId);
+            preparedStatement.setString(2, category);
+            final ResultSet result = preparedStatement.executeQuery();
+
+            final List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) {
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            }
+
+            return coupons;
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
 //    @Override
 //    public Coupon readCoupon(Integer couponId) throws EntityCrudException {
 //        Connection connection = null;
@@ -134,6 +183,77 @@ public class CouponDBDAO implements CouponDAO {
             return coupons;
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        }
+    }
+
+    @Override
+    public List<Coupon> readCouponsByCompanyId(final Integer companyId) throws EntityCrudException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, companyId);
+            final ResultSet result = preparedStatement.executeQuery();
+
+            final List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) {
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            }
+
+            return coupons;
+        } catch (final Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public List<Coupon> readCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND price <= ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, companyId);
+            preparedStatement.setString(2, price); //todo:check why Price is String in SQL
+            final ResultSet result = preparedStatement.executeQuery();
+
+            final List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) {
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            }
+
+            return coupons;
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND category = ?";
+            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+            preparedStatement.setInt(1, companyId);
+            preparedStatement.setString(2, category);
+            final ResultSet result = preparedStatement.executeQuery();
+
+            final List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) {
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            }
+
+            return coupons;
+        } catch (Exception e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        } finally {
+            connectionPool.returnConnection(connection);
         }
     }
 
@@ -209,6 +329,7 @@ public class CouponDBDAO implements CouponDAO {
 
     /**
      * Deletes Coupon record from MySQL database by coupon ID number.
+     *
      * @param couponID ID number of the Coupon to be deleted
      * @throws EntityCrudException Thrown if delete from MySQL was unsuccessful
      */
@@ -239,121 +360,85 @@ public class CouponDBDAO implements CouponDAO {
 //        }
 //    }
 
+    /**
+     * Deletes Coupon records from MySQL database by coupon expiration date.
+     *
+     * @param date current date //todo correct?
+     * @throws EntityCrudException Thrown if delete from MySQL was unsuccessful
+     */
     @Override
     public void deleteExpiredCoupons(String date/*todo why string?*/) throws EntityCrudException {
-        Connection connection = null;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, date);
         try {
-            connection = connectionPool.getConnection();
-            //todo:fix the SQL statement
-            final String sqlStatement = "DELETE FROM coupons WHERE end_date < ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setString(1, date);
-        } catch (Exception e) {
+            System.out.println("Deleted Coupon: " + DBTools.runQuery(DBManager.DELETE_COUPON_BY_END_DATE, params));
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
 
+//    @Override
+//    public void deleteExpiredCoupons(String date) throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "DELETE FROM coupons WHERE end_date < ?";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setString(1, date);
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
+
     /**
-     * Checks whether the Coupon corresponding to the title argument exists in the corresponding Company in MySQL database
+     * Checks whether the Coupon corresponding to the title argument exists in the Company corresponding to the company
+     * ID argument in MySQL database by counting the coupons that meet both criteria.
      *
-     * @param companyId ID of the checked Company
-     * @param title     title of the Coupon being checked
-     * @return true -> coupon exists in the company, false -> coupon does not exist in company
-     * @throws EntityCrudException thrown if operation failed
+     * @param companyId Issuing Company ID number
+     * @param title     Coupon title
+     * @return true -> coupon exists, false -> coupon does not exist
+     * @throws EntityCrudException Thrown if count in MySQL was unsuccessful
      */
     @Override
     public boolean isCouponExistByCompanyId(Integer companyId, String title) throws EntityCrudException {
-        Connection connection = null;
         int counter;
+        ResultSet result;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, companyId);
+        params.put(2, title);
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT count(*) FROM coupons WHERE company_id = ? AND title = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            preparedStatement.setString(2, title);
-            final ResultSet result = preparedStatement.executeQuery();
-            result.next();
+            result = DBTools.runQueryForResult(DBManager.COUNT_COUPONS_BY_COMPANY_ID_AND_TITLE, params);
+            assert result != null;
+            result.next(); //todo needed?
             counter = result.getInt(1);
             return counter != 0;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.COUNT);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
 
-    @Override
-    public List<Coupon> readCouponsByCompanyId(final Integer companyId) throws EntityCrudException {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ?";
-            final PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) {
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-            }
-
-            return coupons;
-        } catch (final Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
-    @Override
-    public List<Coupon> readCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND price <= ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            preparedStatement.setString(2, price); //todo:check why Price is String in SQL
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) {
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-            }
-
-            return coupons;
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
-    @Override
-    public List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND category = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            preparedStatement.setString(2, category);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) {
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-            }
-
-            return coupons;
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
+//    @Override
+//    public boolean isCouponExistByCompanyId(Integer companyId, String title) throws EntityCrudException {
+//        Connection connection = null;
+//        int counter;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "SELECT count(*) FROM coupons WHERE company_id = ? AND title = ?";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setInt(1, companyId);
+//            preparedStatement.setString(2, title);
+//            final ResultSet result = preparedStatement.executeQuery();
+//            result.next();
+//            counter = result.getInt(1);
+//            return counter != 0;
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.COUNT);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
 
     @Override
     public void addCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException {
@@ -418,55 +503,6 @@ public class CouponDBDAO implements CouponDAO {
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
-    @Override
-    public List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, String price) throws EntityCrudException, SQLException {
-//todo:check why Price is String in SQL
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM coupons WHERE customer_id = ? AND price <= ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, customerId);
-            preparedStatement.setString(2, price);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) {
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-            }
-
-            return coupons;
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
-    @Override
-    public List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException, SQLException {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM coupons WHERE customer_id = ? AND category = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, customerId);
-            preparedStatement.setString(2, category);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) {
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-            }
-
-            return coupons;
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         } finally {
             connectionPool.returnConnection(connection);
         }

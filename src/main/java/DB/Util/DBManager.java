@@ -84,6 +84,8 @@ public class DBManager {
     public static final String READ_ALL_COUPONS = "SELECT * FROM coupons";
     public static final String UPDATE_COUPON = "UPDATE coupons SET title = ?, category = ? ,amount = ? ," + "description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ?";
     public static final String DELETE_COUPON_BY_ID = "DELETE FROM coupons WHERE id = ?";
+    public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM coupons WHERE end_date < ?"; //todo:fix the SQL statement
+    public static final String COUNT_COUPONS_BY_COMPANY_ID_AND_TITLE = "SELECT count(*) FROM coupons WHERE company_id = ? AND title = ?";
 
     // Customer CRUD:
     public static final String CREATE_CUSTOMER = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";

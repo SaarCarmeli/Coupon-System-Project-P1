@@ -76,9 +76,9 @@ public class CustomerDBDAO implements CustomerDAO {
      */
     @Override
     public Customer readCustomer(Integer customerId) throws EntityCrudException {
+        ResultSet result;
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerId);
-        ResultSet result;
         try {
             result = DBTools.runQueryForResult(DBManager.READ_CUSTOMER_BY_ID, params);
             assert result != null;
@@ -155,14 +155,16 @@ public class CustomerDBDAO implements CustomerDAO {
 
     /**
      * Returns a List of all Coupons a Customer owns by customer ID number from MySQL database
+     *
      * @param customerId Customer ID number
      * @return List of all Coupons by customer ID from MySQL database
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
     public List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException {
-        Map<Integer, Object> params = new HashMap<>();
         ResultSet result;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customerId);
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID, params);
             List<Coupon> coupons = new ArrayList<>();
@@ -281,10 +283,11 @@ public class CustomerDBDAO implements CustomerDAO {
     @Override
     public boolean isCustomerExist(String email) throws EntityCrudException {
         int counter;
+        ResultSet result;
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, email);
         try {
-            ResultSet result = DBTools.runQueryForResult(DBManager.COUNT_CUSTOMERS_BY_EMAIL, params);
+            result = DBTools.runQueryForResult(DBManager.COUNT_CUSTOMERS_BY_EMAIL, params);
             assert result != null;
             result.next(); //todo needed?
             counter = result.getInt(1);
