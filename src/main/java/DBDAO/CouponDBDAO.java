@@ -94,8 +94,73 @@ public class CouponDBDAO implements CouponDAO {
         }
     }
 
+//    @Override
+//    public Coupon readCoupon(Integer couponId) throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "SELECT * FROM coupons WHERE id = ?";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            preparedStatement.setInt(1, couponId);
+//            final ResultSet result = preparedStatement.executeQuery();
+//
+//            if (!result.next()) {
+//                return null;
+//            }
+//
+//            return ObjectExtractionUtil.resultSetToCoupon(result);
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
+
+    /**
+     * Returns a List of all Coupons in MySQL database
+     *
+     * @return List of all Coupons in MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
     @Override
-    public List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, String price) throws EntityCrudException, SQLException {
+    public List<Coupon> readAllCoupons() throws EntityCrudException {
+        ResultSet result;
+        try {
+            result = DBTools.runQueryForResult(DBManager.READ_ALL_COUPONS);
+            List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) { // todo consider asserting
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            }
+            return coupons;
+        } catch (SQLException e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        }
+    }
+
+//    @Override
+//    public List<Coupon> readAllCoupons() throws EntityCrudException {
+//        Connection connection = null;
+//        try {
+//            connection = connectionPool.getConnection();
+//            final String sqlStatement = "SELECT * FROM coupons";
+//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
+//            final ResultSet result = preparedStatement.executeQuery();
+//
+//            final List<Coupon> coupons = new ArrayList<>();
+//            while (result.next()) {
+//                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+//            }
+//
+//            return coupons;
+//        } catch (Exception e) {
+//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+//        } finally {
+//            connectionPool.returnConnection(connection);
+//        }
+//    }
+
+    @Override
+    public List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double price) throws EntityCrudException, SQLException {
 //todo:check why Price is String in SQL
         Connection connection = null;
         try {
@@ -140,49 +205,6 @@ public class CouponDBDAO implements CouponDAO {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         } finally {
             connectionPool.returnConnection(connection);
-        }
-    }
-
-//    @Override
-//    public Coupon readCoupon(Integer couponId) throws EntityCrudException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "SELECT * FROM coupons WHERE id = ?";
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            preparedStatement.setInt(1, couponId);
-//            final ResultSet result = preparedStatement.executeQuery();
-//
-//            if (!result.next()) {
-//                return null;
-//            }
-//
-//            return ObjectExtractionUtil.resultSetToCoupon(result);
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
-
-    /**
-     * Returns a List of all Coupons in MySQL database
-     *
-     * @return List of all Coupons in MySQL database
-     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
-     */
-    @Override
-    public List<Coupon> readAllCoupons() throws EntityCrudException {
-        ResultSet result;
-        try {
-            result = DBTools.runQueryForResult(DBManager.READ_ALL_COUPONS);
-            List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) { // todo consider asserting
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-            }
-            return coupons;
-        } catch (SQLException e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         }
     }
 
@@ -256,28 +278,6 @@ public class CouponDBDAO implements CouponDAO {
             connectionPool.returnConnection(connection);
         }
     }
-
-//    @Override
-//    public List<Coupon> readAllCoupons() throws EntityCrudException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "SELECT * FROM coupons";
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            final ResultSet result = preparedStatement.executeQuery();
-//
-//            final List<Coupon> coupons = new ArrayList<>();
-//            while (result.next()) {
-//                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-//            }
-//
-//            return coupons;
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
 
     /**
      * Updates Coupon record in MySQL database.

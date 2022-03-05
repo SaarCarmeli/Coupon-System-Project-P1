@@ -9,12 +9,12 @@ import java.util.List;
 public interface CouponDAO {
     Integer createCoupon(Coupon coupon) throws EntityCrudException;
     Coupon readCoupon(Integer couponId) throws EntityCrudException;
-    List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException, SQLException;
-    List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, String price) throws EntityCrudException, SQLException;
     List<Coupon> readAllCoupons() throws EntityCrudException;
+    List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double price) throws EntityCrudException, SQLException;
+    List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException, SQLException;
     List<Coupon> readCouponsByCompanyId(Integer companyId) throws EntityCrudException;
-    List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException;
     List<Coupon> readCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException;
+    List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException;
     void updateCoupon(Coupon coupon) throws EntityCrudException;
     void deleteCoupon(Integer couponID) throws EntityCrudException;
     void deleteExpiredCoupons(String date) throws EntityCrudException;
