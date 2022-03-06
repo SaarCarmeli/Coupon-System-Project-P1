@@ -18,6 +18,8 @@ public class CustomerFacade implements CustomerFacadeDAO {
         this.customer = CustomerDBDAO.getInstance().readCustomer(customerId); // todo: is necessary?
     }
 
+    public CustomerFacade() {
+    }
 
     // todo implement methods:
     @Override

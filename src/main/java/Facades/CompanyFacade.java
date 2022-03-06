@@ -13,13 +13,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyFacade implements CompanyFacadeDAO {
-    private final int companyId;
+    private final int companyId; 
     private final Company company; // todo: is necessary?
+
+
+    public CompanyFacade() {
+    }
+
 
     public CompanyFacade(int companyId) throws EntityCrudException {
         this.companyId = companyId;
         this.company = CompanyDBDAO.getInstance().readCompany(companyId); // todo: is necessary?
     }
+
+
 
     @Override
     public void addCoupon(Coupon coupon) throws EntityAlreadyExistException, EntityCrudException {

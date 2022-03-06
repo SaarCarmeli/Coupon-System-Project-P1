@@ -95,4 +95,9 @@ public class DBManager {
     public static final String DELETE_CUSTOMER_BY_ID = "DELETE FROM customers WHERE id = ?";
     public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT count(*) FROM customers WHERE email = ?";
     public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT * FROM customer_to_coupon WHERE customer_id = ?";
+
+    //Login
+    public static final String COMPANY_LOGGING ="SELECT count(*) FROM companies WHERE email = ? AND password = ?";
+    public static final String CUSTOMER_LOGGING ="SELECT count(*) FROM customers WHERE email = ? AND password = ?";
+
 }
