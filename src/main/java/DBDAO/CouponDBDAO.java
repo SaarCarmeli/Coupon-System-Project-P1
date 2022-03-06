@@ -128,7 +128,7 @@ public class CouponDBDAO implements CouponDAO {
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_COUPONS);
             List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
             return coupons;
