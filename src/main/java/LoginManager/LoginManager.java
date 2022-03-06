@@ -1,13 +1,11 @@
 package LoginManager;
 
-import DB.ConnectionPool;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
 import Facades.AdminFacade;
 import Facades.CompanyFacade;
 import Facades.CustomerFacade;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -15,15 +13,9 @@ import java.util.Map;
 
 public class LoginManager {
     private static LoginManager instance = null;
-    private final ConnectionPool connectionPool;
 
     //c'tor
     private LoginManager() {
-        try {
-            connectionPool = ConnectionPool.getInstance();
-        } catch (SQLException e) {
-            throw new RuntimeException("Something went wrong while getting connection pool instance");
-        }
     }
 
     //getting instance.
@@ -39,9 +31,7 @@ public class LoginManager {
     }
 
     public Object login(String email, String password, ClientType clientType) {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
+
             switch (clientType) {
                 case ADMINISTRATOR:
                     if (email.equals("admin@admin.com") && password.equals("admin")) {
@@ -85,12 +75,6 @@ public class LoginManager {
                     e.printStackTrace();
                 }
             }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
         return null;
     }
 }
