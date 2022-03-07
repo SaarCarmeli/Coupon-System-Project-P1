@@ -82,7 +82,9 @@ public class DBManager {
     public static final String CREATE_COUPON = "INSERT INTO coupons (company_id, amount, price, category, title, description, image, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
     public static final String READ_COUPON_BY_ID = "SELECT * FROM coupons WHERE coupon_id = ?";
     public static final String READ_ALL_COUPONS = "SELECT * FROM coupons";
-    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT * FROM customer_to_coupon WHERE customer_id = ?"; // todo ???
+    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ?"; // todo check in mysql workbench
+    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ? AND price <= ?";// todo check in mysql workbench
+    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ? AND category = ?";// todo check in mysql workbench
     public static final String UPDATE_COUPON_BY_ID = "UPDATE coupons SET title = ?, category = ? ,amount = ? , description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ? WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_ID = "DELETE FROM coupons WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM coupons WHERE end_date < ?";

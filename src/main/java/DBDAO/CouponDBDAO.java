@@ -1,6 +1,7 @@
 package DBDAO;
 
 
+import Beans.Category;
 import Beans.Coupon;
 import DB.ConnectionPool;
 import DB.Util.DBManager;
@@ -183,54 +184,41 @@ public class CouponDBDAO implements CouponDAO {
         }
     }
 
+    @Override
+    public List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double price) throws EntityCrudException {
+        ResultSet result;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customerId);
+        params.put(2, price);
+        try {
+            result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE, params);
+            List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) { // todo consider asserting
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            }
+            return coupons;
+        } catch (SQLException e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        }
+    }
 
-//    @Override
-//    public List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double price) throws EntityCrudException, SQLException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "SELECT * FROM coupons WHERE customer_id = ? AND price <= ?";// todo no such field as customer_id exist in coupons
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            preparedStatement.setInt(1, customerId);
-//            preparedStatement.setDouble(2, price);
-//            final ResultSet result = preparedStatement.executeQuery();
-//
-//            final List<Coupon> coupons = new ArrayList<>();
-//            while (result.next()) {
-//                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-//            }
-//
-//            return coupons;
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
-//
-//    @Override
-//    public List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException, SQLException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "SELECT * FROM coupons WHERE customer_id = ? AND category = ?"; // todo no such field as customer_id exist in coupons
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            preparedStatement.setInt(1, customerId);
-//            preparedStatement.setString(2, category);
-//            final ResultSet result = preparedStatement.executeQuery();
-//
-//            final List<Coupon> coupons = new ArrayList<>();
-//            while (result.next()) {
-//                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-//            }
-//
-//            return coupons;
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
+    @Override
+    public List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException {
+        ResultSet result;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customerId);
+        params.put(2, category);
+        try {
+            result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY, params);
+            List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) { // todo consider asserting
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            }
+            return coupons;
+        } catch (SQLException e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        }
+    }
 
     @Override
     public List<Coupon> readCouponsByCompanyId(final Integer companyId) throws EntityCrudException {
