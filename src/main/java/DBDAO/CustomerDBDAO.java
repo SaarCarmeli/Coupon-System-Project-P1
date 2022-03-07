@@ -83,7 +83,7 @@ public class CustomerDBDAO implements CustomerDAO {
             result = DBTools.runQueryForResult(DBManager.READ_CUSTOMER_BY_ID, params);
             assert result != null;
             result.next(); //todo needed?
-            return ObjectExtractionUtil.resultSetToCustomer(result, readCouponsByCustomerId(customerId));
+            return ObjectExtractionUtil.resultSetToCustomer(result, CouponDBDAO.getInstance().readCouponsByCustomerId(customerId));
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
         }
@@ -148,53 +148,6 @@ public class CustomerDBDAO implements CustomerDAO {
 //            return customers;
 //        } catch (Exception e) {
 //            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
-
-    /**
-     * Returns a List of all Coupons a Customer owns by customer ID number from MySQL database
-     *
-     * @param customerId Customer ID number
-     * @return List of all Coupons by customer ID from MySQL database
-     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
-     */
-    @Override
-    public List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException {
-        ResultSet result;
-        Map<Integer, Object> params = new HashMap<>();
-        params.put(1, customerId);
-        try {
-            result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID, params);
-            List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) { // todo consider asserting
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-            }
-            return coupons;
-        } catch (SQLException e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-        }
-    }
-
-//    @Override
-//    public List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "SELECT * FROM customer_to_coupon WHERE customer_id = ?";
-//            final PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
-//            preparedStatement.setInt(1, customerId);
-//            final ResultSet result = preparedStatement.executeQuery();
-//
-//            final List<Coupon> coupons = new ArrayList<>();
-//            while (result.next()) {
-//                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
-//            }
-//
-//            return coupons;
-//        } catch (final Exception e) {
-//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
 //        } finally {
 //            connectionPool.returnConnection(connection);
 //        }

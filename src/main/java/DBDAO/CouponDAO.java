@@ -10,6 +10,7 @@ public interface CouponDAO {
     Integer createCoupon(Coupon coupon) throws EntityCrudException;
     Coupon readCoupon(Integer couponId) throws EntityCrudException;
     List<Coupon> readAllCoupons() throws EntityCrudException;
+    List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException;
 //    List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double price) throws EntityCrudException, SQLException;
 //    List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException, SQLException;
     List<Coupon> readCouponsByCompanyId(Integer companyId) throws EntityCrudException;

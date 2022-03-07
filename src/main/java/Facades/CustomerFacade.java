@@ -24,7 +24,7 @@ public class CustomerFacade implements CustomerFacadeDAO {
 
     @Override
     public ArrayList<Coupon> getCustomerCoupons() throws EntityCrudException {
-        return (ArrayList<Coupon>) CustomerDBDAO.getInstance().readCouponsByCustomerId(customerId);
+        return (ArrayList<Coupon>) CouponDBDAO.getInstance().readCouponsByCustomerId(customerId);
     }
 
     @Override

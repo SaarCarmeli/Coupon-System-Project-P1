@@ -159,6 +159,30 @@ public class CouponDBDAO implements CouponDAO {
 //        }
 //    }
 
+    /**
+     * Returns a List of all Coupons a Customer owns by customer ID number from MySQL database
+     *
+     * @param customerId Customer ID number
+     * @return List of all Coupons by customer ID from MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
+    @Override
+    public List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException {
+        ResultSet result;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customerId);
+        try {
+            result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID, params);
+            List<Coupon> coupons = new ArrayList<>();
+            while (result.next()) { // todo consider asserting
+                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            }
+            return coupons;
+        } catch (SQLException e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
+        }
+    }
+
 
 //    @Override
 //    public List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double price) throws EntityCrudException, SQLException {
