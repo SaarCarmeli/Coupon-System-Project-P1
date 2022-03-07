@@ -28,7 +28,7 @@ public class ObjectExtractionUtil {
 
     public static Coupon resultSetToCoupon(ResultSet result) throws SQLException {
         return new Coupon(
-                result.getInt("id"),
+                result.getInt("coupon_id"),
                 result.getInt("company_id"),
                 result.getInt("amount"),
                 result.getDouble("price"),
@@ -43,7 +43,7 @@ public class ObjectExtractionUtil {
 
     public static Customer resultSetToCustomer(ResultSet result) throws SQLException {
         return new Customer(
-                result.getInt("id"),
+                result.getInt("customer_id"),
                 result.getString("first_name"),
                 result.getString("last_name"),
                 result.getString("email")
