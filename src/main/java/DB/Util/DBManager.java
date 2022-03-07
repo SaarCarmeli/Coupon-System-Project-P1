@@ -89,8 +89,8 @@ public class DBManager {
 
     // Customer CRUD:
     public static final String CREATE_CUSTOMER = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
-    public static final String READ_CUSTOMER_BY_ID = "SELECT * FROM customers WHERE customer_id = ?";
-    public static final String READ_ALL_CUSTOMERS = "SELECT * FROM customers";
+    public static final String READ_CUSTOMER_BY_ID = "SELECT customer_id, first_name, last_name, email FROM customers WHERE customer_id = ?";
+    public static final String READ_ALL_CUSTOMERS = "SELECT customer_id, first_name, last_name, email FROM customers";
     public static final String UPDATE_CUSTOMER_BY_ID = "UPDATE customers SET first_name = ?,last_name = ?, email = ?, password = ? WHERE customer_id = ?";
     public static final String DELETE_CUSTOMER_BY_ID = "DELETE FROM customers WHERE customer_id = ?";
     public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT count(*) FROM customers WHERE email = ?";
