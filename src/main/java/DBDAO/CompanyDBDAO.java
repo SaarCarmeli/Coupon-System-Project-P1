@@ -17,10 +17,8 @@ import java.util.Map;
 
 public class CompanyDBDAO implements CompanyDAO {
     private static CompanyDBDAO instance = null;
-    private final CouponDBDAO couponDBDAO;
 
     private CompanyDBDAO() {
-        couponDBDAO = CouponDBDAO.getInstance();
     }
 
     /**
@@ -74,7 +72,7 @@ public class CompanyDBDAO implements CompanyDAO {
             result = DBTools.runQueryForResult(DBManager.READ_COMPANY_BY_ID, params);
             assert result != null;
             result.next();//todo needed?
-            return ObjectExtractionUtil.resultSetToCompany(result, couponDBDAO.readCouponsByCompanyId(companyId)); //todo check if works
+            return ObjectExtractionUtil.resultSetToCompany(result, CouponDBDAO.getInstance().readCouponsByCompanyId(companyId));
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
         }
