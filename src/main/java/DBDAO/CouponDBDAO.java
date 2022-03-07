@@ -390,21 +390,6 @@ public class CouponDBDAO implements CouponDAO {
         }
     }
 
-//    @Override
-//    public void deleteExpiredCoupons(String date) throws EntityCrudException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "DELETE FROM coupons WHERE end_date < ?";
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            preparedStatement.setString(1, date);
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
-
     /**
      * Checks whether the Coupon corresponding to the title argument exists in the Company corresponding to the company
      * ID argument in MySQL database by counting the coupons that meet both criteria.
@@ -432,27 +417,6 @@ public class CouponDBDAO implements CouponDAO {
         }
     }
 
-//    @Override
-//    public boolean isCouponExistByCompanyId(Integer companyId, String title) throws EntityCrudException {
-//        Connection connection = null;
-//        int counter;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "SELECT count(*) FROM coupons WHERE company_id = ? AND title = ?";
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            preparedStatement.setInt(1, companyId);
-//            preparedStatement.setString(2, title);
-//            final ResultSet result = preparedStatement.executeQuery();
-//            result.next();
-//            counter = result.getInt(1);
-//            return counter != 0;
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.COUNT);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
-
     @Override
     public void addCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException {
         Connection connection = null;
@@ -466,56 +430,6 @@ public class CouponDBDAO implements CouponDAO {
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.CREATE);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
-    @Override
-    public void deleteCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement =
-                    "DELETE FROM customer_to_coupon WHERE customer_id = ? AND coupon_id = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, customerId);
-            preparedStatement.setInt(2, couponId);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
-    @Override
-    public void deleteCouponHistory(Integer couponID) throws EntityCrudException {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "DELETE FROM customer_to_coupons WHERE id = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, couponID);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
-    @Override
-    public void deleteCouponsByCompanyId(Integer companyId) throws EntityCrudException {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "DELETE FROM coupons WHERE companies_id = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
         } finally {
             connectionPool.returnConnection(connection);
         }
