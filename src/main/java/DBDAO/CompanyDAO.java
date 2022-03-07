@@ -6,7 +6,7 @@ import Exceptions.EntityCrudException;
 import java.util.List;
 
 public interface CompanyDAO {
-    Integer createCompany(Company company) throws EntityCrudException;
+    void createCompany(Company company) throws EntityCrudException;
     Company readCompany(Integer companyId) throws EntityCrudException;
     List<Company> readAllCompanies() throws EntityCrudException;
     void updateCompany(Company company) throws EntityCrudException;
