@@ -139,42 +139,4 @@ public class DBTools {
             ConnectionPool.getInstance().returnConnection(connection);
         }
     }
-
-    public static ResultSet runQueryForGenKeys(String sql, Map<Integer, Object> params) throws SQLException {
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            params.forEach((key, value) -> {
-                try {
-                    if (value instanceof Integer) {
-                        statement.setInt(key, (Integer) value);
-                    } else if (value instanceof String) {
-                        statement.setString(key, String.valueOf(value));
-                    } else if (value instanceof Date) {
-                        statement.setDate(key, (Date) value);
-                    } else if (value instanceof Double) {
-                        statement.setDouble(key, (Double) value);
-                    } else if (value instanceof Float) {
-                        statement.setFloat(key, (Float) value);
-                    } else if (value instanceof Long) {
-                        statement.setLong(key, (Long) value);
-                    } else if (value instanceof Byte) {
-                        statement.setByte(key, (Byte) value);
-                    } else if (value instanceof Boolean) {
-                        statement.setBoolean(key, (Boolean) value);
-                    }
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-            });
-            statement.executeQuery();
-            return statement.getGeneratedKeys(); // todo see if works, add javadoc
-        } catch (InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
-            return null;
-        } finally {
-            ConnectionPool.getInstance().returnConnection(connection);
-        }
-    }
 }
