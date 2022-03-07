@@ -79,9 +79,10 @@ public class DBManager {
     public static final String COUNT_COMPANIES_BY_NAME_OR_EMAIL = "SELECT count(*) FROM companies WHERE name = ? OR email = ?";
 
     // Coupon CRUD:
-    public static final String CREATE_COUPON = "INSERT INTO coupons (title, company_id, start_date, end_date, amount, category, description, price, image) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
+    public static final String CREATE_COUPON = "INSERT INTO coupons (company_id, amount, price, category, title, description, image, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
     public static final String READ_COUPON_BY_ID = "SELECT * FROM coupons WHERE coupon_id = ?";
     public static final String READ_ALL_COUPONS = "SELECT * FROM coupons";
+    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT * FROM customer_to_coupon WHERE customer_id = ?"; // todo ???
     public static final String UPDATE_COUPON_BY_ID = "UPDATE coupons SET title = ?, category = ? ,amount = ? , description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ? WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_ID = "DELETE FROM coupons WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM coupons WHERE end_date < ?";
@@ -94,7 +95,6 @@ public class DBManager {
     public static final String UPDATE_CUSTOMER_BY_ID = "UPDATE customers SET first_name = ?,last_name = ?, email = ?, password = ? WHERE customer_id = ?";
     public static final String DELETE_CUSTOMER_BY_ID = "DELETE FROM customers WHERE customer_id = ?";
     public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT count(*) FROM customers WHERE email = ?";
-    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT * FROM customer_to_coupon WHERE customer_id = ?"; // todo ???
 
     //Login
     public static final String COMPANY_LOGGING = "SELECT id FROM companies WHERE email = ? AND password = ?";
