@@ -215,7 +215,7 @@ public class CustomerDBDAO implements CustomerDAO {
         params.put(4, customer.getPassword()); // todo should it be in the database???
         params.put(5, customer.getId());
         try {
-            System.out.println("Updated Customer: " + DBTools.runQuery(DBManager.UPDATE_CUSTOMER, params));
+            System.out.println("Updated Customer: " + DBTools.runQuery(DBManager.UPDATE_CUSTOMER_BY_ID, params));
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.UPDATE);
         }

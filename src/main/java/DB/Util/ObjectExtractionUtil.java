@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ObjectExtractionUtil {
 
-    public static Company resultSetToCompany(final ResultSet result) throws SQLException {
+    public static Company resultSetToCompany(ResultSet result) throws SQLException {
         return new Company(
                 result.getInt("id"),
                 result.getString("name"),
@@ -21,13 +21,13 @@ public class ObjectExtractionUtil {
         );
     }
 
-    public static Company resultSetToCompany(final ResultSet result, final List<Coupon> companyCoupons) throws SQLException {
+    public static Company resultSetToCompany(ResultSet result, List<Coupon> companyCoupons) throws SQLException {
         final Company company = resultSetToCompany(result);
         company.setCoupons(companyCoupons);
         return company;
     }
 
-    public static Coupon resultSetToCoupon(final ResultSet result) throws SQLException {
+    public static Coupon resultSetToCoupon(ResultSet result) throws SQLException {
         return new Coupon(
                 result.getInt("id"),
                 result.getInt("company_id"),
@@ -41,7 +41,8 @@ public class ObjectExtractionUtil {
                 result.getDate("end_date")
         );
     }
-    public static Customer resultSetToCustomer(final ResultSet result) throws SQLException {
+
+    public static Customer resultSetToCustomer(ResultSet result) throws SQLException {
         return new Customer(
                 result.getInt("id"),
                 result.getString("first_name"),
@@ -50,8 +51,9 @@ public class ObjectExtractionUtil {
                 result.getString("password")
         );
     }
-    public static Customer resultSetToCustomer(final ResultSet result, final List<Coupon> customerCoupons) throws SQLException {
-        final Customer customer = resultSetToCustomer(result);
+
+    public static Customer resultSetToCustomer(ResultSet result, List<Coupon> customerCoupons) throws SQLException {
+        Customer customer = resultSetToCustomer(result);
         customer.setCoupons(customerCoupons);
         return customer;
     }

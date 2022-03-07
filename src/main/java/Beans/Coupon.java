@@ -14,7 +14,6 @@ public class Coupon {
     /**
      * Initiates an instance of Coupon.
      *
-     * @param id          Coupon ID number
      * @param companyID   Name of the issuing Company
      * @param amount      Worth of Coupon discount
      * @param price       Price to purchase the Coupon
