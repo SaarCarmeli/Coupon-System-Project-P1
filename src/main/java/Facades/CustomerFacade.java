@@ -11,14 +11,9 @@ import java.util.ArrayList;
 
 public class CustomerFacade implements CustomerFacadeDAO {
     private final int customerId;
-    private final Customer customer; // todo: is necessary?
 
     public CustomerFacade(int customerId) throws EntityCrudException {
         this.customerId = customerId;
-        this.customer = CustomerDBDAO.getInstance().readCustomer(customerId); // todo: is necessary?
-    }
-
-    public CustomerFacade() {
     }
 
     // todo implement methods:
@@ -43,7 +38,8 @@ public class CustomerFacade implements CustomerFacadeDAO {
     }
 
     @Override
-    public Customer getCustomerDetails() {
-        return this.customer;
+    public Customer getCustomerDetails() throws EntityCrudException {
+        CustomerDBDAO customerDBDAO = CustomerDBDAO.getInstance();
+        return customerDBDAO.readCustomer(customerId);
     }
 }

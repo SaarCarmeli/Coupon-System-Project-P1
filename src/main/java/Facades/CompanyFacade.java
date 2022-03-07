@@ -3,6 +3,9 @@ package Facades;
 import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
+import DB.Util.DBManager;
+import DB.Util.DBTools;
+import DB.Util.ObjectExtractionUtil;
 import DBDAO.CompanyDBDAO;
 import DBDAO.CouponDBDAO;
 import Exceptions.EntityAlreadyExistException;
@@ -13,20 +16,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyFacade implements CompanyFacadeDAO {
-    private final int companyId; 
-    private final Company company; // todo: is necessary?
-
-
-    public CompanyFacade() {
-    }
-
+    private final int companyId;
 
     public CompanyFacade(int companyId) throws EntityCrudException {
         this.companyId = companyId;
-        this.company = CompanyDBDAO.getInstance().readCompany(companyId); // todo: is necessary?
     }
-
-
 
     @Override
     public void addCoupon(Coupon coupon) throws EntityAlreadyExistException, EntityCrudException {
@@ -64,7 +58,8 @@ public class CompanyFacade implements CompanyFacadeDAO {
     }
 
     @Override
-    public Company getCompanyDetails() {
-        return this.company;
+    public Company getCompanyDetails() throws EntityCrudException {
+        CompanyDBDAO companyDBDAO = CompanyDBDAO.getInstance();
+        return companyDBDAO.readCompany(companyId);
     }
 }

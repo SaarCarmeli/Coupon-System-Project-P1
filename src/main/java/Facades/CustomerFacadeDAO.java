@@ -12,5 +12,5 @@ public interface CustomerFacadeDAO {
     ArrayList<Coupon> getCustomerCoupons() throws EntityCrudException;
     ArrayList<Coupon> getCustomerCoupons(Category category);
     ArrayList<Coupon> getCustomerCoupons(double maxPrice);
-    Customer getCustomerDetails();
+    Customer getCustomerDetails() throws EntityCrudException;
 }

@@ -13,7 +13,7 @@ public class DBManager {
     public static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE IF NOT EXISTS `categories` (" +
             "   `id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `name` VARCHAR(45) NOT NULL," +
-            "  PRIMARY KEY (`id`))"; //todo
+            "  PRIMARY KEY (`id`))";
 
     public static final String CREATE_TABLE_COMPANIES = "CREATE TABLE IF NOT EXISTS `companies` (" +
             "  `id` BIGINT NOT NULL AUTO_INCREMENT," +
@@ -52,7 +52,7 @@ public class DBManager {
             "    FOREIGN KEY (`category_id`)" +
             "    REFERENCES `coupon_project`.`categories` (`id`)" +
             "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE);"; // todo maybe add ON CREATE CASCADE?
+            "    ON UPDATE CASCADE);";
 
     public static final String CREATE_TABLE_CUSTOMER_TO_COUPON = "CREATE TABLE IF NOT EXISTS `customer_to_coupon` (" +
             "  `customer_id` BIGINT NOT NULL," +
@@ -62,7 +62,7 @@ public class DBManager {
             "  CONSTRAINT `customer_id`" +
             "    FOREIGN KEY (`customer_id`)" +
             "    REFERENCES `coupon_project`.`customers` (`id`)" +
-            "    ON DELETE CASCADE" + //todo:check maybe it's should be NO ACTION
+            "    ON DELETE CASCADE" +
             "    ON UPDATE CASCADE," +
             "  CONSTRAINT `coupon_id`" +
             "    FOREIGN KEY (`coupon_id`)" +
@@ -98,6 +98,6 @@ public class DBManager {
 
     //Login
     public static final String COMPANY_LOGGING ="SELECT id FROM companies WHERE email = ? AND password = ?";
-    public static final String CUSTOMER_LOGGING ="SELECT count(*) FROM customers WHERE email = ? AND password = ?";
+    public static final String CUSTOMER_LOGGING ="SELECT id FROM customers WHERE email = ? AND password = ?";
 
 }
