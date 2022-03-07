@@ -18,14 +18,8 @@ import java.util.Map;
 
 public class CustomerDBDAO implements CustomerDAO {
     private static CustomerDBDAO instance;
-    private final ConnectionPool connectionPool;
 
     private CustomerDBDAO() {
-        try {
-            connectionPool = ConnectionPool.getInstance();
-        } catch (SQLException e) {
-            throw new RuntimeException("Something went wrong while getting connection pool instance"); // todo wheres-the-foot !? (wtf !?)
-        }
     }
 
     public static CustomerDBDAO getInstance() {
@@ -39,7 +33,7 @@ public class CustomerDBDAO implements CustomerDAO {
         return instance;
     }
 
-    @Override
+    @Override// todo finish
     public Integer createCustomer(Customer customer) throws EntityCrudException {
         Connection connection = null;
         try {
@@ -88,27 +82,6 @@ public class CustomerDBDAO implements CustomerDAO {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
         }
     }
-//    @Override
-//    public Customer readCustomer(Integer customerId) throws EntityCrudException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "SELECT * FROM customers WHERE id = ?";
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            preparedStatement.setInt(1, customerId);
-//            final ResultSet result = preparedStatement.executeQuery();
-//
-//            if (!result.next()) {
-//                return null;
-//            }
-//
-//            return ObjectExtractionUtil.resultSetToCustomer(result, readCouponsByCustomerId(customerId));
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
 
     /**
      * Returns a List of all Customers in MySQL database
@@ -131,28 +104,6 @@ public class CustomerDBDAO implements CustomerDAO {
         }
     }
 
-//    @Override
-//    public List<Customer> readAllCustomers() throws EntityCrudException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "SELECT * FROM customers";
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            final ResultSet result = preparedStatement.executeQuery();
-//
-//            final List<Customer> customers = new ArrayList<>();
-//            while (result.next()) {
-//                customers.add(ObjectExtractionUtil.resultSetToCustomer(result));
-//            }
-//
-//            return customers;
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
-
     /**
      * Updates Customer record in MySQL database.
      *
@@ -174,25 +125,6 @@ public class CustomerDBDAO implements CustomerDAO {
         }
     }
 
-//    @Override
-//    public void updateCustomer(Customer customer) throws EntityCrudException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "UPDATE customers SET first_name = ?,last_name = ?, email = ?, password = ?";
-//            PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            preparedStatement.setString(1, customer.getFirstName());
-//            preparedStatement.setString(2, customer.getLastName());
-//            preparedStatement.setString(3, customer.getEmail());
-//            preparedStatement.setString(4, customer.getPassword());
-//            preparedStatement.executeUpdate();
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.UPDATE);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
-
     /**
      * Deletes Customer record from MySQL database by customer ID number.
      *
@@ -209,22 +141,6 @@ public class CustomerDBDAO implements CustomerDAO {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.DELETE);
         }
     }
-
-//    @Override
-//    public void deleteCustomer(Integer customerId) throws EntityCrudException {
-//        Connection connection = null;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "DELETE FROM customers WHERE id = ?";
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            preparedStatement.setInt(1, customerId);
-//            preparedStatement.executeUpdate();
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.DELETE);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
 
     /**
      * Checks whether the Customer corresponding to the email argument exists in MySQL database
@@ -248,43 +164,6 @@ public class CustomerDBDAO implements CustomerDAO {
             return counter != 0;
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.COUNT);
-        }
-    }
-
-//    @Override
-//    public boolean isCustomerExist(String email) throws EntityCrudException {
-//        Connection connection = null;
-//        int counter;
-//        try {
-//            connection = connectionPool.getConnection();
-//            final String sqlStatement = "SELECT count(*) FROM companies WHERE email = ?";
-//            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-//            preparedStatement.setString(1, email);
-//            final ResultSet result = preparedStatement.executeQuery();
-//            result.next();
-//            counter = result.getInt(1);
-//            return counter != 0;
-//        } catch (Exception e) {
-//            throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.COUNT);
-//        } finally {
-//            connectionPool.returnConnection(connection);
-//        }
-//    }
-
-    @Override
-    public void deleteCouponPurchaseHistory(Integer customerId) throws EntityCrudException {
-        Connection connection = null;
-        try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement =
-                    "DELETE FROM customer_to_coupon WHERE customer_id";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, customerId);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.DELETE);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
 }

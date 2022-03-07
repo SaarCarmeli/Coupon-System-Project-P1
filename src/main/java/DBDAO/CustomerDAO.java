@@ -13,5 +13,4 @@ public interface CustomerDAO {
     void updateCustomer(Customer customer) throws EntityCrudException;
     void deleteCustomer(Integer customerId) throws EntityCrudException;
     boolean isCustomerExist(String email) throws EntityCrudException;
-    void deleteCouponPurchaseHistory(Integer customerId) throws EntityCrudException;
 }
