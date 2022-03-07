@@ -9,12 +9,27 @@ public class Customer {
     private List<Coupon> coupons;
 
     /**
-     * Initiates an instance of Customer.
+     * Initiates an instance of Customer. From MySQL database.
      *
-     * @param firstName Customer's first name
-     * @param lastName  Customer's last name
-     * @param email     Customer's email
-     * @param password  Customer's login password
+     * @param id        Customer ID number
+     * @param firstName Customer first name
+     * @param lastName  Customer last name
+     * @param email     Customer email
+     */
+    public Customer(Integer id, String firstName, String lastName, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    /**
+     * Initiates an instance of Customer. Before insertion to MySQL database.
+     *
+     * @param firstName Customer first name
+     * @param lastName  Customer last name
+     * @param email     Customer email
+     * @param password  Customer login password
      */
     public Customer(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;

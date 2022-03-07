@@ -9,7 +9,20 @@ public class Company {
     private List<Coupon> coupons;
 
     /**
-     * Initiates an instance of Company.
+     * Initiates an instance of Company. From MySQL database.
+     *
+     * @param id    ID number of the Company
+     * @param name  Name of the Company
+     * @param email Company Email
+     */
+    public Company(Integer id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    /**
+     * Initiates an instance of Company. Before insertion to MySQL database.
      *
      * @param name     Name of the Company
      * @param email    Company Email

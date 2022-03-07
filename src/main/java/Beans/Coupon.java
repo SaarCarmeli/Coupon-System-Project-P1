@@ -12,9 +12,36 @@ public class Coupon {
     private Date startDate, endDate;
 
     /**
-     * Initiates an instance of Coupon.
+     * Initiates an instance of Coupon. From MySQL database.
      *
-     * @param companyID   Name of the issuing Company
+     * @param id          Coupon ID number
+     * @param companyID   ID number of the issuing Company
+     * @param amount      Worth of Coupon discount
+     * @param price       Price to purchase the Coupon
+     * @param category    Commercial category the Coupon gives discount in
+     * @param title       Commercial name of the Coupon
+     * @param description Description of the products the Coupon is valid for and additional info
+     * @param image       File name for the Coupon's logo image
+     * @param startDate   Coupon creation date
+     * @param endDate     Date of Coupon expiration
+     */
+    public Coupon(Integer id, int companyID, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
+        this.id = id;
+        this.companyID = companyID;
+        this.amount = amount;
+        this.price = price;
+        this.category = category;
+        this.title = title;
+        this.description = description;
+        this.image = image;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    /**
+     * Initiates an instance of Coupon. Before insertion to MySQL database.
+     *
+     * @param companyID   ID number of the issuing Company
      * @param amount      Worth of Coupon discount
      * @param price       Price to purchase the Coupon
      * @param category    Commercial category the Coupon gives discount in

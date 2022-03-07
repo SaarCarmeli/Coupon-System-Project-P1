@@ -16,8 +16,7 @@ public class ObjectExtractionUtil {
         return new Company(
                 result.getInt("id"),
                 result.getString("name"),
-                result.getString("email"),
-                result.getString("password")
+                result.getString("email")
         );
     }
 
@@ -47,8 +46,7 @@ public class ObjectExtractionUtil {
                 result.getInt("id"),
                 result.getString("first_name"),
                 result.getString("last_name"),
-                result.getString("email"),
-                result.getString("password")
+                result.getString("email")
         );
     }
 
