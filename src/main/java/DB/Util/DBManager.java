@@ -97,7 +97,7 @@ public class DBManager {
     public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT * FROM customer_to_coupon WHERE customer_id = ?";
 
     //Login
-    public static final String COMPANY_LOGGING ="SELECT count(*) FROM companies WHERE email = ? AND password = ?";
+    public static final String COMPANY_LOGGING ="SELECT id FROM companies WHERE email = ? AND password = ?";
     public static final String CUSTOMER_LOGGING ="SELECT count(*) FROM customers WHERE email = ? AND password = ?";
 
 }

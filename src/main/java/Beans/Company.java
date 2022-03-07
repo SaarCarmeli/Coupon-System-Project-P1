@@ -1,8 +1,5 @@
 package Beans;
 
-import Exceptions.MethodNotAllowedException;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,13 +11,11 @@ public class Company {
     /**
      * Initiates an instance of Company.
      *
-     * @param id       Company ID number
      * @param name     Name of the Company
      * @param email    Company Email
      * @param password Login password for the Company
      */
-    public Company(Integer id, String name, String email, String password) {
-        this.id = id;
+    public Company(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -39,10 +34,9 @@ public class Company {
      * You can not set this parameter.
      *
      * @param id Company ID number
-     * @throws MethodNotAllowedException Thrown on use
      */
-    public void setId(Integer id) throws MethodNotAllowedException {
-        throw new MethodNotAllowedException("You can not set this parameter");
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
@@ -76,10 +70,9 @@ public class Company {
      * You can not set this parameter.
      *
      * @param name Company Name
-     * @throws MethodNotAllowedException Thrown on use
      */
-    public void setName(String name) throws MethodNotAllowedException {
-        throw new MethodNotAllowedException("You can not set this parameter");
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -113,10 +106,9 @@ public class Company {
      * You can not set this parameter.
      *
      * @param password Login password
-     * @throws MethodNotAllowedException Thrown on use
      */
-    public void setPassword(String password) throws MethodNotAllowedException {
-        throw new MethodNotAllowedException("You can not set this parameter");
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**

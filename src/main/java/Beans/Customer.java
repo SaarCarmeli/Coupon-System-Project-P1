@@ -1,8 +1,5 @@
 package Beans;
 
-import Exceptions.MethodNotAllowedException;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,14 +11,12 @@ public class Customer {
     /**
      * Initiates an instance of Customer.
      *
-     * @param id        Customer ID number
      * @param firstName Customer's first name
      * @param lastName  Customer's last name
      * @param email     Customer's email
      * @param password  Customer's login password
      */
-    public Customer(Integer id, String firstName, String lastName, String email, String password) {
-        this.id = id;
+    public Customer(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -41,10 +36,9 @@ public class Customer {
      * You can not set this parameter.
      *
      * @param id Customer ID number
-     * @throws MethodNotAllowedException Thrown on use
      */
-    public void setId(Integer id) throws MethodNotAllowedException {
-        throw new MethodNotAllowedException("You can not set this parameter");
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
@@ -132,10 +126,9 @@ public class Customer {
      * You can not set this parameter.
      *
      * @param password Customer login password
-     * @throws MethodNotAllowedException Thrown on use
      */
-    public void setPassword(String password) throws MethodNotAllowedException {
-        throw new MethodNotAllowedException("You can not set this parameter");
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**

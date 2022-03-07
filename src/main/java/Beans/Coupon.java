@@ -1,7 +1,5 @@
 package Beans;
 
-import Exceptions.MethodNotAllowedException;
-
 import java.sql.Date;
 import java.util.Objects;
 
@@ -27,8 +25,7 @@ public class Coupon {
      * @param startDate   Coupon creation date
      * @param endDate     Date of Coupon expiration
      */
-    public Coupon(Integer id, int companyID, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
-        this.id = id;
+    public Coupon(int companyID, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
         this.companyID = companyID;
         this.amount = amount;
         this.price = price;
@@ -53,10 +50,9 @@ public class Coupon {
      * You can not set this parameter.
      *
      * @param id Coupon ID number
-     * @throws MethodNotAllowedException Thrown on use
      */
-    public void setId(Integer id) throws MethodNotAllowedException {
-        throw new MethodNotAllowedException("You can not set this parameter");
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
@@ -71,11 +67,10 @@ public class Coupon {
     /**
      * You can not set this parameter.
      *
-     * @param companyID Issuing Company's ID number
-     * @throws MethodNotAllowedException Thrown on use
+     * @param companyId Issuing Company's ID number
      */
-    public void setCompanyID(int companyID) throws MethodNotAllowedException {
-        throw new MethodNotAllowedException("You can not set this parameter");
+    public void setCompanyId(int companyId) {
+        this.companyID = companyId;
     }
 
     /**
@@ -199,10 +194,9 @@ public class Coupon {
      * You can not set this parameter.
      *
      * @param startDate Coupon creation date
-     * @throws MethodNotAllowedException Thrown on use
      */
-    public void setStartDate(Date startDate) throws MethodNotAllowedException {
-        throw new MethodNotAllowedException("You can not set this parameter");
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     /**
