@@ -172,6 +172,7 @@ public class CompanyDBDAO implements CompanyDAO {
         params.put(1, company.getName());
         params.put(2, company.getEmail());
         params.put(3, company.getPassword()); // todo should it be in the database???
+        params.put(4, company.getId());
         try {
             System.out.println("Updated Company: " + DBTools.runQuery(DBManager.UPDATE_COMPANY, params));
         } catch (SQLException e) {

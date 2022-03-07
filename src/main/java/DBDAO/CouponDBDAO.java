@@ -296,6 +296,7 @@ public class CouponDBDAO implements CouponDAO {
         params.put(6, coupon.getImage());
         params.put(7, coupon.getStartDate());
         params.put(8, coupon.getEndDate());
+        params.put(9, coupon.getId());
         try {
             System.out.println("Updated Coupon: " + DBTools.runQuery(DBManager.UPDATE_COUPON, params));
         } catch (SQLException e) {

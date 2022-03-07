@@ -213,6 +213,7 @@ public class CustomerDBDAO implements CustomerDAO {
         params.put(2, customer.getLastName());
         params.put(3, customer.getEmail());
         params.put(4, customer.getPassword()); // todo should it be in the database???
+        params.put(5, customer.getId());
         try {
             System.out.println("Updated Customer: " + DBTools.runQuery(DBManager.UPDATE_CUSTOMER, params));
         } catch (SQLException e) {

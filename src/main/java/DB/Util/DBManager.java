@@ -74,7 +74,7 @@ public class DBManager {
     public static final String CREATE_COMPANY = "INSERT INTO companies (name, email, password) VALUES(?, ?, ?)";
     public static final String READ_COMPANY_BY_ID = "SELECT * FROM companies WHERE id = ?";
     public static final String READ_ALL_COMPANIES = "SELECT * FROM companies";
-    public static final String UPDATE_COMPANY = "UPDATE companies SET name = ?, email = ?, password = ?"; // todo "where id = ?" ???
+    public static final String UPDATE_COMPANY = "UPDATE companies SET name = ?, email = ?, password = ? WHERE id = ?";
     public static final String DELETE_COMPANY_BY_ID = "DELETE FROM companies WHERE id = ?";
     public static final String COUNT_COMPANIES_BY_NAME_OR_EMAIL = "SELECT count(*) FROM companies WHERE name = ? OR email = ?";
 
@@ -82,22 +82,22 @@ public class DBManager {
     public static final String CREATE_COUPON = "INSERT INTO coupons (title, company_id, start_date, end_date, amount, category, description, price, image) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
     public static final String READ_COUPON_BY_ID = "SELECT * FROM coupons WHERE id = ?";
     public static final String READ_ALL_COUPONS = "SELECT * FROM coupons";
-    public static final String UPDATE_COUPON = "UPDATE coupons SET title = ?, category = ? ,amount = ? ," + "description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ?";
+    public static final String UPDATE_COUPON = "UPDATE coupons SET title = ?, category = ? ,amount = ? ," + "description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ? WHERE id = ?";
     public static final String DELETE_COUPON_BY_ID = "DELETE FROM coupons WHERE id = ?";
-    public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM coupons WHERE end_date < ?"; //todo:fix the SQL statement
+    public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM coupons WHERE end_date < ?";
     public static final String COUNT_COUPONS_BY_COMPANY_ID_AND_TITLE = "SELECT count(*) FROM coupons WHERE company_id = ? AND title = ?";
 
     // Customer CRUD:
     public static final String CREATE_CUSTOMER = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
     public static final String READ_CUSTOMER_BY_ID = "SELECT * FROM customers WHERE id = ?";
     public static final String READ_ALL_CUSTOMERS = "SELECT * FROM customers";
-    public static final String UPDATE_CUSTOMER = "UPDATE customers SET first_name = ?,last_name = ?, email = ?, password = ?"; // todo "where id = ?" ???
+    public static final String UPDATE_CUSTOMER = "UPDATE customers SET first_name = ?,last_name = ?, email = ?, password = ? WHERE id = ?";
     public static final String DELETE_CUSTOMER_BY_ID = "DELETE FROM customers WHERE id = ?";
     public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT count(*) FROM customers WHERE email = ?";
     public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT * FROM customer_to_coupon WHERE customer_id = ?";
 
     //Login
-    public static final String COMPANY_LOGGING ="SELECT id FROM companies WHERE email = ? AND password = ?";
-    public static final String CUSTOMER_LOGGING ="SELECT id FROM customers WHERE email = ? AND password = ?";
+    public static final String COMPANY_LOGGING = "SELECT id FROM companies WHERE email = ? AND password = ?";
+    public static final String CUSTOMER_LOGGING = "SELECT id FROM customers WHERE email = ? AND password = ?";
 
 }
