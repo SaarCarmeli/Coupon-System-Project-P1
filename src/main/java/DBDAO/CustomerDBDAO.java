@@ -88,13 +88,13 @@ public class CustomerDBDAO implements CustomerDAO {
     @Override
     public List<Customer> readAllCustomers() throws EntityCrudException {
         ResultSet result;
+        List<Customer> customerList = new ArrayList<>();
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_CUSTOMERS);
-            List<Customer> customers = new ArrayList<>();
             while (result.next()) { // todo consider asserting
-                customers.add(ObjectExtractionUtil.resultSetToCustomer(result));
+                customerList.add(ObjectExtractionUtil.resultSetToCustomer(result));
             }
-            return customers;
+            return customerList;
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
         }

@@ -1,9 +1,7 @@
 package DBDAO;
 
 
-import Beans.Category;
 import Beans.Coupon;
-import DB.ConnectionPool;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
 import DB.Util.ObjectExtractionUtil;
@@ -11,7 +9,8 @@ import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
 import Exceptions.EntityType;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +22,11 @@ public class CouponDBDAO implements CouponDAO {
     private CouponDBDAO() {
     }
 
+    /**
+     * Static method for retrieving and/or initiating an instance of CouponDBDAO.
+     *
+     * @return CouponDBDAO instance
+     */
     public static CouponDBDAO getInstance() {
         if (instance == null) {
             synchronized (CouponDBDAO.class) {
@@ -101,7 +105,7 @@ public class CouponDBDAO implements CouponDAO {
     }
 
     /**
-     * Returns a List of all Coupons in MySQL database
+     * Returns a List of all Coupons in MySQL database.
      *
      * @return List of all Coupons in MySQL database
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
@@ -109,20 +113,20 @@ public class CouponDBDAO implements CouponDAO {
     @Override
     public List<Coupon> readAllCoupons() throws EntityCrudException {
         ResultSet result;
+        List<Coupon> couponList = new ArrayList<>();
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_COUPONS);
-            List<Coupon> coupons = new ArrayList<>();
             while (result.next()) { // todo consider asserting
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+                couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
-            return coupons;
+            return couponList;
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         }
     }
 
     /**
-     * Returns a List of all Coupons a Customer owns by customer ID number from MySQL database
+     * Returns a List of all Coupons a Customer owns by customer ID number from MySQL database.
      *
      * @param customerId Customer ID number
      * @return List of all Coupons by customer ID from MySQL database
@@ -131,124 +135,146 @@ public class CouponDBDAO implements CouponDAO {
     @Override
     public List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException {
         ResultSet result;
+        List<Coupon> couponList = new ArrayList<>();
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerId);
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID, params);
-            List<Coupon> coupons = new ArrayList<>();
             while (result.next()) { // todo consider asserting
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+                couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
-            return coupons;
+            return couponList;
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         }
     }
 
+    /**
+     * Returns a List of all Coupons a Customer owns by customer ID number and maximum price threshold from MySQL database.
+     *
+     * @param customerId Customer ID number
+     * @param maxPrice   Maximum price that Coupon price in the list can not exceed
+     * @return List of all Coupons by customer ID and maximum price from MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
     @Override
-    public List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double price) throws EntityCrudException {
+    public List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double maxPrice) throws EntityCrudException {
         ResultSet result;
+        List<Coupon> couponList = new ArrayList<>();
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerId);
-        params.put(2, price);
+        params.put(2, maxPrice);
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE, params);
-            List<Coupon> coupons = new ArrayList<>();
             while (result.next()) { // todo consider asserting
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+                couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
-            return coupons;
+            return couponList;
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         }
     }
 
+    /**
+     * Returns a List of all Coupons a Customer owns by customer ID number and Coupon category from MySQL database.
+     *
+     * @param customerId Customer ID number
+     * @param category   Category that Coupons belong to
+     * @return List of all Coupons by customer ID and category from MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
     @Override
-    public List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException {
+    public List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String/*todo why not Category enum?*/ category) throws EntityCrudException {
         ResultSet result;
+        List<Coupon> couponList = new ArrayList<>();
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerId);
         params.put(2, category);
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY, params);
-            List<Coupon> coupons = new ArrayList<>();
             while (result.next()) { // todo consider asserting
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+                couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
-            return coupons;
+            return couponList;
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         }
     }
 
+    /**
+     * Returns a List of all Coupons a Company issued by company ID number from MySQL database.
+     *
+     * @param companyId Company ID number
+     * @return List of all Coupons by company ID from MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
     @Override
-    public List<Coupon> readCouponsByCompanyId(final Integer companyId) throws EntityCrudException {
-        Connection connection = null;
+    public List<Coupon> readCouponsByCompanyId(Integer companyId) throws EntityCrudException {
+        ResultSet result;
+        List<Coupon> couponList = new ArrayList<>();
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, companyId);
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ?";
-            final PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) {
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_COMPANY_ID, params);
+            while (result.next()) { // todo consider asserting
+                couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
-
-            return coupons;
-        } catch (final Exception e) {
+            return couponList;
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
 
+    /**
+     * Returns a List of all Coupons a Company issued by company ID number and maximum price threshold from MySQL database.
+     *
+     * @param companyId Company ID number
+     * @param maxPrice  Maximum price that Coupon price in the list can not exceed
+     * @return List of all Coupons by company ID and maximum price from MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
     @Override
-    public List<Coupon> readCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException {
-        Connection connection = null;
+    public List<Coupon> readCouponsByCompanyIdAndMaxPrice(Integer companyId, Double maxPrice) throws EntityCrudException {
+        ResultSet result;
+        List<Coupon> couponList = new ArrayList<>();
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, companyId);
+        params.put(2, maxPrice);
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND price <= ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            preparedStatement.setString(2, price); //todo:check why Price is String in SQL
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) {
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_COMPANY_ID_AND_MAX_PRICE, params);
+            while (result.next()) { // todo consider asserting
+                couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
-
-            return coupons;
-        } catch (Exception e) {
+            return couponList;
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
 
+    /**
+     * Returns a List of all Coupons a Company issued by company ID number and Coupon category from MySQL database.
+     *
+     * @param companyId Company ID number
+     * @param category  Category that Coupons belong to
+     * @return List of all Coupons by company ID and category from MySQL database
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
     @Override
-    public List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException {
-        Connection connection = null;
+    public List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String/*todo why not Category enum?*/ category) throws EntityCrudException {
+        ResultSet result;
+        List<Coupon> couponList = new ArrayList<>();
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, companyId);
+        params.put(2, category);
         try {
-            connection = connectionPool.getConnection();
             final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND category = ?";
-            final PreparedStatement preparedStatement = connectionPool.getConnection().prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, companyId);
-            preparedStatement.setString(2, category);
-            final ResultSet result = preparedStatement.executeQuery();
-
-            final List<Coupon> coupons = new ArrayList<>();
-            while (result.next()) {
-                coupons.add(ObjectExtractionUtil.resultSetToCoupon(result));
+            result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY, params);
+            while (result.next()) { // todo consider asserting
+                couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
-
-            return coupons;
-        } catch (Exception e) {
+            return couponList;
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
 

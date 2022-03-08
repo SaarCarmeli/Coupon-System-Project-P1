@@ -53,8 +53,7 @@ public class CompanyFacade implements CompanyFacadeDAO {
 
     @Override
     public ArrayList<Coupon> getCompanyCoupons(double maxPrice) throws SQLException, EntityCrudException {
-        return (ArrayList<Coupon>) CouponDBDAO.getInstance().
-                readCouponsByCompanyIdAndMaxPrice(this.companyId, String.valueOf(maxPrice)); //todo:check why Price is String in SQL
+        return null;
     }
 
     @Override

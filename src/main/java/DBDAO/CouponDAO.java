@@ -3,7 +3,6 @@ package DBDAO;
 import Beans.Coupon;
 import Exceptions.EntityCrudException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface CouponDAO {
@@ -12,11 +11,11 @@ public interface CouponDAO {
     Coupon readCoupon(Integer couponId) throws EntityCrudException;
     List<Coupon> readAllCoupons() throws EntityCrudException;
     List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException;
-    List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double price) throws EntityCrudException, SQLException;
-    List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException, SQLException;
+    List<Coupon> readCouponsByCustomerIdAndMaxPrice(Integer customerId, Double maxPrice) throws EntityCrudException;
+    List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException;
     List<Coupon> readCouponsByCompanyId(Integer companyId) throws EntityCrudException;
-    List<Coupon> readCouponsByCompanyIdAndMaxPrice(Integer companyId, String price) throws EntityCrudException, SQLException;
-    List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException, SQLException;
+    List<Coupon> readCouponsByCompanyIdAndMaxPrice(Integer companyId, Double maxPrice) throws EntityCrudException;
+    List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException;
     void updateCoupon(Coupon coupon) throws EntityCrudException;
     void deleteCoupon(Integer couponID) throws EntityCrudException;
     void deleteExpiredCoupons(String date) throws EntityCrudException;

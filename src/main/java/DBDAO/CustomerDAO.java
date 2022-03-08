@@ -1,6 +1,5 @@
 package DBDAO;
 
-import Beans.Coupon;
 import Beans.Customer;
 import Exceptions.EntityCrudException;
 

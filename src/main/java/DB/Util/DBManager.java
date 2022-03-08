@@ -19,7 +19,7 @@ public class DBManager {
             "  `id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `name` VARCHAR(45) NOT NULL," +
             "  `email` VARCHAR(45) NOT NULL," +
-            "  `password` VARCHAR(45) NOT NULL," + // todo consider if should be in database?
+            "  `password` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`));";
 
     public static final String CREATE_TABLE_CUSTOMERS = "CREATE TABLE IF NOT EXISTS `customers` (" +
@@ -27,7 +27,7 @@ public class DBManager {
             "  `first_name` VARCHAR(45) NOT NULL," +
             "  `last_name` VARCHAR(45) NOT NULL," +
             "  `email` VARCHAR(45) NOT NULL," +
-            "  `password` VARCHAR(45) NOT NULL," + // todo consider if should be in database?
+            "  `password` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`));";
 
     public static final String CREATE_TABLE_COUPONS = "CREATE TABLE IF NOT EXISTS `coupons` (" +
@@ -39,7 +39,7 @@ public class DBManager {
             "  `start_date` DATE NOT NULL," +
             "  `end_date` VARCHAR(45) NOT NULL," +
             "  `amount` INT NOT NULL," +
-            "  `price` DOUBLE NOT NULL," + // todo change in methods?
+            "  `price` DOUBLE NOT NULL," +
             "  `image` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`)," +
             "  INDEX `category_id_idx` (`category_id` ASC) VISIBLE," +
@@ -86,6 +86,9 @@ public class DBManager {
     public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ?"; // todo check in mysql workbench
     public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ? AND price <= ?";// todo check in mysql workbench
     public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ? AND category = ?";// todo check in mysql workbench
+    public static final String READ_COUPONS_BY_COMPANY_ID = "SELECT * FROM coupons WHERE company_id = ?";
+    public static final String READ_COUPONS_BY_COMPANY_ID_AND_MAX_PRICE = "SELECT * FROM coupons WHERE company_id = ? AND price <= ?";
+    public static final String READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY = "SELECT * FROM coupons WHERE company_id = ? AND category = ?";
     public static final String UPDATE_COUPON_BY_ID = "UPDATE coupons SET title = ?, category = ? ,amount = ? , description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ? WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_ID = "DELETE FROM coupons WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM coupons WHERE end_date < ?";

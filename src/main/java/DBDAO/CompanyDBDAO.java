@@ -87,13 +87,13 @@ public class CompanyDBDAO implements CompanyDAO {
     @Override
     public List<Company> readAllCompanies() throws EntityCrudException {
         ResultSet result;
+        List<Company> companyList = new ArrayList<>();
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_COMPANIES);
-            List<Company> companies = new ArrayList<>();
             while (result.next()) { // todo consider asserting
-                companies.add(ObjectExtractionUtil.resultSetToCompany(result));
+                companyList.add(ObjectExtractionUtil.resultSetToCompany(result));
             }
-            return companies;
+            return companyList;
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
         }
