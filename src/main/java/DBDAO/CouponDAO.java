@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface CouponDAO {
-    Integer createCoupon(Coupon coupon) throws EntityCrudException;
+    void createCoupon(Coupon coupon) throws EntityCrudException;
+    void addCouponPurchase(Integer customerId, Integer couponId) throws EntityCrudException;
     Coupon readCoupon(Integer couponId) throws EntityCrudException;
     List<Coupon> readAllCoupons() throws EntityCrudException;
     List<Coupon> readCouponsByCustomerId(Integer customerId) throws EntityCrudException;
@@ -20,5 +21,4 @@ public interface CouponDAO {
     void deleteCoupon(Integer couponID) throws EntityCrudException;
     void deleteExpiredCoupons(String date) throws EntityCrudException;
     boolean isCouponExistByCompanyId(Integer companyId, String title) throws EntityCrudException;
-    void addCouponPurchase(Integer couponId, Integer customerId) throws EntityCrudException;
 }

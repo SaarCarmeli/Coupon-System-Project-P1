@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Coupon {
     private Integer id;
-    private int companyID, amount;
+    private int companyId, amount;
     private double price;
     private Category category;
     private String title, description, image;
@@ -15,7 +15,7 @@ public class Coupon {
      * Initiates an instance of Coupon. From MySQL database.
      *
      * @param id          Coupon ID number
-     * @param companyID   ID number of the issuing Company
+     * @param companyId   ID number of the issuing Company
      * @param amount      Worth of Coupon discount
      * @param price       Price to purchase the Coupon
      * @param category    Commercial category the Coupon gives discount in
@@ -25,9 +25,9 @@ public class Coupon {
      * @param startDate   Coupon creation date
      * @param endDate     Date of Coupon expiration
      */
-    public Coupon(Integer id, int companyID, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
+    public Coupon(Integer id, int companyId, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
         this.id = id;
-        this.companyID = companyID;
+        this.companyId = companyId;
         this.amount = amount;
         this.price = price;
         this.category = category;
@@ -41,7 +41,7 @@ public class Coupon {
     /**
      * Initiates an instance of Coupon. Before insertion to MySQL database.
      *
-     * @param companyID   ID number of the issuing Company
+     * @param companyId   ID number of the issuing Company
      * @param amount      Worth of Coupon discount
      * @param price       Price to purchase the Coupon
      * @param category    Commercial category the Coupon gives discount in
@@ -51,8 +51,8 @@ public class Coupon {
      * @param startDate   Coupon creation date
      * @param endDate     Date of Coupon expiration
      */
-    public Coupon(int companyID, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
-        this.companyID = companyID;
+    public Coupon(int companyId, int amount, double price, Category category, String title, String description, String image, Date startDate, Date endDate) {
+        this.companyId = companyId;
         this.amount = amount;
         this.price = price;
         this.category = category;
@@ -86,8 +86,8 @@ public class Coupon {
      *
      * @return Issuing Company's ID number
      */
-    public int getCompanyID() {
-        return companyID;
+    public int getCompanyId() {
+        return companyId;
     }
 
     /**
@@ -96,7 +96,7 @@ public class Coupon {
      * @param companyId Issuing Company's ID number
      */
     public void setCompanyId(int companyId) {
-        this.companyID = companyId;
+        this.companyId = companyId;
     }
 
     /**
@@ -254,7 +254,7 @@ public class Coupon {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coupon coupon = (Coupon) o;
-        return id == coupon.id && companyID == coupon.companyID && amount == coupon.amount && Double.compare(coupon.price, price) == 0 && category == coupon.category && Objects.equals(title, coupon.title) && Objects.equals(description, coupon.description) && Objects.equals(image, coupon.image) && Objects.equals(startDate, coupon.startDate) && Objects.equals(endDate, coupon.endDate);
+        return id == coupon.id && companyId == coupon.companyId && amount == coupon.amount && Double.compare(coupon.price, price) == 0 && category == coupon.category && Objects.equals(title, coupon.title) && Objects.equals(description, coupon.description) && Objects.equals(image, coupon.image) && Objects.equals(startDate, coupon.startDate) && Objects.equals(endDate, coupon.endDate);
     }
 
     /**
@@ -264,6 +264,6 @@ public class Coupon {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(id, companyID, amount, price, category, title, description, image, startDate, endDate);
+        return Objects.hash(id, companyId, amount, price, category, title, description, image, startDate, endDate);
     }
 }

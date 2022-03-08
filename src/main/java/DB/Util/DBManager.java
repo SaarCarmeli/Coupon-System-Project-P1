@@ -80,6 +80,7 @@ public class DBManager {
 
     // Coupon CRUD:
     public static final String CREATE_COUPON = "INSERT INTO coupons (company_id, amount, price, category, title, description, image, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
+    public static final String ADD_COUPON_PURCHASE = "INSERT INTO customer_to_coupon (customer_id, coupon_id) VALUES (?,?)";
     public static final String READ_COUPON_BY_ID = "SELECT * FROM coupons WHERE coupon_id = ?";
     public static final String READ_ALL_COUPONS = "SELECT * FROM coupons";
     public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ?"; // todo check in mysql workbench
