@@ -1,7 +1,6 @@
 package DBDAO;
 
 import Beans.Company;
-import DB.ConnectionPool;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
 import DB.Util.ObjectExtractionUtil;
@@ -9,7 +8,8 @@ import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
 import Exceptions.EntityType;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +22,7 @@ public class CompanyDBDAO implements CompanyDAO {
     }
 
     /**
-     * Static method for retrieving or initiating an instance of CompanyDBDAO.
+     * Static method for retrieving and/or initiating an instance of CompanyDBDAO.
      *
      * @return CompanyDBDAO instance
      */
@@ -41,7 +41,7 @@ public class CompanyDBDAO implements CompanyDAO {
      * Create Company record in MySQL database.
      *
      * @param company Company instance to create record by
-     * @throws EntityCrudException Thrown if Create from MySQL was unsuccessful
+     * @throws EntityCrudException Thrown if Create in MySQL was unsuccessful
      */
     @Override
     public void createCompany(Company company) throws EntityCrudException {
@@ -71,7 +71,7 @@ public class CompanyDBDAO implements CompanyDAO {
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COMPANY_BY_ID, params);
             assert result != null;
-            result.next();//todo needed?
+            result.next();
             return ObjectExtractionUtil.resultSetToCompany(result, CouponDBDAO.getInstance().readCouponsByCompanyId(companyId));
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
@@ -154,7 +154,7 @@ public class CompanyDBDAO implements CompanyDAO {
         params.put(2, email);
         try {
             result = DBTools.runQueryForResult(DBManager.COUNT_COMPANIES_BY_NAME_OR_EMAIL, params);
-            assert result != null; //todo needed?
+            assert result != null;
             result.next();
             counter = result.getInt(1);
             return counter != 0;

@@ -7,7 +7,7 @@ import Exceptions.EntityCrudException;
 import java.util.List;
 
 public interface CustomerDAO {
-    Integer createCustomer(Customer customer) throws EntityCrudException;
+    void createCustomer(Customer customer) throws EntityCrudException;
     Customer readCustomer(Integer customerId) throws EntityCrudException;
     List<Customer> readAllCustomers() throws EntityCrudException;
     void updateCustomer(Customer customer) throws EntityCrudException;

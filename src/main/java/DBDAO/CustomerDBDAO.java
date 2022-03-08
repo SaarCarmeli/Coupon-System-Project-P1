@@ -1,8 +1,6 @@
 package DBDAO;
 
-import Beans.Coupon;
 import Beans.Customer;
-import DB.ConnectionPool;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
 import DB.Util.ObjectExtractionUtil;
@@ -10,7 +8,8 @@ import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
 import Exceptions.EntityType;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +21,11 @@ public class CustomerDBDAO implements CustomerDAO {
     private CustomerDBDAO() {
     }
 
+    /**
+     * Static method for retrieving and/or initiating an instance of CustomerDBDAO.
+     *
+     * @return CustomerDBDAO instance
+     */
     public static CustomerDBDAO getInstance() {
         if (instance == null) {
             synchronized (CustomerDBDAO.class) {
@@ -33,31 +37,23 @@ public class CustomerDBDAO implements CustomerDAO {
         return instance;
     }
 
-    @Override// todo finish
-    public Integer createCustomer(Customer customer) throws EntityCrudException {
-        Connection connection = null;
+    /**
+     * Create Customer record in MySQL database.
+     *
+     * @param customer Customer instance to create record by
+     * @throws EntityCrudException Thrown if Create in MySQL was unsuccessful
+     */
+    @Override
+    public void createCustomer(Customer customer) throws EntityCrudException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customer.getFirstName());
+        params.put(2, customer.getLastName());
+        params.put(3, customer.getEmail());
+        params.put(4, customer.getPassword());
         try {
-            connection = connectionPool.getConnection();
-            final String sqlStatement = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
-            final PreparedStatement preparedStatement = connection.prepareStatement(
-                    sqlStatement, Statement.RETURN_GENERATED_KEYS
-            );
-            preparedStatement.setString(1, customer.getFirstName());
-            preparedStatement.setString(2, customer.getLastName());
-            preparedStatement.setString(3, customer.getEmail());
-            preparedStatement.setString(4, customer.getPassword());
-            preparedStatement.executeUpdate();
-            final ResultSet generatedKeysResult = preparedStatement.getGeneratedKeys(); // todo adapt generic method to return generated-keys
-
-            if (!generatedKeysResult.next()) {
-                throw new RuntimeException("No results");
-            }
-
-            return generatedKeysResult.getInt(1);
-        } catch (final Exception e) {
+            System.out.println("Created Customer: " + DBTools.runQuery(DBManager.CREATE_CUSTOMER, params));
+        } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.CREATE);
-        } finally {
-            connectionPool.returnConnection(connection);
         }
     }
 
@@ -76,7 +72,7 @@ public class CustomerDBDAO implements CustomerDAO {
         try {
             result = DBTools.runQueryForResult(DBManager.READ_CUSTOMER_BY_ID, params);
             assert result != null;
-            result.next(); //todo needed?
+            result.next();
             return ObjectExtractionUtil.resultSetToCustomer(result, CouponDBDAO.getInstance().readCouponsByCustomerId(customerId));
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
@@ -116,7 +112,7 @@ public class CustomerDBDAO implements CustomerDAO {
         params.put(1, customer.getFirstName());
         params.put(2, customer.getLastName());
         params.put(3, customer.getEmail());
-        params.put(4, customer.getPassword()); // todo should it be in the database???
+        params.put(4, customer.getPassword());
         params.put(5, customer.getId());
         try {
             System.out.println("Updated Customer: " + DBTools.runQuery(DBManager.UPDATE_CUSTOMER_BY_ID, params));
@@ -159,7 +155,7 @@ public class CustomerDBDAO implements CustomerDAO {
         try {
             result = DBTools.runQueryForResult(DBManager.COUNT_CUSTOMERS_BY_EMAIL, params);
             assert result != null;
-            result.next(); //todo needed?
+            result.next();
             counter = result.getInt(1);
             return counter != 0;
         } catch (SQLException e) {
