@@ -32,7 +32,6 @@ public class LoginManager {
     }
 
     public Object login(String email, String password, ClientType clientType) {
-
         switch (clientType) {
             case ADMINISTRATOR:
                 if (email.equals("admin@admin.com") && password.equals("admin")) {
@@ -45,6 +44,7 @@ public class LoginManager {
                 companyParams.put(2, password);
                 try {
                     companyResult = DBTools.runQueryForResult(DBManager.COMPANY_LOGGING, companyParams);
+                    assert companyResult != null;
                     companyResult.next();
                     return new CompanyFacade(companyResult.getInt(0));
                 } catch (SQLException | EntityCrudException e) {
@@ -57,9 +57,10 @@ public class LoginManager {
                 customerParams.put(2, password);
                 try {
                     customerResult = DBTools.runQueryForResult(DBManager.CUSTOMER_LOGGING, customerParams);
+                    assert customerResult != null;
                     customerResult.next();
                     return new CustomerFacade(customerResult.getInt(0));
-                } catch (SQLException | EntityCrudException e) {
+                } catch (SQLException e) {
                     System.out.println("Error! Login failed!");
                 }
         }

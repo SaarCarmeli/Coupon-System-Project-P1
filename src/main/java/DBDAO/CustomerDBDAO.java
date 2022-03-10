@@ -73,7 +73,7 @@ public class CustomerDBDAO implements CustomerDAO {
             result = DBTools.runQueryForResult(DBManager.READ_CUSTOMER_BY_ID, params);
             assert result != null;
             result.next();
-            return ObjectExtractionUtil.resultSetToCustomer(result, CouponDBDAO.getInstance().readCouponsByCustomerId(customerId));
+            return ObjectExtractionUtil.resultSetToCustomer(result);
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.CUSTOMER, CrudOperation.READ);
         }

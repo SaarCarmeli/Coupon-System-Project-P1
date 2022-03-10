@@ -21,7 +21,7 @@ public class ObjectExtractionUtil {
     }
 
     public static Company resultSetToCompany(ResultSet result, List<Coupon> companyCoupons) throws SQLException {
-        final Company company = resultSetToCompany(result);
+        Company company = resultSetToCompany(result);
         company.setCoupons(companyCoupons);
         return company;
     }
@@ -52,7 +52,7 @@ public class ObjectExtractionUtil {
 
     public static Customer resultSetToCustomer(ResultSet result, List<Coupon> customerCoupons) throws SQLException {
         Customer customer = resultSetToCustomer(result);
-        customer.setCoupons(customerCoupons);
+        customer.setCoupons(customerCoupons);// todo consider deleting
         return customer;
     }
 }
