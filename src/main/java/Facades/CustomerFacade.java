@@ -26,8 +26,8 @@ public class CustomerFacade implements CustomerFacadeDAO {
         /*
             todo add method to check that:
             * customer can't purchase the same coupon twice
-            * coupon inventory number isn't 0
-            * coupon inventory number goes down by 1 after purchase
+            * coupon amount number isn't 0
+            * coupon amount goes down by 1 after purchase
             * coupon isn't expired (before being deleted by daily job)
         */
     }

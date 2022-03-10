@@ -279,7 +279,7 @@ public class CouponDBDAO implements CouponDAO {
     }
 
     /**
-     * Updates Coupon record in MySQL database.
+     * Updates Coupon record in MySQL database. Can not update Coupon ID number, Company ID number or Start date.
      *
      * @param coupon Coupon instance to update by
      * @throws EntityCrudException Thrown if update in MySQL was unsuccessful
@@ -293,9 +293,8 @@ public class CouponDBDAO implements CouponDAO {
         params.put(4, coupon.getDescription());
         params.put(5, coupon.getPrice());
         params.put(6, coupon.getImage());
-        params.put(7, coupon.getStartDate());
-        params.put(8, coupon.getEndDate());
-        params.put(9, coupon.getId());
+        params.put(7, coupon.getEndDate());
+        params.put(8, coupon.getId());
         try {
             System.out.println("Updated Coupon: " + DBTools.runQuery(DBManager.UPDATE_COUPON_BY_ID, params));
         } catch (SQLException e) {

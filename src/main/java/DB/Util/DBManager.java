@@ -89,7 +89,7 @@ public class DBManager {
     public static final String READ_COUPONS_BY_COMPANY_ID = "SELECT * FROM coupons WHERE company_id = ?";
     public static final String READ_COUPONS_BY_COMPANY_ID_AND_MAX_PRICE = "SELECT * FROM coupons WHERE company_id = ? AND price <= ?";
     public static final String READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY = "SELECT * FROM coupons WHERE company_id = ? AND category = ?";
-    public static final String UPDATE_COUPON_BY_ID = "UPDATE coupons SET title = ?, category = ? ,amount = ? , description = ? ,price = ? ,image = ? , start_date = ? ,end_date = ? WHERE coupon_id = ?";
+    public static final String UPDATE_COUPON_BY_ID = "UPDATE coupons SET title = ?, category = ? ,amount = ? , description = ? ,price = ? ,image = ? ,end_date = ? WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_ID = "DELETE FROM coupons WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM coupons WHERE end_date < ?";
     public static final String COUNT_COUPONS_BY_COMPANY_ID_AND_TITLE = "SELECT count(*) FROM coupons WHERE company_id = ? AND title = ?";

@@ -16,7 +16,7 @@ public class Coupon {
      *
      * @param id          Coupon ID number
      * @param companyId   ID number of the issuing Company
-     * @param amount      Worth of Coupon discount
+     * @param amount      Worth of Coupon discount // todo fix
      * @param price       Price to purchase the Coupon
      * @param category    Commercial category the Coupon gives discount in
      * @param title       Commercial name of the Coupon
