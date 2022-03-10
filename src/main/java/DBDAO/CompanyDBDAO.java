@@ -72,7 +72,7 @@ public class CompanyDBDAO implements CompanyDAO {
             result = DBTools.runQueryForResult(DBManager.READ_COMPANY_BY_ID, params);
             assert result != null;
             result.next();
-            return ObjectExtractionUtil.resultSetToCompany(result, CouponDBDAO.getInstance().readCouponsByCompanyId(companyId));
+            return ObjectExtractionUtil.resultSetToCompany(result);
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
         }
