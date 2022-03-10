@@ -14,16 +14,22 @@ public class CustomerFacade implements CustomerFacadeDAO {
 
     /**
      * Constructs a CustomerFacade that implements the methods a customer client is allowed to use. Accessed via log-in from the LoginManager.
+     *
      * @param customerId The logged customer's ID number, received from login method in LoginManager
      */
     public CustomerFacade(int customerId) {
         this.customerId = customerId;
     }
 
-    // todo implement methods:
     @Override
     public void purchaseCoupon(Coupon coupon) {
-
+        /*
+            todo add method to check that:
+            * customer can't purchase the same coupon twice
+            * coupon inventory number isn't 0
+            * coupon inventory number goes down by 1 after purchase
+            * coupon isn't expired (before being deleted by daily job)
+        */
     }
 
     /**
