@@ -16,7 +16,7 @@ public class Coupon {
      *
      * @param id          Coupon ID number
      * @param companyId   ID number of the issuing Company
-     * @param amount      Worth of Coupon discount // todo fix
+     * @param amount      How many coupons available for purchase
      * @param price       Price to purchase the Coupon
      * @param category    Commercial category the Coupon gives discount in
      * @param title       Commercial name of the Coupon
@@ -42,7 +42,7 @@ public class Coupon {
      * Initiates an instance of Coupon. Before insertion to MySQL database.
      *
      * @param companyId   ID number of the issuing Company
-     * @param amount      Worth of Coupon discount
+     * @param amount      How many coupons available for purchase
      * @param price       Price to purchase the Coupon
      * @param category    Commercial category the Coupon gives discount in
      * @param title       Commercial name of the Coupon
@@ -100,18 +100,18 @@ public class Coupon {
     }
 
     /**
-     * Returns the amount of discount the Coupon gives.
+     * Returns the amount of coupons available for purchase.
      *
-     * @return Coupon discount amount
+     * @return Coupon amount
      */
     public int getAmount() {
         return amount;
     }
 
     /**
-     * Sets the amount of discount the Coupon gives.
+     * Sets the amount of coupons available for purchase.
      *
-     * @param amount Coupon discount amount
+     * @param amount Coupon amount
      */
     public void setAmount(int amount) {
         this.amount = amount;

@@ -5,7 +5,10 @@ import Beans.Coupon;
 import Beans.Customer;
 import DBDAO.CouponDBDAO;
 import DBDAO.CustomerDBDAO;
+import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;
+import Exceptions.EntityType;
+import Exceptions.NoCouponsLeftException;
 
 import java.util.ArrayList;
 
@@ -21,15 +24,33 @@ public class CustomerFacade implements CustomerFacadeDAO {
         this.customerId = customerId;
     }
 
+    /**
+     * Adds a new Coupon purchase for a Customer to the database.
+     * Checks that the Customer hasn't already purchased this Coupon (can not buy the same coupon twice).
+     * Checks that there are coupons available for purchase (coupon amount is not 0).
+     * Lowers the amount of coupons by 1 after purchase is complete.
+     *
+     * @param coupon Coupon being purchased
+     * @throws EntityCrudException         Thrown if Count in MySQL was unsuccessful
+     * @throws EntityAlreadyExistException Thrown if the customer already purchased this coupon
+     * @throws NoCouponsLeftException      Thrown if there are no coupons left to purchase
+     */
     @Override
-    public void purchaseCoupon(Coupon coupon) {
+    public void purchaseCoupon(Coupon coupon) throws EntityCrudException, EntityAlreadyExistException, NoCouponsLeftException {
         /*
-            todo add method to check that:
-            * customer can't purchase the same coupon twice
-            * coupon amount number isn't 0
-            * coupon amount goes down by 1 after purchase
-            * coupon isn't expired (before being deleted by daily job)
+            todo add method to check that: coupon isn't expired (before being deleted by daily job)
         */
+        int newCouponAmount;
+        if (CouponDBDAO.getInstance().isCouponExistByCustomerId(coupon.getId(), customerId)) {
+            throw new EntityAlreadyExistException(EntityType.PURCHASE);
+        }
+        if (coupon.getAmount() <= 0) {
+            throw new NoCouponsLeftException();
+        }
+        CouponDBDAO.getInstance().addCouponPurchase(customerId, coupon.getId());
+        newCouponAmount = coupon.getAmount() - 1;
+        coupon.setAmount(newCouponAmount);
+        CouponDBDAO.getInstance().updateCoupon(coupon);
     }
 
     /**
