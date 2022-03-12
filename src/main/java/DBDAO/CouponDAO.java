@@ -20,4 +20,5 @@ public interface CouponDAO {
     void deleteCoupon(Integer couponID) throws EntityCrudException;
     void deleteExpiredCoupons(String date) throws EntityCrudException;
     boolean isCouponExistByCompanyId(Integer companyId, String title) throws EntityCrudException;
+    boolean isCouponExistByCustomerId(Integer couponId, Integer customerId) throws EntityCrudException;
 }

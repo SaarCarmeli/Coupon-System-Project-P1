@@ -93,6 +93,7 @@ public class DBManager {
     public static final String DELETE_COUPON_BY_ID = "DELETE FROM coupons WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM coupons WHERE end_date < ?";
     public static final String COUNT_COUPONS_BY_COMPANY_ID_AND_TITLE = "SELECT count(*) FROM coupons WHERE company_id = ? AND title = ?";
+    public static final String COUNT_COUPONS_BY_CUSTOMER_ID = "SELECT count(*) FROM customer_to_coupon WHERE coupon_id = ? AND customer_id = ?"; // todo check that works
 
     // Customer CRUD:
     public static final String CREATE_CUSTOMER = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";

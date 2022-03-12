@@ -359,7 +359,34 @@ public class CouponDBDAO implements CouponDAO {
             counter = result.getInt(1);
             return counter != 0;
         } catch (SQLException e) {
-            throw new EntityCrudException(EntityType.COMPANY, CrudOperation.COUNT);
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.COUNT);
+        }
+    }
+
+    /**
+     * Checks whether the purchase of a Coupon corresponding to the coupon ID by a Customer corresponding to the customer ID
+     * exists in MySQL database by counting the purchases that meet both criteria.
+     *
+     * @param couponId   The Coupon ID being checked
+     * @param customerId The Customer ID being checked
+     * @return true -> purchase of the coupon by the customer exists, false -> purchase does not exist
+     * @throws EntityCrudException Thrown if count in MySQL was unsuccessful
+     */
+    @Override
+    public boolean isCouponExistByCustomerId(Integer couponId, Integer customerId) throws EntityCrudException {
+        int counter;
+        ResultSet result;
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, couponId);
+        params.put(2, customerId);
+        try {
+            result = DBTools.runQueryForResult(DBManager.COUNT_COUPONS_BY_CUSTOMER_ID, params);
+            assert result != null;
+            result.next();
+            counter = result.getInt(1);
+            return counter != 0; // todo check that works
+        } catch (SQLException e) {
+            throw new EntityCrudException(EntityType.COUPON, CrudOperation.COUNT);
         }
     }
 }
