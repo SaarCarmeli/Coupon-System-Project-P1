@@ -100,7 +100,7 @@ public class CompanyDBDAO implements CompanyDAO {
     }
 
     /**
-     * Updates Company record in MySQL database.
+     * Updates Company record in MySQL database. Can not update Company ID number or Company name.
      *
      * @param company Company instance to update record by
      * @throws EntityCrudException Thrown if update in MySQL was unsuccessful
@@ -108,10 +108,9 @@ public class CompanyDBDAO implements CompanyDAO {
     @Override
     public void updateCompany(Company company) throws EntityCrudException {
         Map<Integer, Object> params = new HashMap<>();
-        params.put(1, company.getName());
-        params.put(2, company.getEmail());
-        params.put(3, company.getPassword()); // todo should it be in the database???
-        params.put(4, company.getId());
+        params.put(1, company.getEmail());
+        params.put(2, company.getPassword());
+        params.put(3, company.getId());
         try {
             System.out.println("Updated Company: " + DBTools.runQuery(DBManager.UPDATE_COMPANY_BY_ID, params));
         } catch (SQLException e) {

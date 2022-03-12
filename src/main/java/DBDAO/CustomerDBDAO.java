@@ -101,7 +101,7 @@ public class CustomerDBDAO implements CustomerDAO {
     }
 
     /**
-     * Updates Customer record in MySQL database.
+     * Updates Customer record in MySQL database. Can not update Customer ID number.
      *
      * @param customer Customer instance to update by
      * @throws EntityCrudException Thrown if update in MySQL was unsuccessful

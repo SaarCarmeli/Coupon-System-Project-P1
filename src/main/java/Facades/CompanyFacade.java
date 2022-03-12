@@ -39,7 +39,7 @@ public class CompanyFacade implements CompanyFacadeDAO {
     }
 
     /**
-     * Updates Coupon record in the database.
+     * Updates Coupon record in the database. Can not update Coupon ID number, Company ID number or Start date.
      *
      * @param coupon Coupon instance to update the record by
      * @throws EntityCrudException Thrown if Update in MySQL was unsuccessful
@@ -96,7 +96,7 @@ public class CompanyFacade implements CompanyFacadeDAO {
     }
 
     /**
-     * Returns the details of the company that logged in including:
+     * Returns the details of the company that logged in, including:
      * Company ID number, Name and Email
      *
      * @return Company details from MySQL database
