@@ -2,7 +2,6 @@ package LoginManager;
 
 import DB.Util.DBManager;
 import DB.Util.DBTools;
-import Exceptions.EntityCrudException;
 import Facades.AdminFacade;
 import Facades.CompanyFacade;
 import Facades.CustomerFacade;
@@ -15,11 +14,14 @@ import java.util.Map;
 public class LoginManager {
     private static LoginManager instance = null;
 
-    //c'tor
     private LoginManager() {
     }
 
-    //getting instance.
+    /**
+     * Static method for retrieving and/or initiating an instance of LoginManager.
+     *
+     * @return LoginManager instance
+     */
     public static LoginManager getInstance() {
         if (instance == null) {
             synchronized (LoginManager.class) {
@@ -31,6 +33,15 @@ public class LoginManager {
         return instance;
     }
 
+    /**
+     * Method for logging into the client facade. Checks the database for a match between client input and an existing record.
+     *
+     * @param email      Client email
+     * @param password   Client password
+     * @param clientType Client type is either ADMINISTRATOR, COMPANY or CUSTOMER
+     * @return AdminFacade if client is administrator, CompanyFacade if client is a Company, CustomerFacade if client is
+     * a Customer or null if there is no match with input
+     */
     public Object login(String email, String password, ClientType clientType) {
         switch (clientType) {
             case ADMINISTRATOR:
@@ -64,6 +75,7 @@ public class LoginManager {
                     System.out.println("Error! Login failed!");
                 }
         }
+        System.out.println("Login failed! No match found with input!");
         return null;
     }
 }
