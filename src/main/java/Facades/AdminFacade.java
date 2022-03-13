@@ -3,7 +3,6 @@ package Facades;
 import Beans.Company;
 import Beans.Customer;
 import DBDAO.CompanyDBDAO;
-import DBDAO.CouponDBDAO;
 import DBDAO.CustomerDBDAO;
 import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;

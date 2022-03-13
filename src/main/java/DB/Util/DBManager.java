@@ -2,7 +2,7 @@ package DB.Util;
 
 public class DBManager {
     // User info:
-    public static final String SQL_URL = "jdbc:mysql://localhost:3306/coupon_project";
+    public static final String SQL_URL = "jdbc:mysql://localhost:3306/";//jdbc:mysql://localhost:3306/coupon_project
     public static final String SQL_USER = "root";
     public static final String SQL_PASS = System.getenv("SQL_PASSWORD");
 
@@ -10,19 +10,19 @@ public class DBManager {
     public static final String CREATE_SCHEMA = "CREATE SCHEMA IF NOT EXISTS `coupon_project`";
 
     // Table Creation:
-    public static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE IF NOT EXISTS `categories` (" +
+    public static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE IF NOT EXISTS `coupon_project`.`categories` (" +
             "   `id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `name` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`))";
 
-    public static final String CREATE_TABLE_COMPANIES = "CREATE TABLE IF NOT EXISTS `companies` (" +
+    public static final String CREATE_TABLE_COMPANIES = "CREATE TABLE IF NOT EXISTS `coupon_project`.`companies` (" +
             "  `id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `name` VARCHAR(45) NOT NULL," +
             "  `email` VARCHAR(45) NOT NULL," +
             "  `password` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`));";
 
-    public static final String CREATE_TABLE_CUSTOMERS = "CREATE TABLE IF NOT EXISTS `customers` (" +
+    public static final String CREATE_TABLE_CUSTOMERS = "CREATE TABLE IF NOT EXISTS `coupon_project`.`customers` (" +
             "`id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `first_name` VARCHAR(45) NOT NULL," +
             "  `last_name` VARCHAR(45) NOT NULL," +
@@ -30,7 +30,7 @@ public class DBManager {
             "  `password` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`));";
 
-    public static final String CREATE_TABLE_COUPONS = "CREATE TABLE IF NOT EXISTS `coupons` (" +
+    public static final String CREATE_TABLE_COUPONS = "CREATE TABLE IF NOT EXISTS `coupon_project`.`coupons` (" +
             "   `coupon_id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `company_id` BIGINT NOT NULL," +
             "  `category_id` BIGINT NOT NULL," +
@@ -54,7 +54,7 @@ public class DBManager {
             "    ON DELETE CASCADE" +
             "    ON UPDATE CASCADE);";
 
-    public static final String CREATE_TABLE_CUSTOMER_TO_COUPON = "CREATE TABLE IF NOT EXISTS `customer_to_coupon` (" +
+    public static final String CREATE_TABLE_CUSTOMER_TO_COUPON = "CREATE TABLE IF NOT EXISTS `coupon_project`.`customer_to_coupon` (" +
             "  `customer_id` BIGINT NOT NULL," +
             "  `coupon_id` BIGINT NOT NULL," +
             "  INDEX `customer_id_idx` (`customer_id` ASC) VISIBLE," +
