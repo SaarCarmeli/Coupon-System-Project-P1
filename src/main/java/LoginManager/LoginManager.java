@@ -47,7 +47,7 @@ public class LoginManager {
                     assert companyResult != null;
                     companyResult.next();
                     return new CompanyFacade(companyResult.getInt(0));
-                } catch (SQLException | EntityCrudException e) {
+                } catch (SQLException e) {
                     System.out.println("Error! Login failed!");
                 }
             case CUSTOMER:
