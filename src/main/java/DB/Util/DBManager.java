@@ -2,9 +2,9 @@ package DB.Util;
 
 public class DBManager {
     // User info:
-    public static final String SQL_URL = "jdbc:mysql://localhost:3306/";//jdbc:mysql://localhost:3306/coupon_project
+    public static final String SQL_URL = "jdbc:mysql://localhost:3306/";
     public static final String SQL_USER = "root";
-    public static final String SQL_PASS = System.getenv("SQL_PASSWORD");
+    public static final String SQL_PASS = "12345678";
 
     // Schema Creation:
     public static final String CREATE_SCHEMA = "CREATE SCHEMA IF NOT EXISTS `coupon_project`";

@@ -22,13 +22,13 @@ public class AdminFacadeTest {
     }
 
     @Test
-    public void addCompanyTest() {
+    public void addCompanyTest() throws Exception {
         Company company = new Company("Itzik hooBanav", "itzB@itzmail.com", "19itzbanav_50");
         try {
             adminFacade.addCompany(company);
             assertEquals(new Company(1, "Itzik hooBanav", "itzB@itzmail.com"), adminFacade.readCompany(1));
         } catch (EntityAlreadyExistException | EntityCrudException e) {
-            System.out.println(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 }

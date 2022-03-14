@@ -21,7 +21,7 @@ public class DatabaseInitializer {
             createCouponsTable();
             createCustomerToCouponTable();
         } catch (DBInitException | DBException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 
