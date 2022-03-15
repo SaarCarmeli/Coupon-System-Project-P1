@@ -15,7 +15,6 @@ public class DatabaseInitializer {
     public static void createTables() {
         try {
             createSchema();
-            createCategoriesTable();
             createCompaniesTable();
             createCustomersTable();
             createCouponsTable();
@@ -30,14 +29,6 @@ public class DatabaseInitializer {
             System.out.println("Created schema: " + DBTools.runQuery(DBManager.CREATE_SCHEMA));
         } catch (SQLException e) {
             throw new DBInitException();
-        }
-    }
-
-    public static void createCategoriesTable() throws DBException {
-        try {
-            System.out.println("Created \"categories\" table: " + DBTools.runQuery(DBManager.CREATE_TABLE_CATEGORIES));
-        } catch (SQLException e) {
-            throw new DBException("Failed to create \"categories\" table");
         }
     }
 

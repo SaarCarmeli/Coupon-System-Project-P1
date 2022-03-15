@@ -10,11 +10,6 @@ public class DBManager {
     public static final String CREATE_SCHEMA = "CREATE SCHEMA IF NOT EXISTS `coupon_project`";
 
     // Table Creation:
-    public static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE IF NOT EXISTS `coupon_project`.`categories` (" +
-            "   `id` BIGINT NOT NULL AUTO_INCREMENT," +
-            "  `name` VARCHAR(45) NOT NULL," +
-            "  PRIMARY KEY (`id`))";
-
     public static final String CREATE_TABLE_COMPANIES = "CREATE TABLE IF NOT EXISTS `coupon_project`.`companies` (" +
             "  `id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `name` VARCHAR(45) NOT NULL," +
@@ -33,7 +28,7 @@ public class DBManager {
     public static final String CREATE_TABLE_COUPONS = "CREATE TABLE IF NOT EXISTS `coupon_project`.`coupons` (" +
             "   `coupon_id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `company_id` BIGINT NOT NULL," +
-            "  `category_id` BIGINT NOT NULL," +
+            "  `category` VARCHAR(45) NOT NULL," +
             "  `title` VARCHAR(45) NOT NULL," +
             "  `description` VARCHAR(45) NOT NULL," +
             "  `start_date` DATE NOT NULL," +
@@ -41,16 +36,10 @@ public class DBManager {
             "  `amount` INT NOT NULL," +
             "  `price` DOUBLE NOT NULL," +
             "  `image` VARCHAR(45) NOT NULL," +
-            "  PRIMARY KEY (`id`)," +
-            "  INDEX `category_id_idx` (`category_id` ASC) VISIBLE," +
+            "  PRIMARY KEY (`coupon_id`)," +
             "  CONSTRAINT `company_id`" +
             "    FOREIGN KEY (`company_id`)" +
             "    REFERENCES `coupon_project`.`companies` (`id`)" +
-            "    ON DELETE CASCADE" +
-            "    ON UPDATE CASCADE," +
-            "  CONSTRAINT `category_id`" +
-            "    FOREIGN KEY (`category_id`)" +
-            "    REFERENCES `coupon_project`.`categories` (`id`)" +
             "    ON DELETE CASCADE" +
             "    ON UPDATE CASCADE);";
 
@@ -66,17 +55,17 @@ public class DBManager {
             "    ON UPDATE CASCADE," +
             "  CONSTRAINT `coupon_id`" +
             "    FOREIGN KEY (`coupon_id`)" +
-            "    REFERENCES `coupon_project`.`coupons` (`id`)" +
+            "    REFERENCES `coupon_project`.`coupons` (`coupon_id`)" +
             "    ON DELETE CASCADE" +
             "    ON UPDATE CASCADE);";
 
     // Company CRUD:
-    public static final String CREATE_COMPANY = "INSERT INTO companies (name, email, password) VALUES(?, ?, ?)";
-    public static final String READ_COMPANY_BY_ID = "SELECT id, name, email FROM companies WHERE id = ?";
-    public static final String READ_ALL_COMPANIES = "SELECT id, name, email FROM companies";
-    public static final String UPDATE_COMPANY_BY_ID = "UPDATE companies SET email = ?, password = ? WHERE id = ?";
-    public static final String DELETE_COMPANY_BY_ID = "DELETE FROM companies WHERE id = ?";
-    public static final String COUNT_COMPANIES_BY_NAME_OR_EMAIL = "SELECT count(*) FROM companies WHERE name = ? OR email = ?";
+    public static final String CREATE_COMPANY = "INSERT INTO `coupon_project`.`companies` (name, email, password) VALUES(?, ?, ?)";
+    public static final String READ_COMPANY_BY_ID = "SELECT id, name, email FROM `coupon_project`.`companies` WHERE id = ?";
+    public static final String READ_ALL_COMPANIES = "SELECT id, name, email FROM `coupon_project`.`companies`";
+    public static final String UPDATE_COMPANY_BY_ID = "UPDATE `coupon_project`.`companies` SET email = ?, password = ? WHERE id = ?";
+    public static final String DELETE_COMPANY_BY_ID = "DELETE FROM `coupon_project`.`companies` WHERE id = ?";
+    public static final String COUNT_COMPANIES_BY_NAME_OR_EMAIL = "SELECT COUNT(*) FROM `coupon_project`.`companies` WHERE name = ? OR email = ?";
 
     // Coupon CRUD:
     public static final String CREATE_COUPON = "INSERT INTO coupons (company_id, amount, price, category, title, description, image, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
