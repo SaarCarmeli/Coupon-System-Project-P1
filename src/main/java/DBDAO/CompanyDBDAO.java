@@ -58,6 +58,7 @@ public class CompanyDBDAO implements CompanyDAO {
 
     /**
      * Returns an instance of Company from MySQL database by company ID number.
+     * Returns Company ID number, Name and Email. Does not return password.
      *
      * @param companyId Company ID number
      * @return Company instance from MySQL database
@@ -100,7 +101,8 @@ public class CompanyDBDAO implements CompanyDAO {
     }
 
     /**
-     * Updates Company record in MySQL database. Can not update Company ID number or Company name.
+     * Updates Company record in MySQL database.
+     * Updates Email and Password. Does not update Company ID number and name.
      *
      * @param company Company instance to update record by
      * @throws EntityCrudException Thrown if update in MySQL was unsuccessful

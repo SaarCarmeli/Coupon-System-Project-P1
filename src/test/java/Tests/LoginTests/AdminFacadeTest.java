@@ -62,7 +62,7 @@ public class AdminFacadeTest {
 
     @After
     public void finish() throws SQLException {
-        //System.out.println("Dropped schema: " + DBTools.runQuery("DROP DATABASE `coupon_project`"));
+        System.out.println("Dropped schema: " + DBTools.runQuery("DROP DATABASE `coupon_project`"));
     }
 
     @Test
@@ -75,11 +75,12 @@ public class AdminFacadeTest {
 
     @Test
     public void updateCompanyTest() throws Exception {
-        Company company = new Company("Tzmigey Ferdinand von Schlauffer", "Tzmigimail@TzamigBusinessMail.com", "12345678");
+        String password = "12345678";
+        Company company = new Company("Tzmigey Ferdinand von Schlauffer", "Tzmigimail@TzamigBusinessMail.com", password);
         adminFacade.addCompany(company);
         company = adminFacade.readCompany(idCounter);
+        company.setPassword(password);
         company.setEmail("businessMail@TzamigMail.com");
-        company.setPassword("87654321");
         adminFacade.updateCompany(company);
         companyAssertion.accept(company);
     }
@@ -124,12 +125,14 @@ public class AdminFacadeTest {
 
     @Test
     public void updateCustomerTest() throws Exception {
-        Customer customer = new Customer("Jennifer", "Jefferson", "jennjeff@gmail.com", "nosreffej6891");
+        String password = "nosreffej6891";
+        Customer customer = new Customer("Jennifer", "Jefferson", "jennjeff@gmail.com", password);
         adminFacade.addCustomer(customer);
         customer = adminFacade.readCustomer(idCounter);
+        customer.setPassword(password);
         customer.setLastName("Robinson");
         customer.setEmail("jennrobinson@gmail.com");
-        adminFacade.updateCustomer(customer); // no value specified for password
+        adminFacade.updateCustomer(customer);
         customerAssertion.accept(customer);
     }
 }

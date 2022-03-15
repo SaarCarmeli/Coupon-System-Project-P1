@@ -59,6 +59,7 @@ public class CustomerDBDAO implements CustomerDAO {
 
     /**
      * Returns an instance of Customer from MySQL database by customer ID number.
+     * Returns Customer ID number, First name, Last name and Email. Does not return password.
      *
      * @param customerId Customer ID number
      * @return Customer instance from MySQL database
@@ -80,7 +81,8 @@ public class CustomerDBDAO implements CustomerDAO {
     }
 
     /**
-     * Returns a List of all Customers in MySQL database
+     * Returns a List of all Customers in MySQL database.
+     * Returns Customer ID number, First name, Last name and Email. Does not return password.
      *
      * @return List of all Customers in MySQL database
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
@@ -101,7 +103,8 @@ public class CustomerDBDAO implements CustomerDAO {
     }
 
     /**
-     * Updates Customer record in MySQL database. Can not update Customer ID number.
+     * Updates Customer record in MySQL database.
+     * Updates First name, Last name, email and password. Does not update Customer ID number.
      *
      * @param customer Customer instance to update by
      * @throws EntityCrudException Thrown if update in MySQL was unsuccessful

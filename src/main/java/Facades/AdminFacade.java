@@ -57,7 +57,8 @@ public class AdminFacade implements AdminFacadeDAO {
 
     /**
      * Returns the details of a Company by its ID number, including:
-     * Company ID number, Name and Email
+     * Company ID number, Name and Email.
+     * Does not return password.
      *
      * @param companyId Company ID number
      * @return Company details from MySQL database
@@ -70,7 +71,8 @@ public class AdminFacade implements AdminFacadeDAO {
 
     /**
      * Returns the details of all Companies, including:
-     * Company ID number, Name and Email
+     * Company ID number, Name and Email.
+     * Does not return password.
      *
      * @return List of all Companies details from MySQL database
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
@@ -119,7 +121,8 @@ public class AdminFacade implements AdminFacadeDAO {
 
     /**
      * Returns the details of a Customer by his ID number, including:
-     * Customer ID number, First name, Last name and Email
+     * Customer ID number, First name, Last name and Email.
+     * Does not return password.
      *
      * @param customerId Customer ID number
      * @return Customer details from MySQL database
@@ -132,7 +135,8 @@ public class AdminFacade implements AdminFacadeDAO {
 
     /**
      * Returns the details of all Customers, including:
-     * Customer ID number, First name, Last name and Email
+     * Customer ID number, First name, Last name and Email.
+     * Does not return password.
      *
      * @return List of all Customers details from MySQL database
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
