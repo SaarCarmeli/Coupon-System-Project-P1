@@ -3,6 +3,7 @@ package Tests.LoginTests;
 import Beans.Company;
 import DB.DatabaseInitializer;
 import DB.Util.DBTools;
+import DBDAO.CompanyDBDAO;
 import Facades.AdminFacade;
 import LoginManager.ClientType;
 import LoginManager.LoginManager;
@@ -12,7 +13,7 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class AdminFacadeTest {
     public static AdminFacade adminFacade;
@@ -51,5 +52,14 @@ public class AdminFacadeTest {
         assertEquals(company.getId(), newCompany.getId());
         assertEquals(company.getName(), newCompany.getName());
         assertEquals(company.getEmail(), newCompany.getEmail());
+    }
+
+    @Test
+    public void deleteCompanyTest() throws Exception {
+        Company company = new Company("Motti Hovalot","Motti@Mmail.com","abc123");
+        adminFacade.addCompany(company);
+        assertTrue(CompanyDBDAO.getInstance().isCompanyExist("Motti Hovalot", "Motti@Mmail.com"));
+        adminFacade.deleteCompany(1);
+        assertFalse(CompanyDBDAO.getInstance().isCompanyExist("Motti Hovalot", "Motti@Mmail.com"));
     }
 }
