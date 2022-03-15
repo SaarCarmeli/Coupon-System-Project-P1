@@ -1,6 +1,7 @@
 package Tests.LoginTests;
 
 import Beans.Company;
+import Beans.Customer;
 import Beans.Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
 import DB.Util.DBTools;
@@ -41,6 +42,17 @@ public class AdminFacadeTest {
         }
     };
 
+    public static Consumer<Customer> customerAssertion = customer -> {
+        try {
+            assertEquals(customer.getId(), adminFacade.readCustomer(idCounter).getId());
+            assertEquals(customer.getFirstName(), adminFacade.readCustomer(idCounter).getFirstName());
+            assertEquals(customer.getLastName(), adminFacade.readCustomer(idCounter).getLastName());
+            assertEquals(customer.getEmail(), adminFacade.readCustomer(idCounter).getEmail());
+        } catch (EntityCrudException e) {
+            System.out.println(e.getMessage());
+        }
+    };
+
     @Before
     public void initiation() {
         DatabaseInitializer.createTables();
@@ -50,13 +62,13 @@ public class AdminFacadeTest {
 
     @After
     public void finish() throws SQLException {
-        System.out.println("Dropped schema: " + DBTools.runQuery("DROP DATABASE `coupon_project`"));
+        //System.out.println("Dropped schema: " + DBTools.runQuery("DROP DATABASE `coupon_project`"));
     }
 
     @Test
     public void addCompanyTest() throws Exception {
         Company company = new Company("Itzik hooBanav", "itzB@itzmail.com", "19itzbanav_50");
-        Company newCompany = new Company(1, "Itzik hooBanav", "itzB@itzmail.com");
+        Company newCompany = new Company(idCounter, "Itzik hooBanav", "itzB@itzmail.com");
         adminFacade.addCompany(company);
         companyAssertion.accept(newCompany);
     }
@@ -65,7 +77,7 @@ public class AdminFacadeTest {
     public void updateCompanyTest() throws Exception {
         Company company = new Company("Tzmigey Ferdinand von Schlauffer", "Tzmigimail@TzamigBusinessMail.com", "12345678");
         adminFacade.addCompany(company);
-        company = adminFacade.readCompany(1);
+        company = adminFacade.readCompany(idCounter);
         company.setEmail("businessMail@TzamigMail.com");
         company.setPassword("87654321");
         adminFacade.updateCompany(company);
@@ -77,7 +89,7 @@ public class AdminFacadeTest {
         Company company = new Company("Motti Hovalot", "Motti@Mmail.com", "abc123");
         adminFacade.addCompany(company);
         assertTrue(CompanyDBDAO.getInstance().isCompanyExist("Motti Hovalot", "Motti@Mmail.com"));
-        adminFacade.deleteCompany(1);
+        adminFacade.deleteCompany(idCounter);
         assertFalse(CompanyDBDAO.getInstance().isCompanyExist("Motti Hovalot", "Motti@Mmail.com"));
     }
 
@@ -100,5 +112,24 @@ public class AdminFacadeTest {
         List<Company> companyList = List.of(company1, company2, company3);
         companyList.forEach(company -> companyCreation.accept(company));
         TablePrinterUtil.print(adminFacade.readAllCompanies());
+    }
+
+    @Test
+    public void addCustomerTest() throws Exception {
+        Customer customer = new Customer("Jeffery", "Jefferson", "jeffjeff@gmail.com", "nosreffej4891");
+        Customer newCustomer = new Customer(idCounter, "Jeffery", "Jefferson", "jeffjeff@gmail.com");
+        adminFacade.addCustomer(customer);
+        customerAssertion.accept(newCustomer);
+    }
+
+    @Test
+    public void updateCustomerTest() throws Exception {
+        Customer customer = new Customer("Jennifer", "Jefferson", "jennjeff@gmail.com", "nosreffej6891");
+        adminFacade.addCustomer(customer);
+        customer = adminFacade.readCustomer(idCounter);
+        customer.setLastName("Robinson");
+        customer.setEmail("jennrobinson@gmail.com");
+        adminFacade.updateCustomer(customer); // no value specified for password
+        customerAssertion.accept(customer);
     }
 }

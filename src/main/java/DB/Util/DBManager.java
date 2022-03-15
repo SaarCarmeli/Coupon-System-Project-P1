@@ -18,15 +18,15 @@ public class DBManager {
             "  PRIMARY KEY (`id`));";
 
     public static final String CREATE_TABLE_CUSTOMERS = "CREATE TABLE IF NOT EXISTS `coupon_project`.`customers` (" +
-            "`id` BIGINT NOT NULL AUTO_INCREMENT," +
+            "  `customer_id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `first_name` VARCHAR(45) NOT NULL," +
             "  `last_name` VARCHAR(45) NOT NULL," +
             "  `email` VARCHAR(45) NOT NULL," +
             "  `password` VARCHAR(45) NOT NULL," +
-            "  PRIMARY KEY (`id`));";
+            "  PRIMARY KEY (`customer_id`));";
 
     public static final String CREATE_TABLE_COUPONS = "CREATE TABLE IF NOT EXISTS `coupon_project`.`coupons` (" +
-            "   `coupon_id` BIGINT NOT NULL AUTO_INCREMENT," +
+            "  `coupon_id` BIGINT NOT NULL AUTO_INCREMENT," +
             "  `company_id` BIGINT NOT NULL," +
             "  `category` VARCHAR(45) NOT NULL," +
             "  `title` VARCHAR(45) NOT NULL," +
@@ -50,7 +50,7 @@ public class DBManager {
             "  INDEX `coupon_id_idx` (`coupon_id` ASC) VISIBLE," +
             "  CONSTRAINT `customer_id`" +
             "    FOREIGN KEY (`customer_id`)" +
-            "    REFERENCES `coupon_project`.`customers` (`id`)" +
+            "    REFERENCES `coupon_project`.`customers` (`customer_id`)" +
             "    ON DELETE CASCADE" +
             "    ON UPDATE CASCADE," +
             "  CONSTRAINT `coupon_id`" +
@@ -90,7 +90,7 @@ public class DBManager {
     public static final String READ_ALL_CUSTOMERS = "SELECT customer_id, first_name, last_name, email FROM `coupon_project`.`customers`";
     public static final String UPDATE_CUSTOMER_BY_ID = "UPDATE `coupon_project`.`customers` SET first_name = ?,last_name = ?, email = ?, password = ? WHERE customer_id = ?";
     public static final String DELETE_CUSTOMER_BY_ID = "DELETE FROM `coupon_project`.`customers` WHERE customer_id = ?";
-    public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT count(*) FROM `coupon_project`.`customers` WHERE email = ?";
+    public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT COUNT(*) FROM `coupon_project`.`customers` WHERE email = ?";
 
     //Login
     public static final String COMPANY_LOGGING = "SELECT id FROM companies WHERE email = ? AND password = ?";
