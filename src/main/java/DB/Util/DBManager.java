@@ -85,12 +85,12 @@ public class DBManager {
     public static final String COUNT_COUPONS_BY_CUSTOMER_ID = "SELECT count(*) FROM customer_to_coupon WHERE coupon_id = ? AND customer_id = ?"; // todo check that works
 
     // Customer CRUD:
-    public static final String CREATE_CUSTOMER = "INSERT INTO customers (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
-    public static final String READ_CUSTOMER_BY_ID = "SELECT customer_id, first_name, last_name, email FROM customers WHERE customer_id = ?";
-    public static final String READ_ALL_CUSTOMERS = "SELECT customer_id, first_name, last_name, email FROM customers";
-    public static final String UPDATE_CUSTOMER_BY_ID = "UPDATE customers SET first_name = ?,last_name = ?, email = ?, password = ? WHERE customer_id = ?";
-    public static final String DELETE_CUSTOMER_BY_ID = "DELETE FROM customers WHERE customer_id = ?";
-    public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT count(*) FROM customers WHERE email = ?";
+    public static final String CREATE_CUSTOMER = "INSERT INTO `coupon_project`.`customers` (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
+    public static final String READ_CUSTOMER_BY_ID = "SELECT customer_id, first_name, last_name, email FROM `coupon_project`.`customers` WHERE customer_id = ?";
+    public static final String READ_ALL_CUSTOMERS = "SELECT customer_id, first_name, last_name, email FROM `coupon_project`.`customers`";
+    public static final String UPDATE_CUSTOMER_BY_ID = "UPDATE `coupon_project`.`customers` SET first_name = ?,last_name = ?, email = ?, password = ? WHERE customer_id = ?";
+    public static final String DELETE_CUSTOMER_BY_ID = "DELETE FROM `coupon_project`.`customers` WHERE customer_id = ?";
+    public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT count(*) FROM `coupon_project`.`customers` WHERE email = ?";
 
     //Login
     public static final String COMPANY_LOGGING = "SELECT id FROM companies WHERE email = ? AND password = ?";
