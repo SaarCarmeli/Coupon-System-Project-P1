@@ -6,6 +6,7 @@ import Beans.Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
 import DB.Util.DBTools;
 import DBDAO.CompanyDBDAO;
+import DBDAO.CustomerDBDAO;
 import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;
 import Facades.AdminFacade;
@@ -134,5 +135,14 @@ public class AdminFacadeTest {
         customer.setEmail("jennrobinson@gmail.com");
         adminFacade.updateCustomer(customer);
         customerAssertion.accept(customer);
+    }
+
+    @Test
+    public void deleteCustomerTest() throws Exception {
+        Customer customer = new Customer("Jennifer", "Jefferson", "jennjeff@gmail.com", "nosreffej6891");
+        adminFacade.addCustomer(customer);
+        assertTrue(CustomerDBDAO.getInstance().isCustomerExist("jennjeff@gmail.com"));
+        adminFacade.deleteCustomer(idCounter);
+        assertFalse(CustomerDBDAO.getInstance().isCustomerExist("jennjeff@gmail.com"));
     }
 }
