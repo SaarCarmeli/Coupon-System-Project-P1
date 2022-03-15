@@ -12,7 +12,7 @@ public interface AdminFacadeDAO {
     void updateCompany(Company company) throws EntityCrudException;
     void deleteCompany(Integer companyId) throws EntityCrudException;
     Company readCompany(Integer companyId) throws EntityCrudException;
-    ArrayList<Company> getAllCompanies() throws EntityCrudException;
+    ArrayList<Company> readAllCompanies() throws EntityCrudException;
 
     void addCustomer(Customer customer) throws EntityAlreadyExistException, EntityCrudException;
     void updateCustomer(Customer customer) throws EntityCrudException;

@@ -76,7 +76,7 @@ public class AdminFacade implements AdminFacadeDAO {
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
-    public ArrayList<Company> getAllCompanies() throws EntityCrudException {
+    public ArrayList<Company> readAllCompanies() throws EntityCrudException {
         return (ArrayList<Company>) CompanyDBDAO.getInstance().readAllCompanies();
     }
 
