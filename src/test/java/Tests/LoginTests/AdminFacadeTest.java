@@ -1,6 +1,7 @@
 package Tests.LoginTests;
 
 import Beans.Company;
+import Beans.Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
 import DB.Util.DBTools;
 import DBDAO.CompanyDBDAO;
@@ -22,6 +23,13 @@ import static org.junit.Assert.*;
 public class AdminFacadeTest {
     public static AdminFacade adminFacade;
     public static int idCounter = 1;
+    public static Consumer<Company> companyCreation = company -> {
+        try {
+            adminFacade.addCompany(company);
+        } catch (EntityAlreadyExistException | EntityCrudException e) {
+            System.out.println(e.getMessage());
+        }
+    };
     public static Consumer<Company> companyAssertion = company -> {
         try {
             assertEquals(company.getId(), adminFacade.readCompany(idCounter).getId());
@@ -79,14 +87,18 @@ public class AdminFacadeTest {
         Company company2 = new Company("Itzik hooBanav", "itzB@itzmail.com", "19itzbanav_50");
         Company company3 = new Company("Macrohard Corp.", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
         List<Company> companyList = List.of(company1, company2, company3);
-        companyList.forEach(company -> {
-            try {
-                adminFacade.addCompany(company);
-            } catch (EntityAlreadyExistException | EntityCrudException e) {
-                System.out.println(e.getMessage());
-            }
-        });
+        companyList.forEach(company -> companyCreation.accept(company));
         List<Company> newCompanyList = adminFacade.readAllCompanies();
         newCompanyList.forEach(company -> companyAssertion.accept(company));
+    }
+
+    @Test
+    public void printAllCompaniesTest() throws Exception {
+        Company company1 = new Company("Motti Hovalot", "Motti@Mmail.com", "abc123");
+        Company company2 = new Company("Itzik hooBanav", "itzB@itzmail.com", "19itzbanav_50");
+        Company company3 = new Company("Macrohard Corp.", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
+        List<Company> companyList = List.of(company1, company2, company3);
+        companyList.forEach(company -> companyCreation.accept(company));
+        TablePrinterUtil.print(adminFacade.readAllCompanies());
     }
 }
