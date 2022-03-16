@@ -54,6 +54,18 @@ public class CustomerFacade implements CustomerFacadeDAO {
     }
 
     /**
+     * Returns a single Customer-owned Coupon by Coupon ID number.
+     *
+     * @param couponId Coupon ID number
+     * @return One Customer-owned Coupon
+     * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
+     */
+    @Override
+    public Coupon getCouponById(int couponId) throws EntityCrudException {
+        return CouponDBDAO.getInstance().readCoupon(couponId);
+    }
+
+    /**
      * Returns a list of all unexpired coupons that the logged customer owns.
      *
      * @return List of all the customer's coupons
