@@ -68,21 +68,21 @@ public class DBManager {
     public static final String COUNT_COMPANIES_BY_NAME_OR_EMAIL = "SELECT COUNT(*) FROM `coupon_project`.`companies` WHERE name = ? OR email = ?";
 
     // Coupon CRUD:
-    public static final String CREATE_COUPON = "INSERT INTO coupons (company_id, amount, price, category, title, description, image, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
-    public static final String ADD_COUPON_PURCHASE = "INSERT INTO customer_to_coupon (customer_id, coupon_id) VALUES (?,?)";
-    public static final String READ_COUPON_BY_ID = "SELECT * FROM coupons WHERE coupon_id = ?";
-    public static final String READ_ALL_COUPONS = "SELECT * FROM coupons";
-    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ?"; // todo check in mysql workbench
-    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ? AND price <= ?";// todo check in mysql workbench
-    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM customer_to_coupon, coupons WHERE customer_id = ? AND category = ?";// todo check in mysql workbench
-    public static final String READ_COUPONS_BY_COMPANY_ID = "SELECT * FROM coupons WHERE company_id = ?";
-    public static final String READ_COUPONS_BY_COMPANY_ID_AND_MAX_PRICE = "SELECT * FROM coupons WHERE company_id = ? AND price <= ?";
-    public static final String READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY = "SELECT * FROM coupons WHERE company_id = ? AND category = ?";
-    public static final String UPDATE_COUPON_BY_ID = "UPDATE coupons SET title = ?, category = ? ,amount = ? , description = ? ,price = ? ,image = ? ,end_date = ? WHERE coupon_id = ?";
-    public static final String DELETE_COUPON_BY_ID = "DELETE FROM coupons WHERE coupon_id = ?";
-    public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM coupons WHERE end_date < ?";
-    public static final String COUNT_COUPONS_BY_COMPANY_ID_AND_TITLE = "SELECT count(*) FROM coupons WHERE company_id = ? AND title = ?";
-    public static final String COUNT_COUPONS_BY_CUSTOMER_ID = "SELECT count(*) FROM customer_to_coupon WHERE coupon_id = ? AND customer_id = ?"; // todo check that works
+    public static final String CREATE_COUPON = "INSERT INTO `coupon_project`.`coupons` (company_id, amount, price, category, title, description, image, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
+    public static final String ADD_COUPON_PURCHASE = "INSERT INTO `coupon_project`.`customer_to_coupon` (customer_id, coupon_id) VALUES (?, ?)";
+    public static final String READ_COUPON_BY_ID = "SELECT * FROM `coupon_project`.`coupons` WHERE coupon_id = ?";
+    public static final String READ_ALL_COUPONS = "SELECT * FROM `coupon_project`.`coupons`";
+    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE customer_id = ?"; // todo check in mysql workbench
+    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE customer_id = ? AND price <= ?";// todo check in mysql workbench
+    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE customer_id = ? AND category = ?";// todo check in mysql workbench
+    public static final String READ_COUPONS_BY_COMPANY_ID = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ?";
+    public static final String READ_COUPONS_BY_COMPANY_ID_AND_MAX_PRICE = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ? AND price <= ?";
+    public static final String READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ? AND category = ?";
+    public static final String UPDATE_COUPON_BY_ID = "UPDATE `coupon_project`.`coupons` SET title = ?, category = ? ,amount = ? , description = ? ,price = ? ,image = ? ,end_date = ? WHERE coupon_id = ?";
+    public static final String DELETE_COUPON_BY_ID = "DELETE FROM `coupon_project`.`coupons` WHERE coupon_id = ?";
+    public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM `coupon_project`.`coupons` WHERE end_date < ?";
+    public static final String COUNT_COUPONS_BY_COMPANY_ID_AND_TITLE = "SELECT COUNT(*) FROM `coupon_project`.`coupons` WHERE company_id = ? AND title = ?";
+    public static final String COUNT_COUPONS_BY_CUSTOMER_ID = "SELECT COUNT(*) FROM `coupon_project`.`customer_to_coupon` WHERE coupon_id = ? AND customer_id = ?"; // todo check that works
 
     // Customer CRUD:
     public static final String CREATE_CUSTOMER = "INSERT INTO `coupon_project`.`customers` (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
@@ -93,7 +93,7 @@ public class DBManager {
     public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT COUNT(*) FROM `coupon_project`.`customers` WHERE email = ?";
 
     //Login
-    public static final String COMPANY_LOGGING = "SELECT id FROM companies WHERE email = ? AND password = ?";
-    public static final String CUSTOMER_LOGGING = "SELECT id FROM customers WHERE email = ? AND password = ?";
+    public static final String COMPANY_LOGGING = "SELECT id FROM `coupon_project`.`companies` WHERE email = ? AND password = ?";
+    public static final String CUSTOMER_LOGGING = "SELECT id FROM `coupon_project`.`customers` WHERE email = ? AND password = ?";
 
 }
