@@ -48,6 +48,7 @@ public class LoginManager {
                 if (email.equals("admin@admin.com") && password.equals("admin")) {
                     return new AdminFacade();
                 }
+                break;
             case COMPANY:
                 ResultSet companyResult;
                 Map<Integer, Object> companyParams = new HashMap<>();
@@ -57,9 +58,10 @@ public class LoginManager {
                     companyResult = DBTools.runQueryForResult(DBManager.COMPANY_LOGGING, companyParams);
                     assert companyResult != null;
                     companyResult.next();
-                    return new CompanyFacade(companyResult.getInt(0));
+                    return new CompanyFacade(companyResult.getInt(1));
                 } catch (SQLException e) {
                     System.out.println("Error! Login failed!");
+                    break;
                 }
             case CUSTOMER:
                 ResultSet customerResult;
@@ -70,9 +72,10 @@ public class LoginManager {
                     customerResult = DBTools.runQueryForResult(DBManager.CUSTOMER_LOGGING, customerParams);
                     assert customerResult != null;
                     customerResult.next();
-                    return new CustomerFacade(customerResult.getInt(0));
+                    return new CustomerFacade(customerResult.getInt(1));
                 } catch (SQLException e) {
                     System.out.println("Error! Login failed!");
+                    break;
                 }
         }
         System.out.println("Login failed! No match found with input!");
