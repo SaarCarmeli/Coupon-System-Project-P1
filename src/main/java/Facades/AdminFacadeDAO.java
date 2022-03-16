@@ -18,5 +18,5 @@ public interface AdminFacadeDAO {
     void updateCustomer(Customer customer) throws EntityCrudException;
     void deleteCustomer(Integer customerId) throws EntityCrudException;
     Customer readCustomer(Integer customerId) throws EntityCrudException;
-    ArrayList<Customer> getAllCustomers() throws EntityCrudException;
+    ArrayList<Customer> readAllCustomers() throws EntityCrudException;
 }

@@ -142,7 +142,7 @@ public class AdminFacade implements AdminFacadeDAO {
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
-    public ArrayList<Customer> getAllCustomers() throws EntityCrudException {
+    public ArrayList<Customer> readAllCustomers() throws EntityCrudException {
         return (ArrayList<Customer>) CustomerDBDAO.getInstance().readAllCustomers();
     }
 }

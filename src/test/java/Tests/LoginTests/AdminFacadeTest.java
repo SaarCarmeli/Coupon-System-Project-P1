@@ -43,12 +43,21 @@ public class AdminFacadeTest {
         }
     };
 
+    public static Consumer<Customer> customerCreation = customer -> {
+        try {
+            adminFacade.addCustomer(customer);
+        } catch (EntityAlreadyExistException | EntityCrudException e) {
+            System.out.println(e.getMessage());
+        }
+    };
+
     public static Consumer<Customer> customerAssertion = customer -> {
         try {
             assertEquals(customer.getId(), adminFacade.readCustomer(idCounter).getId());
             assertEquals(customer.getFirstName(), adminFacade.readCustomer(idCounter).getFirstName());
             assertEquals(customer.getLastName(), adminFacade.readCustomer(idCounter).getLastName());
             assertEquals(customer.getEmail(), adminFacade.readCustomer(idCounter).getEmail());
+            idCounter++;
         } catch (EntityCrudException e) {
             System.out.println(e.getMessage());
         }
@@ -144,5 +153,26 @@ public class AdminFacadeTest {
         assertTrue(CustomerDBDAO.getInstance().isCustomerExist("jennjeff@gmail.com"));
         adminFacade.deleteCustomer(idCounter);
         assertFalse(CustomerDBDAO.getInstance().isCustomerExist("jennjeff@gmail.com"));
+    }
+
+    @Test
+    public void readAllCustomersTest() throws Exception {
+        Customer customer1 = new Customer("Jeffery", "Jefferson", "jeffjeff@gmail.com", "nosreffej4891");
+        Customer customer2 = new Customer("Jennifer", "Jefferson", "jennjeff@gmail.com", "nosreffej6891");
+        Customer customer3 = new Customer("Fred", "Friedman", "freddytheman@gmail.com", "19fredderf89");
+        List<Customer> customerList = List.of(customer1, customer2, customer3);
+        customerList.forEach(customer -> customerCreation.accept(customer));
+        List<Customer> newCustomerList = adminFacade.readAllCustomers();
+        newCustomerList.forEach(customer -> customerAssertion.accept(customer));
+    }
+
+    @Test
+    public void printAllCustomersTest() throws Exception {
+        Customer customer1 = new Customer("Jeffery", "Jefferson", "jeffjeff@gmail.com", "nosreffej4891");
+        Customer customer2 = new Customer("Jennifer", "Jefferson", "jennjeff@gmail.com", "nosreffej6891");
+        Customer customer3 = new Customer("Fred", "Friedman", "freddytheman@gmail.com", "19fredderf89");
+        List<Customer> customerList = List.of(customer1, customer2, customer3);
+        customerList.forEach(customer -> customerCreation.accept(customer));
+        TablePrinterUtil.print(adminFacade.readAllCustomers());
     }
 }
