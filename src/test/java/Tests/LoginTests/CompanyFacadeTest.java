@@ -25,9 +25,10 @@ import static org.junit.Assert.*;
 
 public class CompanyFacadeTest {
     public static AdminFacade adminFacade;
-    public static CompanyFacade[] companyFacade = new CompanyFacade[2];
+    public static CompanyFacade[] companyFacade;
     public static int couponIdCounter;
     public static int companyIdCounter;
+    public Coupon[] macrohardCoupons;
     public static Consumer<Coupon> couponAssertion = coupon -> {
         try {
             Coupon dataCompany = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
@@ -48,7 +49,12 @@ public class CompanyFacadeTest {
 
     @Before
     public void initiation() throws EntityAlreadyExistException, EntityCrudException {
+        // Database set-up:
         DatabaseInitializer.createTables();
+        // Array set-ups:
+        companyFacade = new CompanyFacade[2];
+        macrohardCoupons = new Coupon[4];
+        // Company creation:
         adminFacade = (AdminFacade) LoginManager.getInstance().login("admin@admin.com", "admin", ClientType.valueOf("ADMINISTRATOR"));
         Company macrohard = new Company("Macrohard Corporation", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
         Company banana = new Company("Banana Inc", "Banana.Business@bmail.com", "betterthanmacrohard");
@@ -56,18 +62,11 @@ public class CompanyFacadeTest {
         adminFacade.addCompany(banana);
         companyFacade[0] = (CompanyFacade) LoginManager.getInstance().login("MacroBusiness@coldmail.com", "secretlyMicrosoft", ClientType.COMPANY);
         companyFacade[1] = (CompanyFacade) LoginManager.getInstance().login("Banana.Business@bmail.com", "betterthanmacrohard", ClientType.COMPANY);
+        // idCounter Set-up:
         couponIdCounter = 1;
         companyIdCounter = 1;
-    }
-
-    @After
-    public void finish() throws SQLException {
-        System.out.println("Dropped schema: " + DBTools.runQuery(DBManager.DROP_SCHEMA));
-    }
-
-    @Test
-    public void addCouponTest() throws Exception {
-        Coupon coupon = new Coupon(
+        // Coupon creation:
+        macrohardCoupons[0] = new Coupon(
                 companyIdCounter
                 , 2
                 , 399.99
@@ -78,7 +77,7 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
-        Coupon newCoupon = new Coupon(
+        macrohardCoupons[1] = new Coupon(
                 couponIdCounter,
                 companyIdCounter
                 , 2
@@ -90,46 +89,44 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
-        companyFacade[companyIdCounter - 1].addCoupon(coupon);
-        couponAssertion.accept(newCoupon);
+        macrohardCoupons[2] = new Coupon(
+                companyIdCounter
+                , 2
+                , 49.99
+                , Category.ELECTRICITY
+                , "Macrohard Doors OS Coupon"
+                , "0.01% off on new Macrohard OS!"
+                , "doors-os-logo.jpg"
+                , Date.valueOf(LocalDate.now())
+                , Date.valueOf(LocalDate.now().plusDays(20))
+        );
+    }
+
+    @After
+    public void finish() throws SQLException {
+        System.out.println("Dropped schema: " + DBTools.runQuery(DBManager.DROP_SCHEMA));
+    }
+
+    @Test
+    public void addCouponTest() throws Exception {
+        companyFacade[companyIdCounter - 1].addCoupon(macrohardCoupons[0]);
+        couponAssertion.accept(macrohardCoupons[1]);
     }
 
     @Test
     public void updateCouponTest() throws Exception {
-        Coupon coupon = new Coupon(
-                companyIdCounter
-                , 2
-                , 49.99
-                , Category.ELECTRICITY
-                , "Macrohard Doors OS Coupon"
-                , "0.01% off on new Macrohard OS!"
-                , "doors-os-logo.jpg"
-                , Date.valueOf(LocalDate.now())
-                , Date.valueOf(LocalDate.now().plusDays(20))
-        );
-        companyFacade[companyIdCounter - 1].addCoupon(coupon);
-        coupon = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
-        coupon.setAmount(3);
-        coupon.setPrice(99.99);
-        coupon.setDescription("1.0% off on new Macrohard OS!");
-        companyFacade[companyIdCounter - 1].updateCoupon(coupon);
-        couponAssertion.accept(coupon);
+        companyFacade[companyIdCounter - 1].addCoupon(macrohardCoupons[2]);
+        macrohardCoupons[2] = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
+        macrohardCoupons[2].setAmount(3);
+        macrohardCoupons[2].setPrice(99.99);
+        macrohardCoupons[2].setDescription("1.0% off on new Macrohard OS!");
+        companyFacade[companyIdCounter - 1].updateCoupon(macrohardCoupons[2]);
+        couponAssertion.accept(macrohardCoupons[2]);
     }
 
     @Test
     public void deleteCouponTest() throws Exception {
-        Coupon coupon = new Coupon(
-                companyIdCounter
-                , 2
-                , 49.99
-                , Category.ELECTRICITY
-                , "Macrohard Doors OS Coupon"
-                , "0.01% off on new Macrohard OS!"
-                , "doors-os-logo.jpg"
-                , Date.valueOf(LocalDate.now())
-                , Date.valueOf(LocalDate.now().plusDays(20))
-        );
-        companyFacade[companyIdCounter - 1].addCoupon(coupon);
+        companyFacade[companyIdCounter - 1].addCoupon(macrohardCoupons[2]);
         assertTrue(TestDBMethods.isCouponExistById(couponIdCounter));
         companyFacade[companyIdCounter - 1].deleteCoupon(couponIdCounter);
         assertFalse(TestDBMethods.isCouponExistById(couponIdCounter));
@@ -137,25 +134,14 @@ public class CompanyFacadeTest {
 
     @Test
     public void deleteCouponByCascadeTest() throws Exception {
-        Coupon coupon = new Coupon(
-                companyIdCounter
-                , 2
-                , 49.99
-                , Category.ELECTRICITY
-                , "Macrohard Doors OS Coupon"
-                , "0.01% off on new Macrohard OS!"
-                , "doors-os-logo.jpg"
-                , Date.valueOf(LocalDate.now())
-                , Date.valueOf(LocalDate.now().plusDays(20))
-        );
-        companyFacade[companyIdCounter - 1].addCoupon(coupon);
+        companyFacade[companyIdCounter - 1].addCoupon(macrohardCoupons[2]);
         assertTrue(TestDBMethods.isCouponExistById(couponIdCounter));
         adminFacade.deleteCompany(companyIdCounter);
         assertFalse(TestDBMethods.isCouponExistById(couponIdCounter));
     }
 
     @Test
-    public void readAllCompanyCouponsTest() {
+    public void readAllCompanyCouponsTest() throws Exception {
         /*
         Customer customer1 = new Customer("Jeffery", "Jefferson", "jeffjeff@gmail.com", "nosreffej4891");
         Customer customer2 = new Customer("Jennifer", "Jefferson", "jennjeff@gmail.com", "nosreffej6891");
