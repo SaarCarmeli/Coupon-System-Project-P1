@@ -51,6 +51,24 @@ public class CompanyFacadeTest {
         }
     };
 
+    public static Consumer<Coupon> couponNotAssertion = coupon -> {
+        try {
+            Coupon dataCompany = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
+            assertNotEquals(coupon.getId(), dataCompany.getId());
+            assertNotEquals(coupon.getCompanyId(), dataCompany.getCompanyId());
+            assertNotEquals(coupon.getAmount(), dataCompany.getAmount());
+            assertNotEquals(coupon.getPrice(), dataCompany.getPrice(), 0);
+            assertNotEquals(coupon.getCategory(), dataCompany.getCategory());
+            assertNotEquals(coupon.getTitle(), dataCompany.getTitle());
+            assertNotEquals(coupon.getDescription(), dataCompany.getDescription());
+            assertNotEquals(coupon.getStartDate(), dataCompany.getStartDate());
+            assertNotEquals(coupon.getEndDate(), dataCompany.getEndDate());
+            couponIdCounter++;
+        } catch (EntityCrudException e) {
+            System.out.println(e.getMessage());
+        }
+    };
+
     @Before
     public void initiation() throws EntityAlreadyExistException, EntityCrudException {
         // Database set-up:
@@ -72,7 +90,7 @@ public class CompanyFacadeTest {
         companyIdCounter = 1;
         // Coupon creation:
         macrohardCoupons[0] = new Coupon(
-                companyIdCounter
+                1
                 , 2
                 , 399.99
                 , Category.ELECTRICITY
@@ -83,8 +101,8 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
         macrohardCoupons[1] = new Coupon(
-                couponIdCounter,
-                companyIdCounter
+                1
+                , 1
                 , 2
                 , 399.99
                 , Category.ELECTRICITY
@@ -95,7 +113,19 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
         macrohardCoupons[2] = new Coupon(
-                companyIdCounter
+                1
+                , 2
+                , 49.99
+                , Category.SOFTWARE
+                , "Macrohard Doors OS Coupon"
+                , "0.01% off on new Macrohard OS!"
+                , "doors-os-logo.jpg"
+                , Date.valueOf(LocalDate.now())
+                , Date.valueOf(LocalDate.now().plusDays(13))
+        );
+        macrohardCoupons[3] = new Coupon(
+                2
+                , 1
                 , 2
                 , 49.99
                 , Category.SOFTWARE
@@ -106,7 +136,7 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now().plusDays(13))
         );
         bananaCoupons[0] = new Coupon(
-                (companyIdCounter + 1)
+                2
                 , 3
                 , 999.99
                 , Category.SOFTWARE
@@ -176,5 +206,23 @@ public class CompanyFacadeTest {
         companyFacade[1].addCoupon(bananaCoupons[0]);
         TablePrinterUtil.print(companyFacade[0].readAllCompanyCoupons());
         TablePrinterUtil.print(companyFacade[1].readAllCompanyCoupons());
+    }
+
+    @Test
+    public void readCompanyCouponsByCategoryTest() throws Exception {
+        companyFacade[0].addCoupon(macrohardCoupons[0]);
+        companyFacade[0].addCoupon(macrohardCoupons[2]);
+        List<Coupon> newCouponList = companyFacade[0].readCompanyCoupons(Category.SOFTWARE);
+        assertEquals(1, newCouponList.size());
+        couponIdCounter = 2;//todo
+        newCouponList.forEach(coupon -> couponAssertion.accept(macrohardCoupons[3]));
+        newCouponList.forEach(coupon -> couponNotAssertion.accept(macrohardCoupons[0]));
+    }
+
+    @Test
+    public void printCompanyCouponsByCategoryTest() throws Exception {
+        companyFacade[0].addCoupon(macrohardCoupons[0]);
+        companyFacade[0].addCoupon(macrohardCoupons[2]);
+        TablePrinterUtil.print(companyFacade[0].readCompanyCoupons(Category.SOFTWARE));
     }
 }
