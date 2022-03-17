@@ -3,6 +3,7 @@ package Tests.LoginTests;
 import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
+import Beans.Customer;
 import DB.DatabaseInitializer;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
@@ -19,6 +20,8 @@ import org.junit.Test;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static org.junit.Assert.*;
@@ -29,6 +32,7 @@ public class CompanyFacadeTest {
     public static int couponIdCounter;
     public static int companyIdCounter;
     public Coupon[] macrohardCoupons;
+    public Coupon[] bananaCoupons;
     public static Consumer<Coupon> couponAssertion = coupon -> {
         try {
             Coupon dataCompany = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
@@ -54,6 +58,7 @@ public class CompanyFacadeTest {
         // Array set-ups:
         companyFacade = new CompanyFacade[2];
         macrohardCoupons = new Coupon[4];
+        bananaCoupons = new Coupon[2];
         // Company creation:
         adminFacade = (AdminFacade) LoginManager.getInstance().login("admin@admin.com", "admin", ClientType.valueOf("ADMINISTRATOR"));
         Company macrohard = new Company("Macrohard Corporation", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
@@ -93,12 +98,23 @@ public class CompanyFacadeTest {
                 companyIdCounter
                 , 2
                 , 49.99
-                , Category.ELECTRICITY
+                , Category.SOFTWARE
                 , "Macrohard Doors OS Coupon"
                 , "0.01% off on new Macrohard OS!"
                 , "doors-os-logo.jpg"
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(20))
+        );
+        bananaCoupons[0] = new Coupon(
+                (companyIdCounter + 1)
+                , 3
+                , 999.99
+                , Category.ELECTRICITY
+                , "Banana OS Coupon"
+                , "0.001% off on new Banana OS!"
+                , "banana-os-logo.jpg"
+                , Date.valueOf(LocalDate.now())
+                , Date.valueOf(LocalDate.now().plusDays(10))
         );
     }
 
@@ -142,15 +158,14 @@ public class CompanyFacadeTest {
 
     @Test
     public void readAllCompanyCouponsTest() throws Exception {
-        /*
-        Customer customer1 = new Customer("Jeffery", "Jefferson", "jeffjeff@gmail.com", "nosreffej4891");
-        Customer customer2 = new Customer("Jennifer", "Jefferson", "jennjeff@gmail.com", "nosreffej6891");
-        Customer customer3 = new Customer("Fred", "Friedman", "freddytheman@gmail.com", "19fredderf89");
-        List<Customer> customerList = List.of(customer1, customer2, customer3);
-        customerList.forEach(customer -> customerCreation.accept(customer));
-        List<Customer> newCustomerList = adminFacade.readAllCustomers();
-        newCustomerList.forEach(customer -> customerAssertion.accept(customer));
-        * */
-
+        companyFacade[0].addCoupon(macrohardCoupons[0]);
+        companyFacade[0].addCoupon(macrohardCoupons[2]);
+        companyFacade[1].addCoupon(bananaCoupons[0]);
+        List<Coupon> newCouponList = companyFacade[0].readAllCompanyCoupons();
+        newCouponList.forEach(coupon -> couponAssertion.accept(coupon));
+        companyIdCounter++;
+        newCouponList = new ArrayList<>();
+        newCouponList = companyFacade[1].readAllCompanyCoupons();
+        newCouponList.forEach(coupon -> couponAssertion.accept(coupon));
     }
 }
