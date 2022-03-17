@@ -3,7 +3,7 @@ package Tests.LoginTests;
 import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
-import Beans.Customer;
+import Beans.Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
@@ -78,7 +78,7 @@ public class CompanyFacadeTest {
                 , Category.ELECTRICITY
                 , "Macrohard PC Coupon"
                 , "0.1% off on new Macrohard computers!"
-                , "gloogle-pictures-generic-computer.jpg"
+                , "gloogle-generic-computer.jpg"
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
@@ -90,7 +90,7 @@ public class CompanyFacadeTest {
                 , Category.ELECTRICITY
                 , "Macrohard PC Coupon"
                 , "0.1% off on new Macrohard computers!"
-                , "gloogle-pictures-generic-computer.jpg"
+                , "gloogle-generic-computer.jpg"
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
@@ -103,13 +103,13 @@ public class CompanyFacadeTest {
                 , "0.01% off on new Macrohard OS!"
                 , "doors-os-logo.jpg"
                 , Date.valueOf(LocalDate.now())
-                , Date.valueOf(LocalDate.now().plusDays(20))
+                , Date.valueOf(LocalDate.now().plusDays(13))
         );
         bananaCoupons[0] = new Coupon(
                 (companyIdCounter + 1)
                 , 3
                 , 999.99
-                , Category.ELECTRICITY
+                , Category.SOFTWARE
                 , "Banana OS Coupon"
                 , "0.001% off on new Banana OS!"
                 , "banana-os-logo.jpg"
@@ -167,5 +167,14 @@ public class CompanyFacadeTest {
         newCouponList = new ArrayList<>();
         newCouponList = companyFacade[1].readAllCompanyCoupons();
         newCouponList.forEach(coupon -> couponAssertion.accept(coupon));
+    }
+
+    @Test
+    public void printAllCompanyCouponsTest() throws Exception {
+        companyFacade[0].addCoupon(macrohardCoupons[0]);
+        companyFacade[0].addCoupon(macrohardCoupons[2]);
+        companyFacade[1].addCoupon(bananaCoupons[0]);
+        TablePrinterUtil.print(companyFacade[0].readAllCompanyCoupons());
+        TablePrinterUtil.print(companyFacade[1].readAllCompanyCoupons());
     }
 }
