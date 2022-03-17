@@ -51,24 +51,6 @@ public class CompanyFacadeTest {
         }
     };
 
-    public static Consumer<Coupon> couponNotAssertion = coupon -> {
-        try {
-            Coupon dataCompany = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
-            assertNotEquals(coupon.getId(), dataCompany.getId());
-            assertNotEquals(coupon.getCompanyId(), dataCompany.getCompanyId());
-            assertNotEquals(coupon.getAmount(), dataCompany.getAmount());
-            assertNotEquals(coupon.getPrice(), dataCompany.getPrice(), 0);
-            assertNotEquals(coupon.getCategory(), dataCompany.getCategory());
-            assertNotEquals(coupon.getTitle(), dataCompany.getTitle());
-            assertNotEquals(coupon.getDescription(), dataCompany.getDescription());
-            assertNotEquals(coupon.getStartDate(), dataCompany.getStartDate());
-            assertNotEquals(coupon.getEndDate(), dataCompany.getEndDate());
-            couponIdCounter++;
-        } catch (EntityCrudException e) {
-            System.out.println(e.getMessage());
-        }
-    };
-
     @Before
     public void initiation() throws EntityAlreadyExistException, EntityCrudException {
         // Database set-up:
@@ -214,9 +196,8 @@ public class CompanyFacadeTest {
         companyFacade[0].addCoupon(macrohardCoupons[2]);
         List<Coupon> newCouponList = companyFacade[0].readCompanyCoupons(Category.SOFTWARE);
         assertEquals(1, newCouponList.size());
-        couponIdCounter = 2;//todo
+        couponIdCounter = 2;
         newCouponList.forEach(coupon -> couponAssertion.accept(macrohardCoupons[3]));
-        newCouponList.forEach(coupon -> couponNotAssertion.accept(macrohardCoupons[0]));
     }
 
     @Test

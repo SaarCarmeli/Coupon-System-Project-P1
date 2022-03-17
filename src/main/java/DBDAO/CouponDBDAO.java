@@ -100,6 +100,7 @@ public class CouponDBDAO implements CouponDAO {
             result.next();
             return ObjectExtractionUtil.resultSetToCoupon(result);
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         }
     }
