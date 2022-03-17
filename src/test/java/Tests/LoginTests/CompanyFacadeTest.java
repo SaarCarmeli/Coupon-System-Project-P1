@@ -25,11 +25,12 @@ import static org.junit.Assert.*;
 
 public class CompanyFacadeTest {
     public static AdminFacade adminFacade;
-    public static CompanyFacade companyFacade;
-    public static int idCounter = 1;
+    public static CompanyFacade[] companyFacade = new CompanyFacade[2];
+    public static int couponIdCounter;
+    public static int companyIdCounter;
     public static Consumer<Coupon> couponAssertion = coupon -> {
         try {
-            Coupon dataCompany = companyFacade.getCouponById(idCounter);// todo maybe change to "by id and company id"
+            Coupon dataCompany = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
             assertEquals(coupon.getId(), dataCompany.getId());
             assertEquals(coupon.getCompanyId(), dataCompany.getCompanyId());
             assertEquals(coupon.getAmount(), dataCompany.getAmount());
@@ -39,6 +40,7 @@ public class CompanyFacadeTest {
             assertEquals(coupon.getDescription(), dataCompany.getDescription());
             assertEquals(coupon.getStartDate(), dataCompany.getStartDate());
             assertEquals(coupon.getEndDate(), dataCompany.getEndDate());
+            couponIdCounter++;
         } catch (EntityCrudException e) {
             System.out.println(e.getMessage());
         }
@@ -48,10 +50,14 @@ public class CompanyFacadeTest {
     public void initiation() throws EntityAlreadyExistException, EntityCrudException {
         DatabaseInitializer.createTables();
         adminFacade = (AdminFacade) LoginManager.getInstance().login("admin@admin.com", "admin", ClientType.valueOf("ADMINISTRATOR"));
-        Company company = new Company("Macrohard Corp.", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
-        adminFacade.addCompany(company);
-        companyFacade = (CompanyFacade) LoginManager.getInstance().login("MacroBusiness@coldmail.com", "secretlyMicrosoft", ClientType.COMPANY);
-        idCounter = 1;
+        Company macrohard = new Company("Macrohard Corporation", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
+        Company banana = new Company("Banana Inc", "Banana.Business@bmail.com", "betterthanmacrohard");
+        adminFacade.addCompany(macrohard);
+        adminFacade.addCompany(banana);
+        companyFacade[0] = (CompanyFacade) LoginManager.getInstance().login("MacroBusiness@coldmail.com", "secretlyMicrosoft", ClientType.COMPANY);
+        companyFacade[1] = (CompanyFacade) LoginManager.getInstance().login("Banana.Business@bmail.com", "betterthanmacrohard", ClientType.COMPANY);
+        couponIdCounter = 1;
+        companyIdCounter = 1;
     }
 
     @After
@@ -62,7 +68,7 @@ public class CompanyFacadeTest {
     @Test
     public void addCouponTest() throws Exception {
         Coupon coupon = new Coupon(
-                idCounter
+                companyIdCounter
                 , 2
                 , 399.99
                 , Category.ELECTRICITY
@@ -73,8 +79,8 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
         Coupon newCoupon = new Coupon(
-                idCounter,
-                idCounter
+                couponIdCounter,
+                companyIdCounter
                 , 2
                 , 399.99
                 , Category.ELECTRICITY
@@ -84,14 +90,14 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
-        companyFacade.addCoupon(coupon);
+        companyFacade[companyIdCounter - 1].addCoupon(coupon);
         couponAssertion.accept(newCoupon);
     }
 
     @Test
     public void updateCouponTest() throws Exception {
         Coupon coupon = new Coupon(
-                idCounter
+                companyIdCounter
                 , 2
                 , 49.99
                 , Category.ELECTRICITY
@@ -101,19 +107,19 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
-        companyFacade.addCoupon(coupon);
-        coupon = companyFacade.getCouponById(idCounter);
+        companyFacade[companyIdCounter - 1].addCoupon(coupon);
+        coupon = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
         coupon.setAmount(3);
         coupon.setPrice(99.99);
         coupon.setDescription("1.0% off on new Macrohard OS!");
-        companyFacade.updateCoupon(coupon);
+        companyFacade[companyIdCounter - 1].updateCoupon(coupon);
         couponAssertion.accept(coupon);
     }
 
     @Test
     public void deleteCouponTest() throws Exception {
         Coupon coupon = new Coupon(
-                idCounter
+                companyIdCounter
                 , 2
                 , 49.99
                 , Category.ELECTRICITY
@@ -123,16 +129,16 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
-        companyFacade.addCoupon(coupon);
-        assertTrue(TestDBMethods.isCouponExistById(idCounter));
-        companyFacade.deleteCoupon(idCounter);
-        assertFalse(TestDBMethods.isCouponExistById(idCounter));
+        companyFacade[companyIdCounter - 1].addCoupon(coupon);
+        assertTrue(TestDBMethods.isCouponExistById(couponIdCounter));
+        companyFacade[companyIdCounter - 1].deleteCoupon(couponIdCounter);
+        assertFalse(TestDBMethods.isCouponExistById(couponIdCounter));
     }
 
     @Test
     public void deleteCouponByCascadeTest() throws Exception {
         Coupon coupon = new Coupon(
-                idCounter
+                companyIdCounter
                 , 2
                 , 49.99
                 , Category.ELECTRICITY
@@ -142,9 +148,23 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(20))
         );
-        companyFacade.addCoupon(coupon);
-        assertTrue(TestDBMethods.isCouponExistById(idCounter));
-        adminFacade.deleteCompany(idCounter);
-        assertFalse(TestDBMethods.isCouponExistById(idCounter));
+        companyFacade[companyIdCounter - 1].addCoupon(coupon);
+        assertTrue(TestDBMethods.isCouponExistById(couponIdCounter));
+        adminFacade.deleteCompany(companyIdCounter);
+        assertFalse(TestDBMethods.isCouponExistById(couponIdCounter));
+    }
+
+    @Test
+    public void readAllCompanyCouponsTest() {
+        /*
+        Customer customer1 = new Customer("Jeffery", "Jefferson", "jeffjeff@gmail.com", "nosreffej4891");
+        Customer customer2 = new Customer("Jennifer", "Jefferson", "jennjeff@gmail.com", "nosreffej6891");
+        Customer customer3 = new Customer("Fred", "Friedman", "freddytheman@gmail.com", "19fredderf89");
+        List<Customer> customerList = List.of(customer1, customer2, customer3);
+        customerList.forEach(customer -> customerCreation.accept(customer));
+        List<Customer> newCustomerList = adminFacade.readAllCustomers();
+        newCustomerList.forEach(customer -> customerAssertion.accept(customer));
+        * */
+
     }
 }

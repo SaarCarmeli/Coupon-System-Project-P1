@@ -68,7 +68,7 @@ public class CompanyFacade implements CompanyFacadeDAO {
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
-    public Coupon getCouponById(int couponId) throws EntityCrudException {
+    public Coupon readCouponById(int couponId) throws EntityCrudException {
         return CouponDBDAO.getInstance().readCoupon(couponId);
     }
 
@@ -79,7 +79,7 @@ public class CompanyFacade implements CompanyFacadeDAO {
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
-    public ArrayList<Coupon> getCompanyCoupons() throws EntityCrudException {
+    public ArrayList<Coupon> readAllCompanyCoupons() throws EntityCrudException {
         return (ArrayList<Coupon>) CouponDBDAO.getInstance().readCouponsByCompanyId(this.companyId);
     }
 
@@ -91,7 +91,7 @@ public class CompanyFacade implements CompanyFacadeDAO {
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
-    public ArrayList<Coupon> getCompanyCoupons(Category category) throws EntityCrudException {
+    public ArrayList<Coupon> readCompanyCoupons(Category category) throws EntityCrudException {
         return (ArrayList<Coupon>) CouponDBDAO.getInstance().readCouponsByCompanyIdAndCategory(this.companyId, String.valueOf(category));
     }
 
@@ -103,7 +103,7 @@ public class CompanyFacade implements CompanyFacadeDAO {
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
-    public ArrayList<Coupon> getCompanyCoupons(double maxPrice) throws EntityCrudException {
+    public ArrayList<Coupon> readCompanyCoupons(double maxPrice) throws EntityCrudException {
         return (ArrayList<Coupon>) CouponDBDAO.getInstance().readCouponsByCompanyIdAndMaxPrice(this.companyId, maxPrice);
     }
 
