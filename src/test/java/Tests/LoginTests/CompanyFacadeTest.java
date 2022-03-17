@@ -4,6 +4,7 @@ import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
 import DB.DatabaseInitializer;
+import DB.Util.DBManager;
 import DB.Util.DBTools;
 import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;
@@ -19,10 +20,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class CompanyFacadeTest {
     public static AdminFacade adminFacade;
@@ -57,7 +56,7 @@ public class CompanyFacadeTest {
 
     @After
     public void finish() throws SQLException {
-        System.out.println("Dropped schema: " + DBTools.runQuery("DROP DATABASE `coupon_project`"));
+        System.out.println("Dropped schema: " + DBTools.runQuery(DBManager.DROP_SCHEMA));
     }
 
     @Test
@@ -113,11 +112,39 @@ public class CompanyFacadeTest {
 
     @Test
     public void deleteCouponTest() throws Exception {
-
+        Coupon coupon = new Coupon(
+                idCounter
+                , 2
+                , 49.99
+                , Category.ELECTRICITY
+                , "Macrohard Doors OS Coupon"
+                , "0.01% off on new Macrohard OS!"
+                , "doors-os-logo.jpg"
+                , Date.valueOf(LocalDate.now())
+                , Date.valueOf(LocalDate.now().plusDays(20))
+        );
+        companyFacade.addCoupon(coupon);
+        assertTrue(TestDBMethods.isCouponExistById(idCounter));
+        companyFacade.deleteCoupon(idCounter);
+        assertFalse(TestDBMethods.isCouponExistById(idCounter));
     }
 
     @Test
     public void deleteCouponByCascadeTest() throws Exception {
-
+        Coupon coupon = new Coupon(
+                idCounter
+                , 2
+                , 49.99
+                , Category.ELECTRICITY
+                , "Macrohard Doors OS Coupon"
+                , "0.01% off on new Macrohard OS!"
+                , "doors-os-logo.jpg"
+                , Date.valueOf(LocalDate.now())
+                , Date.valueOf(LocalDate.now().plusDays(20))
+        );
+        companyFacade.addCoupon(coupon);
+        assertTrue(TestDBMethods.isCouponExistById(idCounter));
+        adminFacade.deleteCompany(idCounter);
+        assertFalse(TestDBMethods.isCouponExistById(idCounter));
     }
 }

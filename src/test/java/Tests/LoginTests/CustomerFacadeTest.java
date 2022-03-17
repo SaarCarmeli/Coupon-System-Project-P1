@@ -1,6 +1,7 @@
 package Tests.LoginTests;
 
 import DB.DatabaseInitializer;
+import DB.Util.DBManager;
 import DB.Util.DBTools;
 import Facades.AdminFacade;
 import LoginManager.ClientType;
@@ -23,6 +24,6 @@ public class CustomerFacadeTest {
 
     @After
     public void finish() throws SQLException {
-        System.out.println("Dropped schema: " + DBTools.runQuery("DROP DATABASE `coupon_project`"));
+        System.out.println("Dropped schema: " + DBTools.runQuery(DBManager.DROP_SCHEMA));
     }
 }

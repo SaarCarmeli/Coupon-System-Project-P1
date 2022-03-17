@@ -92,8 +92,14 @@ public class DBManager {
     public static final String DELETE_CUSTOMER_BY_ID = "DELETE FROM `coupon_project`.`customers` WHERE customer_id = ?";
     public static final String COUNT_CUSTOMERS_BY_EMAIL = "SELECT COUNT(*) FROM `coupon_project`.`customers` WHERE email = ?";
 
-    //Login
+    // Login:
     public static final String COMPANY_LOGGING = "SELECT id FROM `coupon_project`.`companies` WHERE email = ? AND password = ?";
     public static final String CUSTOMER_LOGGING = "SELECT id FROM `coupon_project`.`customers` WHERE email = ? AND password = ?";
 
+    // Test:
+    public static final String DROP_SCHEMA = "DROP DATABASE `coupon_project`";
+
+    public static final String COUNT_COMPANY_BY_ID = "SELECT COUNT(*) FROM `coupon_project`.`companies` WHERE id = ?";
+    public static final String COUNT_CUSTOMER_BY_ID = "SELECT COUNT(*) FROM `coupon_project`.`customers` WHERE customer_id = ?";
+    public static final String COUNT_COUPON_BY_ID = "SELECT COUNT(*) FROM `coupon_project`.`coupons` WHERE coupon_id = ?";
 }
