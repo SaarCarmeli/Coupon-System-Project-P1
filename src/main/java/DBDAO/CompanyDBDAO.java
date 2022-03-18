@@ -73,7 +73,7 @@ public class CompanyDBDAO implements CompanyDAO {
             result = DBTools.runQueryForResult(DBManager.READ_COMPANY_BY_ID, params);
             assert result != null;
             result.next();
-            return ObjectExtractionUtil.resultSetToCompany(result);
+            return ObjectExtractionUtil.resultSetToCompany(result, CouponDBDAO.getInstance().readCouponsByCompanyId(companyId));
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COMPANY, CrudOperation.READ);
         }
@@ -92,7 +92,7 @@ public class CompanyDBDAO implements CompanyDAO {
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_COMPANIES);
             while (result.next()) { // todo consider asserting
-                companyList.add(ObjectExtractionUtil.resultSetToCompany(result));
+                companyList.add(ObjectExtractionUtil.resultSetToCompany(result));//todo CouponDBDAO.getInstance().readCouponsByCompanyId(ObjectExtractionUtil.resultSetToCompany(result).getId())??? too dangerous?
             }
             return companyList;
         } catch (SQLException e) {
