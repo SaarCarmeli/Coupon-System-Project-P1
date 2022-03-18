@@ -130,6 +130,18 @@ public class CompanyFacadeTest {
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(10))
         );
+        bananaCoupons[1] = new Coupon(
+                3,
+                2
+                , 3
+                , 999.99
+                , Category.SOFTWARE
+                , "Banana OS Coupon"
+                , "0.001% off on new Banana OS!"
+                , "banana-os-logo.jpg"
+                , Date.valueOf(LocalDate.now())
+                , Date.valueOf(LocalDate.now().plusDays(10))
+        );
     }
 
     @After

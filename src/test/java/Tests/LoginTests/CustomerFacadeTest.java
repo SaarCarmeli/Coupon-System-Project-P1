@@ -20,6 +20,7 @@ public class CustomerFacadeTest {
         DatabaseInitializer.createTables();
         adminFacade = (AdminFacade) LoginManager.getInstance().login("admin@admin.com", "admin", ClientType.valueOf("ADMINISTRATOR"));
         idCounter = 1;
+        // at least 2 companies, 2 customers, 4 coupons
     }
 
     @After
