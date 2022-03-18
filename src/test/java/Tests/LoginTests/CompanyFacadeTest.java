@@ -29,22 +29,24 @@ import static org.junit.Assert.*;
 public class CompanyFacadeTest {
     public static AdminFacade adminFacade;
     public static CompanyFacade[] companyFacade;
+    public static Company macrohard;
+    public static Company banana;
     public static int couponIdCounter;
     public static int companyIdCounter;
     public Coupon[] macrohardCoupons;
     public Coupon[] bananaCoupons;
-    public static Consumer<Coupon> couponAssertion = coupon -> {
+    public static Consumer<Coupon> couponAssertion = expected -> {
         try {
-            Coupon dataCompany = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
-            assertEquals(coupon.getId(), dataCompany.getId());
-            assertEquals(coupon.getCompanyId(), dataCompany.getCompanyId());
-            assertEquals(coupon.getAmount(), dataCompany.getAmount());
-            assertEquals(coupon.getPrice(), dataCompany.getPrice(), 0);
-            assertEquals(coupon.getCategory(), dataCompany.getCategory());
-            assertEquals(coupon.getTitle(), dataCompany.getTitle());
-            assertEquals(coupon.getDescription(), dataCompany.getDescription());
-            assertEquals(coupon.getStartDate(), dataCompany.getStartDate());
-            assertEquals(coupon.getEndDate(), dataCompany.getEndDate());
+            Coupon actual = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
+            assertEquals(expected.getId(), actual.getId());
+            assertEquals(expected.getCompanyId(), actual.getCompanyId());
+            assertEquals(expected.getAmount(), actual.getAmount());
+            assertEquals(expected.getPrice(), actual.getPrice(), 0);
+            assertEquals(expected.getCategory(), actual.getCategory());
+            assertEquals(expected.getTitle(), actual.getTitle());
+            assertEquals(expected.getDescription(), actual.getDescription());
+            assertEquals(expected.getStartDate(), actual.getStartDate());
+            assertEquals(expected.getEndDate(), actual.getEndDate());
             couponIdCounter++;
         } catch (EntityCrudException e) {
             System.out.println(e.getMessage());
@@ -59,10 +61,10 @@ public class CompanyFacadeTest {
         companyFacade = new CompanyFacade[2];
         macrohardCoupons = new Coupon[4];
         bananaCoupons = new Coupon[2];
-        // Company creation:
+        // Company creation and login:
         adminFacade = (AdminFacade) LoginManager.getInstance().login("admin@admin.com", "admin", ClientType.valueOf("ADMINISTRATOR"));
-        Company macrohard = new Company("Macrohard Corporation", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
-        Company banana = new Company("Banana Inc", "Banana.Business@bmail.com", "betterthanmacrohard");
+        macrohard = new Company("Macrohard Corporation", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
+        banana = new Company("Banana Inc", "Banana.Business@bmail.com", "betterthanmacrohard");
         adminFacade.addCompany(macrohard);
         adminFacade.addCompany(banana);
         companyFacade[0] = (CompanyFacade) LoginManager.getInstance().login("MacroBusiness@coldmail.com", "secretlyMicrosoft", ClientType.COMPANY);
@@ -205,5 +207,38 @@ public class CompanyFacadeTest {
         companyFacade[0].addCoupon(macrohardCoupons[0]);
         companyFacade[0].addCoupon(macrohardCoupons[2]);
         TablePrinterUtil.print(companyFacade[0].readCompanyCoupons(Category.SOFTWARE));
+    }
+
+    @Test
+    public void readCompanyCouponsByMaxPriceTest() throws Exception {
+        companyFacade[0].addCoupon(macrohardCoupons[0]);
+        companyFacade[0].addCoupon(macrohardCoupons[2]);
+        List<Coupon> newCouponList = companyFacade[0].readCompanyCoupons(50);
+        assertEquals(1, newCouponList.size());
+        couponIdCounter = 2;
+        newCouponList.forEach(coupon -> couponAssertion.accept(macrohardCoupons[3]));
+    }
+
+    @Test
+    public void printCompanyCouponsByMaxPriceTest() throws Exception {
+        companyFacade[0].addCoupon(macrohardCoupons[0]);
+        companyFacade[0].addCoupon(macrohardCoupons[2]);
+        TablePrinterUtil.print(companyFacade[0].readCompanyCoupons(50));
+    }
+
+    @Test
+    public void getCompanyDetailsTest() throws Exception {
+        Company expected = macrohard;
+        Company actual = companyFacade[0].getCompanyDetails();
+        assertEquals(companyIdCounter, actual.getId());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getEmail(), actual.getEmail());
+    }
+
+    @Test
+    public void printCompanyDetailsTest() throws Exception {
+        companyFacade[0].addCoupon(macrohardCoupons[0]);
+        companyFacade[0].addCoupon(macrohardCoupons[2]);//todo how to fix??
+        TablePrinterUtil.print(companyFacade[0].getCompanyDetails());
     }
 }

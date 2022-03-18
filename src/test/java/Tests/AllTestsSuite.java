@@ -9,7 +9,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        AdminFacadeTest.class, CustomerFacadeTest.class, CompanyFacadeTest.class
+        AdminFacadeTest.class, CompanyFacadeTest.class//, CustomerFacadeTest.class
 })
 public class AllTestsSuite {
 
