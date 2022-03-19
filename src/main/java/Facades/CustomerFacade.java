@@ -102,7 +102,8 @@ public class CustomerFacade implements CustomerFacadeDAO {
 
     /**
      * Returns the details of the customer that logged in including:
-     * Customer ID number, First name, Last name and Email
+     * Customer ID number, First name, Last name and Email,
+     * Not including password
      *
      * @return Customer details from MySQL database
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful

@@ -109,7 +109,8 @@ public class CompanyFacade implements CompanyFacadeDAO {
 
     /**
      * Returns the details of the company that logged in, including:
-     * Company ID number, Name and Email
+     * Company ID number, Name and Email,
+     * Not including password
      *
      * @return Company details from MySQL database
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
