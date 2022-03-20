@@ -3,6 +3,7 @@ package Tests.FacadeTests;
 import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
+import Beans.Customer;
 import DB.DatabaseInitializer;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
@@ -10,6 +11,7 @@ import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;
 import Facades.AdminFacade;
 import Facades.CompanyFacade;
+import Facades.CustomerFacade;
 import LoginManager.ClientType;
 import LoginManager.LoginManager;
 import org.junit.After;
@@ -26,17 +28,16 @@ import static org.junit.Assert.assertEquals;
 public class CustomerFacadeTest {
     public static AdminFacade adminFacade;
     public static CompanyFacade[] companyFacade;
-    public static Company macrohard;
-    public static Company banana;
-    public static int couponIdCounter;
-    public static int companyIdCounter;
-    public Coupon[] databaseMacrohardCoupons;
-    public Coupon[] expectedMacrohardCoupons;
-    public Coupon[] databaseBananaCoupons;
-    public Coupon[] expectedBananaCoupons;
+    public static CustomerFacade[] customerFacade;
+    public static Company macrohard, banana;
+    public static Customer jeff, jennifer, christopher, christine;
+
+    public static int couponIdCounter, companyIdCounter, customerIdCounter;
+    public Coupon[] databaseMacrohardCoupons, expectedMacrohardCoupons;
+    public Coupon[] databaseBananaCoupons, expectedBananaCoupons;
     public static Consumer<Coupon> couponAssertion = expected -> {
         try {
-            Coupon actual = companyFacade[companyIdCounter - 1].readCouponById(couponIdCounter);
+            Coupon actual = customerFacade[customerIdCounter - 1].readCouponById(couponIdCounter);
             assertEquals(expected.getId(), actual.getId());
             assertEquals(expected.getCompanyId(), actual.getCompanyId());
             assertEquals(expected.getAmount(), actual.getAmount());
@@ -48,6 +49,14 @@ public class CustomerFacadeTest {
             assertEquals(expected.getEndDate(), actual.getEndDate());
             couponIdCounter++;
         } catch (EntityCrudException e) {
+            System.out.println(e.getMessage());
+        }
+    };
+
+    public static Consumer<Customer> customerCreation = customer -> {
+        try {
+            adminFacade.addCustomer(customer);
+        } catch (EntityAlreadyExistException | EntityCrudException e) {
             System.out.println(e.getMessage());
         }
     };
@@ -73,6 +82,7 @@ public class CustomerFacadeTest {
         // idCounter Set-up:
         couponIdCounter = 1;
         companyIdCounter = 1;
+        customerIdCounter = 1;
         // Coupon creation:
         databaseMacrohardCoupons[0] = new Coupon(
                 1
@@ -142,6 +152,32 @@ public class CustomerFacadeTest {
                 , "banana-os-logo.jpg"
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(10))
+        );
+
+        // Customer creation and login:
+        jeff = new Customer(
+                "Jeff",
+                "Jefferson",
+                "jeffyjeff@gmail.com",
+                "12345678"
+        );
+        jennifer = new Customer(
+                "Jennifer",
+                "Davis",
+                "jenny@gmail.com",
+                "abc123"
+        );
+        christopher = new Customer(
+                "Christopher",
+                "Williams",
+                "chris@gmail.com",
+                "abcdefg"
+        );
+        christine = new Customer(
+                "Christine",
+                "Brown",
+                "christy@gmail.com",
+                "1Fsj9byG_oP%"
         );
     }
 
