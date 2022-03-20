@@ -16,6 +16,7 @@ import LoginManager.ClientType;
 import LoginManager.LoginManager;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.sql.Date;
@@ -33,8 +34,8 @@ public class CustomerFacadeTest {
     public static Customer jeff, jennifer, christopher, christine;
 
     public static int couponIdCounter, companyIdCounter, customerIdCounter;
-    public Coupon[] databaseMacrohardCoupons, expectedMacrohardCoupons;
-    public Coupon[] databaseBananaCoupons, expectedBananaCoupons;
+    public static Coupon[] databaseMacrohardCoupons, expectedMacrohardCoupons;
+    public static Coupon[] databaseBananaCoupons, expectedBananaCoupons;
     public static Consumer<Coupon> couponAssertion = expected -> {
         try {
             Coupon actual = customerFacade[customerIdCounter - 1].readCouponById(couponIdCounter);
@@ -61,29 +62,18 @@ public class CustomerFacadeTest {
         }
     };
 
-    @Before
-    public void initiation() throws EntityAlreadyExistException, EntityCrudException {
-        // Database set-up:
-        DatabaseInitializer.createTables();
+    @BeforeClass
+    public static void oneInitialization(){
         // Array set-ups:
         companyFacade = new CompanyFacade[2];
         databaseMacrohardCoupons = new Coupon[2];
         expectedMacrohardCoupons = new Coupon[2];
         databaseBananaCoupons = new Coupon[1];
         expectedBananaCoupons = new Coupon[1];
-        // Company creation and login:
-        adminFacade = (AdminFacade) LoginManager.getInstance().login("admin@admin.com", "admin", ClientType.valueOf("ADMINISTRATOR"));
+        // In-program Company creation:
         macrohard = new Company("Macrohard Corporation", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
         banana = new Company("Banana Inc", "Banana.Business@bmail.com", "betterthanmacrohard");
-        adminFacade.addCompany(macrohard);
-        adminFacade.addCompany(banana);
-        companyFacade[0] = (CompanyFacade) LoginManager.getInstance().login("MacroBusiness@coldmail.com", "secretlyMicrosoft", ClientType.COMPANY);
-        companyFacade[1] = (CompanyFacade) LoginManager.getInstance().login("Banana.Business@bmail.com", "betterthanmacrohard", ClientType.COMPANY);
-        // idCounter Set-up:
-        couponIdCounter = 1;
-        companyIdCounter = 1;
-        customerIdCounter = 1;
-        // Coupon creation:
+        // In-program Coupon creation:
         databaseMacrohardCoupons[0] = new Coupon(
                 1
                 , 2
@@ -153,8 +143,7 @@ public class CustomerFacadeTest {
                 , Date.valueOf(LocalDate.now())
                 , Date.valueOf(LocalDate.now().plusDays(10))
         );
-
-        // Customer creation and login:
+        // In-program Customer creation and login:
         jeff = new Customer(
                 "Jeff",
                 "Jefferson",
@@ -179,6 +168,26 @@ public class CustomerFacadeTest {
                 "christy@gmail.com",
                 "1Fsj9byG_oP%"
         );
+    }
+
+    @Before
+    public void initiation() throws EntityAlreadyExistException, EntityCrudException {
+        // Database set-up:
+        DatabaseInitializer.createTables();
+        // In-SQL Company creation and login:
+        adminFacade = (AdminFacade) LoginManager.getInstance().login("admin@admin.com", "admin", ClientType.valueOf("ADMINISTRATOR"));
+        adminFacade.addCompany(macrohard);
+        adminFacade.addCompany(banana);
+        companyFacade[0] = (CompanyFacade) LoginManager.getInstance().login("MacroBusiness@coldmail.com", "secretlyMicrosoft", ClientType.COMPANY);
+        companyFacade[1] = (CompanyFacade) LoginManager.getInstance().login("Banana.Business@bmail.com", "betterthanmacrohard", ClientType.COMPANY);
+        // idCounter Set-up:
+        couponIdCounter = 1;
+        companyIdCounter = 1;
+        customerIdCounter = 1;
+        // In-SQL Coupon creation:
+        companyFacade[0].addCoupon(databaseMacrohardCoupons[0]);
+        companyFacade[0].addCoupon(databaseMacrohardCoupons[1]);
+        companyFacade[1].addCoupon(databaseBananaCoupons[0]);
     }
 
     @After
