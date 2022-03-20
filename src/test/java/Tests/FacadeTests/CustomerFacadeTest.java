@@ -156,6 +156,16 @@ public class CustomerFacadeTest {
     }
 
     @Test
+    public void deleteCouponPurchaseByDeleteCouponCascade() {
+
+    }
+
+    @Test
+    public void deleteCouponPurchaseByDeleteCompanyCascade() {
+
+    }
+
+    @Test
     public void readCouponByIdTest() {
 
     }
