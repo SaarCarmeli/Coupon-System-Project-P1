@@ -1,4 +1,4 @@
-package Tests.LoginTests;
+package Tests.FacadeTests;
 
 import DB.Util.DBManager;
 import DB.Util.DBTools;

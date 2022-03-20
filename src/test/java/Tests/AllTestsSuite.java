@@ -1,9 +1,8 @@
 package Tests;
 
 
-import Tests.LoginTests.AdminFacadeTest;
-import Tests.LoginTests.CompanyFacadeTest;
-import Tests.LoginTests.CustomerFacadeTest;
+import Tests.FacadeTests.AdminFacadeTest;
+import Tests.FacadeTests.CompanyFacadeTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

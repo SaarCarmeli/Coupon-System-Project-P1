@@ -1,4 +1,4 @@
-package Tests.LoginTests;
+package Tests.FacadeTests;
 
 import Beans.Category;
 import Beans.Company;

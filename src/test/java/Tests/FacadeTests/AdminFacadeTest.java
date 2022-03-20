@@ -1,4 +1,4 @@
-package Tests.LoginTests;
+package Tests.FacadeTests;
 
 import Beans.Company;
 import Beans.Customer;
@@ -6,7 +6,6 @@ import Beans.Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
-import DBDAO.CompanyDBDAO;
 import DBDAO.CustomerDBDAO;
 import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;

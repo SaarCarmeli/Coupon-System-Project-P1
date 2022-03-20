@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public interface CustomerFacadeDAO {
     void purchaseCoupon(Coupon coupon) throws EntityCrudException, EntityAlreadyExistException, NoCouponsLeftException;
-    Coupon getCouponById(int couponId) throws EntityCrudException;
-    ArrayList<Coupon> getCustomerCoupons() throws EntityCrudException;
-    ArrayList<Coupon> getCustomerCoupons(Category category) throws EntityCrudException;
-    ArrayList<Coupon> getCustomerCoupons(double maxPrice) throws EntityCrudException;
+    Coupon readCouponById(int couponId) throws EntityCrudException;
+    ArrayList<Coupon> readAllCustomerCoupons() throws EntityCrudException;
+    ArrayList<Coupon> readCustomerCoupons(Category category) throws EntityCrudException;
+    ArrayList<Coupon> readCustomerCoupons(double maxPrice) throws EntityCrudException;
     Customer getCustomerDetails() throws EntityCrudException;
 }

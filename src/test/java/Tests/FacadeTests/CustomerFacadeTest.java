@@ -1,9 +1,8 @@
-package Tests.LoginTests;
+package Tests.FacadeTests;
 
 import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
-import Beans.Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
@@ -151,25 +150,53 @@ public class CustomerFacadeTest {
         System.out.println("Dropped schema: " + DBTools.runQuery(DBManager.DROP_SCHEMA));
     }
 
-    //========================================
-
     @Test
-    public void getCustomerDetailsTest() throws Exception {
+    public void purchaseCouponTest() {
 
     }
-//    @Test
-//    public void getCompanyDetailsTest() throws Exception {// todo example
-//        Company expected = macrohard;
-//        Company actual = companyFacade[0].getCompanyDetails();
-//        assertEquals(companyIdCounter, actual.getId());
-//        assertEquals(expected.getName(), actual.getName());
-//        assertEquals(expected.getEmail(), actual.getEmail());
-//    }
-//
-//    @Test
-//    public void printCompanyDetailsTest() throws Exception {
-//        companyFacade[0].addCoupon(macrohardCoupons[0]);
-//        companyFacade[0].addCoupon(macrohardCoupons[2]);
-//        TablePrinterUtil.print(companyFacade[0].getCompanyDetails());
-//    }
+
+    @Test
+    public void readCouponByIdTest() {
+
+    }
+
+    @Test
+    public void readAllCustomerCouponsTest() {
+
+    }
+
+    @Test
+    public void printAllCustomerCouponTest() {
+
+    }
+
+    @Test
+    public void readCustomerCouponsByCategoryTest() {
+
+    }
+
+    @Test
+    public void printCustomerCouponsByCategoryTest() {
+
+    }
+
+    @Test
+    public void readCustomerCouponsByMaxPriceTest() {
+
+    }
+
+    @Test
+    public void printCustomerCouponsByMaxPriceTest() {
+
+    }
+
+    @Test
+    public void getCustomerDetailsTest() {
+
+    }
+
+    @Test
+    public void printCustomerDetailsTest() {
+
+    }
 }
