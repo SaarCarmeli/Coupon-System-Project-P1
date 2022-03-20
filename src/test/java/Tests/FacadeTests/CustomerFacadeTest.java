@@ -63,9 +63,10 @@ public class CustomerFacadeTest {
     };
 
     @BeforeClass
-    public static void oneInitialization(){
+    public static void oneTimeInitialization() {
         // Array set-ups:
         companyFacade = new CompanyFacade[2];
+        customerFacade = new CustomerFacade[4];
         databaseMacrohardCoupons = new Coupon[2];
         expectedMacrohardCoupons = new Coupon[2];
         databaseBananaCoupons = new Coupon[1];
@@ -171,7 +172,7 @@ public class CustomerFacadeTest {
     }
 
     @Before
-    public void initiation() throws EntityAlreadyExistException, EntityCrudException {
+    public void everyTestInitiation() throws EntityAlreadyExistException, EntityCrudException {
         // Database set-up:
         DatabaseInitializer.createTables();
         // In-SQL Company creation and login:
@@ -180,19 +181,23 @@ public class CustomerFacadeTest {
         adminFacade.addCompany(banana);
         companyFacade[0] = (CompanyFacade) LoginManager.getInstance().login("MacroBusiness@coldmail.com", "secretlyMicrosoft", ClientType.COMPANY);
         companyFacade[1] = (CompanyFacade) LoginManager.getInstance().login("Banana.Business@bmail.com", "betterthanmacrohard", ClientType.COMPANY);
-        // idCounter Set-up:
-        couponIdCounter = 1;
-        companyIdCounter = 1;
-        customerIdCounter = 1;
         // In-SQL Coupon creation:
         companyFacade[0].addCoupon(databaseMacrohardCoupons[0]);
         companyFacade[0].addCoupon(databaseMacrohardCoupons[1]);
         companyFacade[1].addCoupon(databaseBananaCoupons[0]);
-        // In-SQL Customer creation:
+        // In-SQL Customer creation and login:
         adminFacade.addCustomer(jeff);
         adminFacade.addCustomer(jennifer);
         adminFacade.addCustomer(christopher);
         adminFacade.addCustomer(christine);
+        customerFacade[0] = (CustomerFacade) LoginManager.getInstance().login("jeffyjeff@gmail.com", "12345678", ClientType.CUSTOMER);
+        customerFacade[1] = (CustomerFacade) LoginManager.getInstance().login("jenny@gmail.com", "abc123", ClientType.CUSTOMER);
+        customerFacade[2] = (CustomerFacade) LoginManager.getInstance().login("chris@gmail.com", "abcdefg", ClientType.CUSTOMER);
+        customerFacade[3] = (CustomerFacade) LoginManager.getInstance().login("christy@gmail.com", "1Fsj9byG_oP%", ClientType.CUSTOMER);
+        // idCounter Set-up:
+        couponIdCounter = 1;
+        companyIdCounter = 1;
+        customerIdCounter = 1;
     }
 
     @After
@@ -201,62 +206,62 @@ public class CustomerFacadeTest {
     }
 
     @Test
-    public void purchaseCouponTest() {
+    public void purchaseCouponTest() throws Exception {
 
     }
 
     @Test
-    public void deleteCouponPurchaseByDeleteCouponCascade() {
+    public void deleteCouponPurchaseByDeleteCouponCascade() throws Exception {
 
     }
 
     @Test
-    public void deleteCouponPurchaseByDeleteCompanyCascade() {
+    public void deleteCouponPurchaseByDeleteCompanyCascade() throws Exception {
 
     }
 
     @Test
-    public void readCouponByIdTest() {
+    public void readCouponByIdTest() throws Exception {
 
     }
 
     @Test
-    public void readAllCustomerCouponsTest() {
+    public void readAllCustomerCouponsTest() throws Exception {
 
     }
 
     @Test
-    public void printAllCustomerCouponTest() {
+    public void printAllCustomerCouponTest() throws Exception {
 
     }
 
     @Test
-    public void readCustomerCouponsByCategoryTest() {
+    public void readCustomerCouponsByCategoryTest() throws Exception {
 
     }
 
     @Test
-    public void printCustomerCouponsByCategoryTest() {
+    public void printCustomerCouponsByCategoryTest() throws Exception {
 
     }
 
     @Test
-    public void readCustomerCouponsByMaxPriceTest() {
+    public void readCustomerCouponsByMaxPriceTest() throws Exception {
 
     }
 
     @Test
-    public void printCustomerCouponsByMaxPriceTest() {
+    public void printCustomerCouponsByMaxPriceTest() throws Exception {
 
     }
 
     @Test
-    public void getCustomerDetailsTest() {
+    public void getCustomerDetailsTest() throws Exception {
 
     }
 
     @Test
-    public void printCustomerDetailsTest() {
+    public void printCustomerDetailsTest() throws Exception {
 
     }
 }
