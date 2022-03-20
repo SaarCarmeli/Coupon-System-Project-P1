@@ -54,10 +54,10 @@ public class CustomerFacade implements CustomerFacadeDAO {
     }
 
     /**
-     * Returns a single Customer-owned Coupon by Coupon ID number.
+     * Returns a single Coupon by Coupon ID number.
      *
      * @param couponId Coupon ID number
-     * @return One Customer-owned Coupon
+     * @return One Coupon
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override

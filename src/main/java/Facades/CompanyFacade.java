@@ -61,10 +61,10 @@ public class CompanyFacade implements CompanyFacadeDAO {
     }
 
     /**
-     * Returns a single Company-issued Coupon by Coupon ID number.
+     * Returns a single Coupon by Coupon ID number.
      *
      * @param couponId Coupon ID number
-     * @return One Company-issued Coupon
+     * @return One Coupon
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override

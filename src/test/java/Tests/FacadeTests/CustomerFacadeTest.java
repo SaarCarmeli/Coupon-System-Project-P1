@@ -22,6 +22,7 @@ import org.junit.Test;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static org.junit.Assert.assertEquals;
@@ -36,22 +37,17 @@ public class CustomerFacadeTest {
     public static int couponIdCounter, companyIdCounter, customerIdCounter;
     public static Coupon[] databaseMacrohardCoupons, expectedMacrohardCoupons;
     public static Coupon[] databaseBananaCoupons, expectedBananaCoupons;
-    public static Consumer<Coupon> couponAssertion = expected -> {
-        try {
-            Coupon actual = customerFacade[customerIdCounter - 1].readCouponById(couponIdCounter);
-            assertEquals(expected.getId(), actual.getId());
-            assertEquals(expected.getCompanyId(), actual.getCompanyId());
-            assertEquals(expected.getAmount(), actual.getAmount());
-            assertEquals(expected.getPrice(), actual.getPrice(), 0);
-            assertEquals(expected.getCategory(), actual.getCategory());
-            assertEquals(expected.getTitle(), actual.getTitle());
-            assertEquals(expected.getDescription(), actual.getDescription());
-            assertEquals(expected.getStartDate(), actual.getStartDate());
-            assertEquals(expected.getEndDate(), actual.getEndDate());
-            couponIdCounter++;
-        } catch (EntityCrudException e) {
-            System.out.println(e.getMessage());
-        }
+
+    public static BiConsumer<Coupon, Coupon> couponAssertion = (expected, actual) -> {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getCompanyId(), actual.getCompanyId());
+        assertEquals(expected.getAmount(), actual.getAmount());
+        assertEquals(expected.getPrice(), actual.getPrice(), 0);
+        assertEquals(expected.getCategory(), actual.getCategory());
+        assertEquals(expected.getTitle(), actual.getTitle());
+        assertEquals(expected.getDescription(), actual.getDescription());
+        assertEquals(expected.getStartDate(), actual.getStartDate());
+        assertEquals(expected.getEndDate(), actual.getEndDate());
     };
 
     public static Consumer<Customer> customerCreation = customer -> {
@@ -207,7 +203,12 @@ public class CustomerFacadeTest {
 
     @Test
     public void purchaseCouponTest() throws Exception {
-
+        Coupon coupon = customerFacade[0].readCouponById(1);
+        Coupon actual, expected;
+        customerFacade[0].purchaseCoupon(coupon);
+        expected = expectedMacrohardCoupons[0];
+        actual = customerFacade[0].readAllCustomerCoupons().get(0);
+        couponAssertion.accept(expected, actual);
     }
 
     @Test

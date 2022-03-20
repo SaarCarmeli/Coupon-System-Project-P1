@@ -94,7 +94,7 @@ public class DBManager {
 
     // Login:
     public static final String COMPANY_LOGGING = "SELECT id FROM `coupon_project`.`companies` WHERE email = ? AND password = ?";
-    public static final String CUSTOMER_LOGGING = "SELECT id FROM `coupon_project`.`customers` WHERE email = ? AND password = ?";
+    public static final String CUSTOMER_LOGGING = "SELECT customer_id FROM `coupon_project`.`customers` WHERE email = ? AND password = ?";
 
     // Test:
     public static final String DROP_SCHEMA = "DROP DATABASE `coupon_project`";
