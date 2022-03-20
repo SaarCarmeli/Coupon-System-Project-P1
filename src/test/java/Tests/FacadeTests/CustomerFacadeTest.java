@@ -188,6 +188,11 @@ public class CustomerFacadeTest {
         companyFacade[0].addCoupon(databaseMacrohardCoupons[0]);
         companyFacade[0].addCoupon(databaseMacrohardCoupons[1]);
         companyFacade[1].addCoupon(databaseBananaCoupons[0]);
+        // In-SQL Customer creation:
+        adminFacade.addCustomer(jeff);
+        adminFacade.addCustomer(jennifer);
+        adminFacade.addCustomer(christopher);
+        adminFacade.addCustomer(christine);
     }
 
     @After
