@@ -72,9 +72,9 @@ public class DBManager {
     public static final String ADD_COUPON_PURCHASE = "INSERT INTO `coupon_project`.`customer_to_coupon` (id_customer, id_coupon) VALUES (?, ?)"; // todo
     public static final String READ_COUPON_BY_ID = "SELECT * FROM `coupon_project`.`coupons` WHERE coupon_id = ?";
     public static final String READ_ALL_COUPONS = "SELECT * FROM `coupon_project`.`coupons`";
-    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE customer_id = ?"; // todo
-    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE customer_id = ? AND price <= ?";// todo
-    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE customer_id = ? AND category = ?";// todo
+    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ?"; // todo
+    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ? AND price <= ?";// todo
+    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ? AND category = ?";// todo
     public static final String READ_COUPONS_BY_COMPANY_ID = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ?";
     public static final String READ_COUPONS_BY_COMPANY_ID_AND_MAX_PRICE = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ? AND price <= ?";
     public static final String READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ? AND category = ?";
