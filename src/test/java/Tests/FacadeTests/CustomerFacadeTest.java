@@ -207,6 +207,7 @@ public class CustomerFacadeTest {
         Coupon actual, expected;
         customerFacade[0].purchaseCoupon(coupon);
         expected = expectedMacrohardCoupons[0];
+        expected.setAmount(expected.getAmount() - 1);
         actual = customerFacade[0].readAllCustomerCoupons().get(0);
         couponAssertion.accept(expected, actual);
     }
