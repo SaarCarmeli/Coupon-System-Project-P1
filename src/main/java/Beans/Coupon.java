@@ -266,4 +266,21 @@ public class Coupon {
     public int hashCode() {
         return Objects.hash(id, companyId, amount, price, category, title, description, image, startDate, endDate);
     }
+
+    //todo javadoc
+    @Override
+    public String toString() {
+        return "Coupon{" +
+                "id=" + id +
+                ", companyId=" + companyId +
+                ", amount=" + amount +
+                ", price=" + price +
+                ", category=" + category +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

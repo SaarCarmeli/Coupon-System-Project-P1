@@ -147,4 +147,16 @@ public class Company {
     public int hashCode() {
         return Objects.hash(id, name, email, password, coupons);
     }
+
+    //todo javadoc
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", coupons=" + coupons +
+                '}';
+    }
 }

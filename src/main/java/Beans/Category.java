@@ -6,6 +6,4 @@ public enum Category {
     SOFTWARE,
     RESTAURANT,
     VACATION;
-
-    public final int value = 1 + ordinal();
 }

@@ -169,4 +169,17 @@ public class Customer {
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, email, password, coupons);
     }
+
+    //todo javadoc
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", coupons=" + coupons +
+                '}';
+    }
 }
