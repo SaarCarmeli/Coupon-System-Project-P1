@@ -51,6 +51,7 @@ public class CustomerFacade implements CustomerFacadeDAO {
         newCouponAmount = coupon.getAmount() - 1;
         coupon.setAmount(newCouponAmount);
         CouponDBDAO.getInstance().updateCoupon(coupon);
+        System.out.println("Coupon Amount -1");
     }
 
     /**

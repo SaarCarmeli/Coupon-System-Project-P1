@@ -213,7 +213,7 @@ public class CustomerFacadeTest {
     }
 
     @Test
-    public void deleteCouponPurchaseByDeleteCouponCascade() throws Exception {
+    public void deleteCouponPurchaseByDeleteCouponCascadeTest() throws Exception {
         Coupon coupon = customerFacade[0].readCouponById(1);
         customerFacade[0].purchaseCoupon(coupon);
         assertTrue(TestDBMethods.isPurchaseExistById(1, 1));
@@ -222,7 +222,7 @@ public class CustomerFacadeTest {
     }
 
     @Test
-    public void deleteCouponPurchaseByDeleteCompanyCascade() throws Exception {
+    public void deleteCouponPurchaseByDeleteCompanyCascadeTest() throws Exception {
         Coupon coupon = customerFacade[0].readCouponById(1);
         customerFacade[0].purchaseCoupon(coupon);
         assertTrue(TestDBMethods.isPurchaseExistById(1, 1));
@@ -232,7 +232,7 @@ public class CustomerFacadeTest {
 
     @Test
     public void readCouponByIdTest() throws Exception {
-
+        Coupon coupon = customerFacade[0].readCouponById(1);
     }
 
     @Test

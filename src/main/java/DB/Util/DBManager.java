@@ -44,17 +44,17 @@ public class DBManager {
             "    ON UPDATE CASCADE);";
 
     public static final String CREATE_TABLE_CUSTOMER_TO_COUPON = "CREATE TABLE IF NOT EXISTS `coupon_project`.`customer_to_coupon` (" +
-            "  `id_customer` BIGINT NOT NULL," + //todo
-            "  `id_coupon` BIGINT NOT NULL," + //todo
-            "  INDEX `id_customer_idx` (`id_customer` ASC) VISIBLE," +//todo
-            "  INDEX `id_coupon_idx` (`id_coupon` ASC) VISIBLE," +//todo
-            "  CONSTRAINT `id_customer`" +//todo
-            "    FOREIGN KEY (`id_customer`)" +//todo
-            "    REFERENCES `coupon_project`.`customers` (`customer_id`)" +//todo
+            "  `id_customer` BIGINT NOT NULL," +
+            "  `id_coupon` BIGINT NOT NULL," +
+            "  INDEX `id_customer_idx` (`id_customer` ASC) VISIBLE," +
+            "  INDEX `id_coupon_idx` (`id_coupon` ASC) VISIBLE," +
+            "  CONSTRAINT `id_customer`" +
+            "    FOREIGN KEY (`id_customer`)" +
+            "    REFERENCES `coupon_project`.`customers` (`customer_id`)" +
             "    ON DELETE CASCADE" +
             "    ON UPDATE CASCADE," +
-            "  CONSTRAINT `id_coupon`" +// todo
-            "    FOREIGN KEY (`id_coupon`)" +// todo
+            "  CONSTRAINT `id_coupon`" +
+            "    FOREIGN KEY (`id_coupon`)" +
             "    REFERENCES `coupon_project`.`coupons` (`coupon_id`)" +
             "    ON DELETE CASCADE" +
             "    ON UPDATE CASCADE);";
@@ -69,12 +69,12 @@ public class DBManager {
 
     // Coupon CRUD:
     public static final String CREATE_COUPON = "INSERT INTO `coupon_project`.`coupons` (company_id, amount, price, category, title, description, image, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";// todo check match with map
-    public static final String ADD_COUPON_PURCHASE = "INSERT INTO `coupon_project`.`customer_to_coupon` (id_customer, id_coupon) VALUES (?, ?)"; // todo
+    public static final String ADD_COUPON_PURCHASE = "INSERT INTO `coupon_project`.`customer_to_coupon` (id_customer, id_coupon) VALUES (?, ?)";
     public static final String READ_COUPON_BY_ID = "SELECT * FROM `coupon_project`.`coupons` WHERE coupon_id = ?";
     public static final String READ_ALL_COUPONS = "SELECT * FROM `coupon_project`.`coupons`";
-    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ?"; // todo
-    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ? AND price <= ?";// todo
-    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ? AND category = ?";// todo
+    public static final String READ_COUPONS_BY_CUSTOMER_ID = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ?"; // todo check in mysql workbench
+    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ? AND price <= ?";// todo check in mysql workbench
+    public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ? AND category = ?";// todo check in mysql workbench
     public static final String READ_COUPONS_BY_COMPANY_ID = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ?";
     public static final String READ_COUPONS_BY_COMPANY_ID_AND_MAX_PRICE = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ? AND price <= ?";
     public static final String READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ? AND category = ?";
@@ -82,7 +82,7 @@ public class DBManager {
     public static final String DELETE_COUPON_BY_ID = "DELETE FROM `coupon_project`.`coupons` WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM `coupon_project`.`coupons` WHERE end_date < ?";
     public static final String COUNT_COUPONS_BY_COMPANY_ID_AND_TITLE = "SELECT COUNT(*) FROM `coupon_project`.`coupons` WHERE company_id = ? AND title = ?";
-    public static final String COUNT_COUPONS_BY_CUSTOMER_ID = "SELECT COUNT(*) FROM `coupon_project`.`customer_to_coupon` WHERE id_coupon = ? AND id_customer = ?"; // todo
+    public static final String COUNT_COUPONS_BY_CUSTOMER_ID = "SELECT COUNT(*) FROM `coupon_project`.`customer_to_coupon` WHERE id_coupon = ? AND id_customer = ?"; // todo check that works
 
     // Customer CRUD:
     public static final String CREATE_CUSTOMER = "INSERT INTO `coupon_project`.`customers` (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
