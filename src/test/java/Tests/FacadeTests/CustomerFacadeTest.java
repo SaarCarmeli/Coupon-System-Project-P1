@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class CustomerFacadeTest {
     public static AdminFacade adminFacade;
@@ -214,12 +214,20 @@ public class CustomerFacadeTest {
 
     @Test
     public void deleteCouponPurchaseByDeleteCouponCascade() throws Exception {
-
+        Coupon coupon = customerFacade[0].readCouponById(1);
+        customerFacade[0].purchaseCoupon(coupon);
+        assertTrue(TestDBMethods.isPurchaseExistById(1, 1));
+        companyFacade[0].deleteCoupon(1);
+        assertFalse(TestDBMethods.isPurchaseExistById(1, 1));
     }
 
     @Test
     public void deleteCouponPurchaseByDeleteCompanyCascade() throws Exception {
-
+        Coupon coupon = customerFacade[0].readCouponById(1);
+        customerFacade[0].purchaseCoupon(coupon);
+        assertTrue(TestDBMethods.isPurchaseExistById(1, 1));
+        adminFacade.deleteCompany(1);
+        assertFalse(TestDBMethods.isPurchaseExistById(1, 1));
     }
 
     @Test

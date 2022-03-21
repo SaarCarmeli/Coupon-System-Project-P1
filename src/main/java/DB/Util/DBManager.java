@@ -102,4 +102,5 @@ public class DBManager {
     public static final String COUNT_COMPANY_BY_ID = "SELECT COUNT(*) FROM `coupon_project`.`companies` WHERE id = ?";
     public static final String COUNT_CUSTOMER_BY_ID = "SELECT COUNT(*) FROM `coupon_project`.`customers` WHERE customer_id = ?";
     public static final String COUNT_COUPON_BY_ID = "SELECT COUNT(*) FROM `coupon_project`.`coupons` WHERE coupon_id = ?";
+    public static final String COUNT_PURCHASE_BY_IDS = "SELECT COUNT(*) FROM `coupon_project`.`customer_to_coupon` WHERE id_customer = ? AND id_coupon = ?";
 }
