@@ -11,7 +11,7 @@ public class DateUtil {
      * @return Current Date in String
      */
     public static String getCurrentDate() {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); // todo where date comes from?
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         return df.format(new Date());
     }
 }
