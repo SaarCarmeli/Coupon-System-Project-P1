@@ -5,11 +5,10 @@ import Beans.Coupon;
 import Beans.Customer;
 import DBDAO.CouponDBDAO;
 import DBDAO.CustomerDBDAO;
-import Exceptions.EntityAlreadyExistException;
-import Exceptions.EntityCrudException;
-import Exceptions.EntityType;
-import Exceptions.NoCouponsLeftException;
+import Exceptions.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CustomerFacade implements CustomerFacadeDAO {
@@ -36,16 +35,16 @@ public class CustomerFacade implements CustomerFacadeDAO {
      * @throws NoCouponsLeftException      Thrown if there are no coupons left to purchase
      */
     @Override
-    public void purchaseCoupon(Coupon coupon) throws EntityCrudException, EntityAlreadyExistException, NoCouponsLeftException {
-        /*
-            todo add method to check that: coupon isn't expired (before being deleted by daily job)
-        */
+    public void purchaseCoupon(Coupon coupon) throws EntityCrudException, EntityAlreadyExistException, NoCouponsLeftException, CouponExpiredException {
         int newCouponAmount;
         if (CouponDBDAO.getInstance().isPurchaseExistByIds(coupon.getId(), customerId)) {
             throw new EntityAlreadyExistException(EntityType.PURCHASE);
         }
         if (coupon.getAmount() <= 0) {
             throw new NoCouponsLeftException();
+        }
+        if (coupon.getEndDate().after(Date.valueOf(LocalDate.now()))){
+            throw new CouponExpiredException();
         }
         CouponDBDAO.getInstance().addCouponPurchase(customerId, coupon.getId());
         newCouponAmount = coupon.getAmount() - 1;
