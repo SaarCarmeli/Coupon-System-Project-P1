@@ -74,7 +74,7 @@ public class DBManager {
     public static final String READ_ALL_COUPONS = "SELECT * FROM `coupon_project`.`coupons`";
     public static final String READ_COUPONS_BY_CUSTOMER_ID =
             "SELECT c.coupon_id, c.company_id, c.amount, c.price, c.category, c.title, c.description, c.image, c.start_date, c.end_date" +
-            "FROM `coupon_project`.`coupons` AS c" +
+            "FROM `coupon_project`.`coupons` AS c " +
             "JOIN `coupon_project`.`customer_to_coupon` AS ctc ON ctc.id_coupon = c.coupon_id" +
             "WHERE ctc.id_customer = ?";
     public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE = "SELECT coupon_id, company_id, amount, price, category, title, description, image, start_date, end_date FROM `coupon_project`.`customer_to_coupon`, `coupon_project`.`coupons` WHERE id_customer = ? AND price <= ?";// todo check in mysql workbench
