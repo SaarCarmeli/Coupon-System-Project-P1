@@ -1,4 +1,4 @@
-package DB.Util;
+package DB;
 
 public class DBManager {
     // User info:

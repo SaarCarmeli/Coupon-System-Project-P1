@@ -1,9 +1,9 @@
 package DBDAO;
 
 import Beans.Company;
-import DB.Util.DBManager;
-import DB.Util.DBTools;
-import DB.Util.ObjectExtractionUtil;
+import DB.DBManager;
+import DB.DBTools;
+import DB.ObjectExtractionUtil;
 import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
 import Exceptions.EntityType;

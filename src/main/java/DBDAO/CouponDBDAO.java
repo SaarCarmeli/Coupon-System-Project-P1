@@ -2,9 +2,9 @@ package DBDAO;
 
 
 import Beans.Coupon;
-import DB.Util.DBManager;
-import DB.Util.DBTools;
-import DB.Util.ObjectExtractionUtil;
+import DB.DBManager;
+import DB.DBTools;
+import DB.ObjectExtractionUtil;
 import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
 import Exceptions.EntityType;
@@ -323,11 +323,11 @@ public class CouponDBDAO implements CouponDAO {
     /**
      * Deletes Coupon records from MySQL database by coupon expiration date.
      *
-     * @param date current date //todo correct?
+     * @param date current date
      * @throws EntityCrudException Thrown if delete from MySQL was unsuccessful
      */
     @Override
-    public void deleteExpiredCoupons(String date/*todo why string?*/) throws EntityCrudException {
+    public void deleteExpiredCoupons(String date) throws EntityCrudException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, date);
         try {

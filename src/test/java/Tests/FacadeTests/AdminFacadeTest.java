@@ -2,10 +2,10 @@ package Tests.FacadeTests;
 
 import Beans.Company;
 import Beans.Customer;
-import Beans.Util.TablePrinterUtil;
+import Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
-import DB.Util.DBManager;
-import DB.Util.DBTools;
+import DB.DBManager;
+import DB.DBTools;
 import DBDAO.CustomerDBDAO;
 import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;

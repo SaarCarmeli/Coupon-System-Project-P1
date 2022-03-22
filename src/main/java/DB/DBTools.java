@@ -1,4 +1,4 @@
-package DB.Util;
+package DB;
 
 import DB.ConnectionPool;
 

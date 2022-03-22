@@ -1,7 +1,7 @@
 package LoginManager;
 
-import DB.Util.DBManager;
-import DB.Util.DBTools;
+import DB.DBManager;
+import DB.DBTools;
 import Facades.AdminFacade;
 import Facades.CompanyFacade;
 import Facades.CustomerFacade;

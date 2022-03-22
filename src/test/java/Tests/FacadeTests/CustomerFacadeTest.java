@@ -4,10 +4,10 @@ import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
 import Beans.Customer;
-import Beans.Util.TablePrinterUtil;
+import Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
-import DB.Util.DBManager;
-import DB.Util.DBTools;
+import DB.DBManager;
+import DB.DBTools;
 import DBDAO.CouponDBDAO;
 import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;
@@ -353,6 +353,6 @@ public class CustomerFacadeTest {
         Customer customer = customerFacade[3].getCustomerDetails();
         Coupon coupon = customerFacade[3].readCouponById(3);
         customerFacade[3].purchaseCoupon(coupon);
-        TablePrinterUtil.print(customer);
+        TablePrinterUtil.print(customer);// todo fix setCoupons
     }
 }

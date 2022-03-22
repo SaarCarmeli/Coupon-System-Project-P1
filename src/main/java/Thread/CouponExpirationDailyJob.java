@@ -1,6 +1,6 @@
 package Thread;
 
-import DB.Util.DateUtil;
+import Util.DateUtil;
 import DBDAO.CouponDBDAO;
 import Exceptions.EntityCrudException;
 
@@ -15,7 +15,6 @@ public class CouponExpirationDailyJob {
     private final long dayInMilliseconds = 86_400 * 1000;
 
 
-    //c'tor
     public CouponExpirationDailyJob() {
         Timer timer = new Timer();
         couponDBDAO = CouponDBDAO.getInstance();
@@ -28,23 +27,19 @@ public class CouponExpirationDailyJob {
                         couponDBDAO.deleteExpiredCoupons(DateUtil.getCurrentDate());
                         System.out.println("All expired coupons have been deleted !");
                     } catch (EntityCrudException e) {
-                        //todo:customize Exception
-                        e.printStackTrace();
+                        System.out.println("Failed to delete expired coupons !");
                     }
                 }
             }
         };
         Calendar today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 2);
+        today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.SECOND, 0);
         timer.schedule(couponCleanUp, today.getTime(), dayInMilliseconds);
     }
 
-//        public boolean isRunning(){
-//        return !isRunning;
-
     public void stopTask() {
-        isRunning = false;
+        isRunning = false;// todo outside of c-tor, will never be accessable (unless static?)
     }
 }

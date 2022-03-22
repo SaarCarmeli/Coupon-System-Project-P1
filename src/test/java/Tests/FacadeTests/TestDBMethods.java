@@ -1,7 +1,7 @@
 package Tests.FacadeTests;
 
-import DB.Util.DBManager;
-import DB.Util.DBTools;
+import DB.DBManager;
+import DB.DBTools;
 import Exceptions.CrudOperation;
 import Exceptions.EntityCrudException;
 import Exceptions.EntityType;

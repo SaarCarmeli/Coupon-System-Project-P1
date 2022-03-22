@@ -1,7 +1,5 @@
 package DB;
 
-import DB.Util.DBManager;
-import DB.Util.DBTools;
 import Exceptions.DBException;
 import Exceptions.DBInitException;
 

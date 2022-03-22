@@ -1,4 +1,4 @@
-package Beans.Util;
+package Util;
 
 import java.lang.reflect.*;
 import java.util.*;
