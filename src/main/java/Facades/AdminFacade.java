@@ -10,6 +10,9 @@ import Exceptions.EntityType;
 
 import java.util.ArrayList;
 
+/**
+ * Class containing methods available for the "Administrator" user.
+ */
 public class AdminFacade implements AdminFacadeDAO {
 
     /**

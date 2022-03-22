@@ -11,6 +11,9 @@ import Exceptions.EntityType;
 
 import java.util.ArrayList;
 
+/**
+ * Class containing methods available for the "Company" user.
+ */
 public class CompanyFacade implements CompanyFacadeDAO {
     private final int companyId;
 

@@ -11,6 +11,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Class containing methods available for the "Customer" user.
+ */
 public class CustomerFacade implements CustomerFacadeDAO {
     private final int customerId;
 
@@ -27,12 +30,14 @@ public class CustomerFacade implements CustomerFacadeDAO {
      * Adds a new Coupon purchase for a Customer to the database.
      * Checks that the Customer hasn't already purchased this Coupon (can not buy the same coupon twice).
      * Checks that there are coupons available for purchase (coupon amount is not 0).
+     * Checks that the coupon isn't expired.
      * Lowers the amount of coupons by 1 after purchase is complete.
      *
      * @param coupon Coupon being purchased
      * @throws EntityCrudException         Thrown if Count in MySQL was unsuccessful
      * @throws EntityAlreadyExistException Thrown if the customer already purchased this coupon
      * @throws NoCouponsLeftException      Thrown if there are no coupons left to purchase
+     * @throws CouponExpiredException      Thrown if the coupon being attempted to purchase is expired
      */
     @Override
     public void purchaseCoupon(Coupon coupon) throws EntityCrudException, EntityAlreadyExistException, NoCouponsLeftException, CouponExpiredException {
@@ -43,7 +48,7 @@ public class CustomerFacade implements CustomerFacadeDAO {
         if (coupon.getAmount() <= 0) {
             throw new NoCouponsLeftException();
         }
-        if (coupon.getEndDate().before(Date.valueOf(LocalDate.now()))){
+        if (coupon.getEndDate().before(Date.valueOf(LocalDate.now()))) {
             throw new CouponExpiredException();
         }
         CouponDBDAO.getInstance().addCouponPurchase(customerId, coupon.getId());
