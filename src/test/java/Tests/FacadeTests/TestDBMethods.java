@@ -59,21 +59,4 @@ public abstract class TestDBMethods {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.COUNT);
         }
     }
-
-    public static boolean isPurchaseExistById(int customerId, int couponId) throws EntityCrudException {
-        int counter;
-        ResultSet result;
-        Map<Integer, Object> params = new HashMap<>();
-        params.put(1,customerId);
-        params.put(2, couponId);
-        try {
-            result = DBTools.runQueryForResult(DBManager.COUNT_PURCHASE_BY_IDS, params);
-            assert result != null;
-            result.next();
-            counter = result.getInt(1);
-            return counter != 0;
-        } catch (SQLException e) {
-            throw new EntityCrudException(EntityType.COUPON, CrudOperation.COUNT);
-        }
-    }
 }

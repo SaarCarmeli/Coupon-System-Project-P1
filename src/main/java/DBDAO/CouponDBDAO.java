@@ -374,14 +374,14 @@ public class CouponDBDAO implements CouponDAO {
      * @throws EntityCrudException Thrown if count in MySQL was unsuccessful
      */
     @Override
-    public boolean isCouponExistByCustomerId(Integer couponId, Integer customerId) throws EntityCrudException {
+    public boolean isPurchaseExistByIds(Integer couponId, Integer customerId) throws EntityCrudException {
         int counter;
         ResultSet result;
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, couponId);
         params.put(2, customerId);
         try {
-            result = DBTools.runQueryForResult(DBManager.COUNT_COUPONS_BY_CUSTOMER_ID, params);
+            result = DBTools.runQueryForResult(DBManager.COUNT_PURCHASE_BY_IDS, params);
             assert result != null;
             result.next();
             counter = result.getInt(1);

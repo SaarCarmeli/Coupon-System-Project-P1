@@ -94,7 +94,7 @@ public class DBManager {
     public static final String DELETE_COUPON_BY_ID = "DELETE FROM `coupon_project`.`coupons` WHERE coupon_id = ?";
     public static final String DELETE_COUPON_BY_END_DATE = "DELETE FROM `coupon_project`.`coupons` WHERE end_date < ?";
     public static final String COUNT_COUPONS_BY_COMPANY_ID_AND_TITLE = "SELECT COUNT(*) FROM `coupon_project`.`coupons` WHERE company_id = ? AND title = ?";
-    public static final String COUNT_COUPONS_BY_CUSTOMER_ID = "SELECT COUNT(*) FROM `coupon_project`.`customer_to_coupon` WHERE id_coupon = ? AND id_customer = ?"; // todo check that works
+    public static final String COUNT_PURCHASE_BY_IDS = "SELECT COUNT(*) FROM `coupon_project`.`customer_to_coupon` WHERE id_coupon = ? AND id_customer = ?"; // todo check that works
 
     // Customer CRUD:
     public static final String CREATE_CUSTOMER = "INSERT INTO `coupon_project`.`customers` (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
@@ -114,5 +114,4 @@ public class DBManager {
     public static final String COUNT_COMPANY_BY_ID = "SELECT COUNT(*) FROM `coupon_project`.`companies` WHERE id = ?";
     public static final String COUNT_CUSTOMER_BY_ID = "SELECT COUNT(*) FROM `coupon_project`.`customers` WHERE customer_id = ?";
     public static final String COUNT_COUPON_BY_ID = "SELECT COUNT(*) FROM `coupon_project`.`coupons` WHERE coupon_id = ?";
-    public static final String COUNT_PURCHASE_BY_IDS = "SELECT COUNT(*) FROM `coupon_project`.`customer_to_coupon` WHERE id_customer = ? AND id_coupon = ?";
 }

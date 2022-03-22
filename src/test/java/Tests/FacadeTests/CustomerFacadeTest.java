@@ -8,6 +8,7 @@ import Beans.Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
+import DBDAO.CouponDBDAO;
 import Exceptions.EntityAlreadyExistException;
 import Exceptions.EntityCrudException;
 import Facades.AdminFacade;
@@ -246,18 +247,18 @@ public class CustomerFacadeTest {
     public void deleteCouponPurchaseByDeleteCouponCascadeTest() throws Exception {
         Coupon coupon = customerFacade[0].readCouponById(1);
         customerFacade[0].purchaseCoupon(coupon);
-        assertTrue(TestDBMethods.isPurchaseExistById(1, 1));
+        assertTrue(CouponDBDAO.getInstance().isPurchaseExistByIds(1, 1));
         companyFacade[0].deleteCoupon(1);
-        assertFalse(TestDBMethods.isPurchaseExistById(1, 1));
+        assertFalse(CouponDBDAO.getInstance().isPurchaseExistByIds(1, 1));
     }
 
     @Test
     public void deleteCouponPurchaseByDeleteCompanyCascadeTest() throws Exception {
         Coupon coupon = customerFacade[0].readCouponById(1);
         customerFacade[0].purchaseCoupon(coupon);
-        assertTrue(TestDBMethods.isPurchaseExistById(1, 1));
+        assertTrue(CouponDBDAO.getInstance().isPurchaseExistByIds(1, 1));
         adminFacade.deleteCompany(1);
-        assertFalse(TestDBMethods.isPurchaseExistById(1, 1));
+        assertFalse(CouponDBDAO.getInstance().isPurchaseExistByIds(1, 1));
     }
 
     @Test

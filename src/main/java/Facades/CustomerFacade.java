@@ -41,7 +41,7 @@ public class CustomerFacade implements CustomerFacadeDAO {
             todo add method to check that: coupon isn't expired (before being deleted by daily job)
         */
         int newCouponAmount;
-        if (CouponDBDAO.getInstance().isCouponExistByCustomerId(coupon.getId(), customerId)) {
+        if (CouponDBDAO.getInstance().isPurchaseExistByIds(coupon.getId(), customerId)) {
             throw new EntityAlreadyExistException(EntityType.PURCHASE);
         }
         if (coupon.getAmount() <= 0) {
