@@ -11,6 +11,7 @@ public class TestsSuiteRunner {
             System.out.println(fail.toString());
         }
 
+        System.out.println();
         System.out.println("Success? " + result.wasSuccessful());
     }
 }
