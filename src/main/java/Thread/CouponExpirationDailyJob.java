@@ -8,13 +8,18 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * Class containing daily-job thread for deleting expired coupons from the database.
+ */
 public class CouponExpirationDailyJob {
     private CouponDBDAO couponDBDAO;
     private boolean isRunning;
     private final long dayInMilliseconds = 86_400 * 1000;
 
 
+    /**
+     * Constructor containing daily-job thread. deletes expired-coupons every day at 00:00:00 am.
+     */
     public CouponExpirationDailyJob() {
         Timer timer = new Timer();
         couponDBDAO = CouponDBDAO.getInstance();
@@ -39,6 +44,9 @@ public class CouponExpirationDailyJob {
         timer.schedule(couponCleanUp, today.getTime(), dayInMilliseconds);
     }
 
+    /**
+     * Method for stopping daily-job thread.
+     */
     public void stopTask() {
         isRunning = false;// todo outside of c-tor, will never be accessable (unless static?)
     }
