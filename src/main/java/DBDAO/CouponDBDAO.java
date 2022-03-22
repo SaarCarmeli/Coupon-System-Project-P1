@@ -274,7 +274,6 @@ public class CouponDBDAO implements CouponDAO {
         params.put(1, companyId);
         params.put(2, category);
         try {
-            final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND category = ?";
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY, params);
             while (result.next()) {
                 couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
