@@ -93,7 +93,7 @@ public class CustomerDBDAO implements CustomerDAO {
         List<Customer> customerList = new ArrayList<>();
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_CUSTOMERS);
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 customerList.add(ObjectExtractionUtil.resultSetToCustomer(result));
             }
             return customerList;

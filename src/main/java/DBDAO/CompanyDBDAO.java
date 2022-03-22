@@ -91,7 +91,7 @@ public class CompanyDBDAO implements CompanyDAO {
         List<Company> companyList = new ArrayList<>();
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_COMPANIES);
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 companyList.add(ObjectExtractionUtil.resultSetToCompany(result));//todo CouponDBDAO.getInstance().readCouponsByCompanyId(ObjectExtractionUtil.resultSetToCompany(result).getId())??? too dangerous?
             }
             return companyList;

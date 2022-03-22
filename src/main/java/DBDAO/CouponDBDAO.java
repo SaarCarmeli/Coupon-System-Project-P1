@@ -117,7 +117,7 @@ public class CouponDBDAO implements CouponDAO {
         List<Coupon> couponList = new ArrayList<>();
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_COUPONS);
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
             return couponList;
@@ -141,7 +141,7 @@ public class CouponDBDAO implements CouponDAO {
         params.put(1, customerId);
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID, params);
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
             return couponList;
@@ -167,7 +167,7 @@ public class CouponDBDAO implements CouponDAO {
         params.put(2, maxPrice);
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE, params);
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
             return couponList;
@@ -193,7 +193,7 @@ public class CouponDBDAO implements CouponDAO {
         params.put(2, category);
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY, params);
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
             return couponList;
@@ -217,7 +217,7 @@ public class CouponDBDAO implements CouponDAO {
         params.put(1, companyId);
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_COMPANY_ID, params);
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
             return couponList;
@@ -243,7 +243,7 @@ public class CouponDBDAO implements CouponDAO {
         params.put(2, maxPrice);
         try {
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_COMPANY_ID_AND_MAX_PRICE, params);
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
             return couponList;
@@ -270,7 +270,7 @@ public class CouponDBDAO implements CouponDAO {
         try {
             final String sqlStatement = "SELECT * FROM coupons WHERE company_id = ? AND category = ?";
             result = DBTools.runQueryForResult(DBManager.READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY, params);
-            while (result.next()) { // todo consider asserting
+            while (result.next()) {
                 couponList.add(ObjectExtractionUtil.resultSetToCoupon(result));
             }
             return couponList;
@@ -385,7 +385,7 @@ public class CouponDBDAO implements CouponDAO {
             assert result != null;
             result.next();
             counter = result.getInt(1);
-            return counter != 0; // todo check that works
+            return counter != 0;
         } catch (SQLException e) {
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.COUNT);
         }
