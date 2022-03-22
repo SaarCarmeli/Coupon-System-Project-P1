@@ -4,6 +4,7 @@ import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
 import Beans.Customer;
+import Beans.Util.TablePrinterUtil;
 import DB.DatabaseInitializer;
 import DB.Util.DBManager;
 import DB.Util.DBTools;
@@ -22,6 +23,8 @@ import org.junit.Test;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -32,7 +35,9 @@ public class CustomerFacadeTest {
     public static CompanyFacade[] companyFacade;
     public static CustomerFacade[] customerFacade;
     public static Company macrohard, banana;
-    public static Customer jeff, jennifer, christopher, christine;
+    public static List<Company> companyList;
+    public static Customer jeff, jennifer, christopher, christine, expctedChristine;
+    public static List<Customer> customerList;
 
     public static int couponIdCounter, companyIdCounter, customerIdCounter;
     public static Coupon[] databaseMacrohardCoupons, expectedMacrohardCoupons;
@@ -58,6 +63,21 @@ public class CustomerFacadeTest {
         }
     };
 
+    public static BiConsumer<Customer, Customer> customerAssertion = (expected, actual) -> {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getFirstName(), actual.getFirstName());
+        assertEquals(expected.getLastName(), actual.getLastName());
+        assertEquals(expected.getEmail(), actual.getEmail());
+    };
+
+    public static Consumer<Company> companyCreation = company -> {
+        try {
+            adminFacade.addCompany(company);
+        } catch (EntityAlreadyExistException | EntityCrudException e) {
+            System.out.println(e.getMessage());
+        }
+    };
+
     @BeforeClass
     public static void oneTimeInitialization() {
         // Array set-ups:
@@ -70,6 +90,7 @@ public class CustomerFacadeTest {
         // In-program Company creation:
         macrohard = new Company("Macrohard Corporation", "MacroBusiness@coldmail.com", "secretlyMicrosoft");
         banana = new Company("Banana Inc", "Banana.Business@bmail.com", "betterthanmacrohard");
+        companyList = List.of(macrohard, banana);
         // In-program Coupon creation:
         databaseMacrohardCoupons[0] = new Coupon(
                 1
@@ -165,6 +186,14 @@ public class CustomerFacadeTest {
                 "christy@gmail.com",
                 "1Fsj9byG_oP%"
         );
+
+        expctedChristine = new Customer(
+                4,
+                "Christine",
+                "Brown",
+                "christy@gmail.com"
+        );
+        customerList = List.of(jeff, jennifer, christopher, christine);
     }
 
     @Before
@@ -173,8 +202,7 @@ public class CustomerFacadeTest {
         DatabaseInitializer.createTables();
         // In-SQL Company creation and login:
         adminFacade = (AdminFacade) LoginManager.getInstance().login("admin@admin.com", "admin", ClientType.valueOf("ADMINISTRATOR"));
-        adminFacade.addCompany(macrohard);
-        adminFacade.addCompany(banana);
+        companyList.forEach(company -> companyCreation.accept(company));
         companyFacade[0] = (CompanyFacade) LoginManager.getInstance().login("MacroBusiness@coldmail.com", "secretlyMicrosoft", ClientType.COMPANY);
         companyFacade[1] = (CompanyFacade) LoginManager.getInstance().login("Banana.Business@bmail.com", "betterthanmacrohard", ClientType.COMPANY);
         // In-SQL Coupon creation:
@@ -182,10 +210,7 @@ public class CustomerFacadeTest {
         companyFacade[0].addCoupon(databaseMacrohardCoupons[1]);
         companyFacade[1].addCoupon(databaseBananaCoupons[0]);
         // In-SQL Customer creation and login:
-        adminFacade.addCustomer(jeff);
-        adminFacade.addCustomer(jennifer);
-        adminFacade.addCustomer(christopher);
-        adminFacade.addCustomer(christine);
+        customerList.forEach(customer -> customerCreation.accept(customer));
         customerFacade[0] = (CustomerFacade) LoginManager.getInstance().login("jeffyjeff@gmail.com", "12345678", ClientType.CUSTOMER);
         customerFacade[1] = (CustomerFacade) LoginManager.getInstance().login("jenny@gmail.com", "abc123", ClientType.CUSTOMER);
         customerFacade[2] = (CustomerFacade) LoginManager.getInstance().login("chris@gmail.com", "abcdefg", ClientType.CUSTOMER);
@@ -231,47 +256,97 @@ public class CustomerFacadeTest {
     }
 
     @Test
-    public void readCouponByIdTest() throws Exception {
-        Coupon coupon = customerFacade[0].readCouponById(1);
-    }
-
-    @Test
     public void readAllCustomerCouponsTest() throws Exception {
-
+        Coupon coupon1 = customerFacade[1].readCouponById(1);
+        Coupon coupon2 = customerFacade[1].readCouponById(2);
+        customerFacade[1].purchaseCoupon(coupon1);
+        customerFacade[1].purchaseCoupon(coupon2);
+        Coupon coupon3 = customerFacade[2].readCouponById(3);
+        customerFacade[2].purchaseCoupon(coupon3);
+        ArrayList<Coupon> customer1Coupons = customerFacade[1].readAllCustomerCoupons();
+        assertEquals(2, customer1Coupons.size());
+        expectedMacrohardCoupons[0].setAmount(expectedMacrohardCoupons[0].getAmount() - 1);
+        expectedMacrohardCoupons[1].setAmount(expectedMacrohardCoupons[1].getAmount() - 1);
+        couponAssertion.accept(expectedMacrohardCoupons[0], customer1Coupons.get(0));
+        couponAssertion.accept(expectedMacrohardCoupons[1], customer1Coupons.get(1));
     }
 
     @Test
     public void printAllCustomerCouponTest() throws Exception {
-
+        Coupon coupon1 = customerFacade[1].readCouponById(1);
+        Coupon coupon2 = customerFacade[1].readCouponById(2);
+        customerFacade[1].purchaseCoupon(coupon1);
+        customerFacade[1].purchaseCoupon(coupon2);
+        Coupon coupon3 = customerFacade[2].readCouponById(3);
+        customerFacade[2].purchaseCoupon(coupon3);
+        ArrayList<Coupon> customer1Coupons = customerFacade[1].readAllCustomerCoupons();
+        TablePrinterUtil.print(customer1Coupons);
     }
 
     @Test
     public void readCustomerCouponsByCategoryTest() throws Exception {
-
+        Coupon coupon1 = customerFacade[1].readCouponById(1);
+        Coupon coupon2 = customerFacade[1].readCouponById(2);
+        customerFacade[1].purchaseCoupon(coupon1);
+        customerFacade[1].purchaseCoupon(coupon2);
+        Coupon coupon3 = customerFacade[2].readCouponById(3);
+        customerFacade[2].purchaseCoupon(coupon3);
+        ArrayList<Coupon> customer1Coupons = customerFacade[1].readCustomerCoupons(Category.SOFTWARE);
+        assertEquals(1, customer1Coupons.size());
+        expectedMacrohardCoupons[1].setAmount(expectedMacrohardCoupons[1].getAmount() - 1);
+        couponAssertion.accept(expectedMacrohardCoupons[1], customer1Coupons.get(1));
     }
 
     @Test
     public void printCustomerCouponsByCategoryTest() throws Exception {
-
+        Coupon coupon1 = customerFacade[1].readCouponById(1);
+        Coupon coupon2 = customerFacade[1].readCouponById(2);
+        customerFacade[1].purchaseCoupon(coupon1);
+        customerFacade[1].purchaseCoupon(coupon2);
+        Coupon coupon3 = customerFacade[2].readCouponById(3);
+        customerFacade[2].purchaseCoupon(coupon3);
+        ArrayList<Coupon> customer1Coupons = customerFacade[1].readCustomerCoupons(Category.SOFTWARE);
+        TablePrinterUtil.print(customer1Coupons);
     }
 
     @Test
     public void readCustomerCouponsByMaxPriceTest() throws Exception {
-
+        Coupon coupon1 = customerFacade[1].readCouponById(1);
+        Coupon coupon2 = customerFacade[1].readCouponById(2);
+        customerFacade[1].purchaseCoupon(coupon1);
+        customerFacade[1].purchaseCoupon(coupon2);
+        Coupon coupon3 = customerFacade[2].readCouponById(3);
+        customerFacade[2].purchaseCoupon(coupon3);
+        ArrayList<Coupon> customer1Coupons = customerFacade[1].readCustomerCoupons(50);
+        assertEquals(1, customer1Coupons.size());
+        expectedMacrohardCoupons[1].setAmount(expectedMacrohardCoupons[1].getAmount() - 1);
+        couponAssertion.accept(expectedMacrohardCoupons[1], customer1Coupons.get(1));
     }
 
     @Test
     public void printCustomerCouponsByMaxPriceTest() throws Exception {
-
+        Coupon coupon1 = customerFacade[1].readCouponById(1);
+        Coupon coupon2 = customerFacade[1].readCouponById(2);
+        customerFacade[1].purchaseCoupon(coupon1);
+        customerFacade[1].purchaseCoupon(coupon2);
+        Coupon coupon3 = customerFacade[2].readCouponById(3);
+        customerFacade[2].purchaseCoupon(coupon3);
+        ArrayList<Coupon> customer1Coupons = customerFacade[1].readCustomerCoupons(50);
+        TablePrinterUtil.print(customer1Coupons);
     }
 
     @Test
     public void getCustomerDetailsTest() throws Exception {
-
+        Customer actual = customerFacade[3].getCustomerDetails();
+        Customer expected = expctedChristine;
+        customerAssertion.accept(expected, actual);
     }
 
     @Test
     public void printCustomerDetailsTest() throws Exception {
-
+        Customer customer = customerFacade[3].getCustomerDetails();
+        Coupon coupon = customerFacade[3].readCouponById(3);
+        customerFacade[3].purchaseCoupon(coupon);
+        TablePrinterUtil.print(customer);
     }
 }
