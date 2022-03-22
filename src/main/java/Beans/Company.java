@@ -148,14 +148,17 @@ public class Company {
         return Objects.hash(id, name, email, password, coupons);
     }
 
-    //todo javadoc
+    /**
+     * Returns String description of Company attributes: id, name, email, coupons list.
+     *
+     * @return String description of Company attributes
+     */
     @Override
     public String toString() {
         return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", coupons=" + coupons +
                 '}';
     }

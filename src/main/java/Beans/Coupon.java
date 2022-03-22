@@ -267,7 +267,11 @@ public class Coupon {
         return Objects.hash(id, companyId, amount, price, category, title, description, image, startDate, endDate);
     }
 
-    //todo javadoc
+    /**
+     * Returns String description of Coupon attributes: id, companyId, amount, price, category, title, description, image, startDate, endDate
+     *
+     * @return Returns String description of Coupon attributes
+     */
     @Override
     public String toString() {
         return "Coupon{" +

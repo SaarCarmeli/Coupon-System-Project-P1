@@ -170,7 +170,11 @@ public class Customer {
         return Objects.hash(id, firstName, lastName, email, password, coupons);
     }
 
-    //todo javadoc
+    /**
+     * Returns String description of Customer attributes: id, firstName, lastName, email, coupons list
+     *
+     * @return Returns String description of Customer attributes
+     */
     @Override
     public String toString() {
         return "Customer{" +
@@ -178,7 +182,6 @@ public class Customer {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", coupons=" + coupons +
                 '}';
     }
