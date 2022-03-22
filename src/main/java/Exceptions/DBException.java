@@ -1,11 +1,22 @@
 package Exceptions;
 
+/**
+ * Thrown when table initialisation failed.
+ */
 public class DBException extends Exception {
+    /**
+     * Thrown when table initialisation failed.
+     */
     public DBException() {
         super("Failed to perform DB operation");
     }
 
-    public DBException(final String msg) {
-        super(msg);
+    /**
+     * Thrown when table initialisation failed.
+     *
+     * @param message Error message
+     */
+    public DBException(String message) {
+        super(message);
     }
 }
