@@ -13,7 +13,7 @@ import java.util.TimerTask;
  */
 public class CouponExpirationDailyJob {
     private CouponDBDAO couponDBDAO;
-    private boolean isRunning;
+    private static boolean isRunning;
     private final long dayInMilliseconds = 86_400 * 1000;
 
 
@@ -23,7 +23,7 @@ public class CouponExpirationDailyJob {
     public CouponExpirationDailyJob() {
         Timer timer = new Timer();
         couponDBDAO = CouponDBDAO.getInstance();
-        this.isRunning = true;
+        isRunning = true;
         TimerTask couponCleanUp = new TimerTask() {
             @Override
             public void run() {
@@ -45,9 +45,9 @@ public class CouponExpirationDailyJob {
     }
 
     /**
-     * Method for stopping daily-job thread.
+     * Static method for stopping daily-job thread.
      */
-    public void stopTask() {
-        isRunning = false;// todo outside of c-tor, will never be accessable (unless static?)
+    public static void stopTask() {
+        isRunning = false;
     }
 }
