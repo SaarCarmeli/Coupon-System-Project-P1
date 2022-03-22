@@ -32,7 +32,7 @@ public class DBManager {
             "  `title` VARCHAR(45) NOT NULL," +
             "  `description` VARCHAR(45) NOT NULL," +
             "  `start_date` DATE NOT NULL," +
-            "  `end_date` VARCHAR(45) NOT NULL," +
+            "  `end_date` DATE NOT NULL," +
             "  `amount` INT NOT NULL," +
             "  `price` DOUBLE NOT NULL," +
             "  `image` VARCHAR(45) NOT NULL," +

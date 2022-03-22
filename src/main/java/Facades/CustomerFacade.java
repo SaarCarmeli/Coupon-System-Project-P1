@@ -43,7 +43,7 @@ public class CustomerFacade implements CustomerFacadeDAO {
         if (coupon.getAmount() <= 0) {
             throw new NoCouponsLeftException();
         }
-        if (coupon.getEndDate().after(Date.valueOf(LocalDate.now()))){
+        if (coupon.getEndDate().before(Date.valueOf(LocalDate.now()))){
             throw new CouponExpiredException();
         }
         CouponDBDAO.getInstance().addCouponPurchase(customerId, coupon.getId());
