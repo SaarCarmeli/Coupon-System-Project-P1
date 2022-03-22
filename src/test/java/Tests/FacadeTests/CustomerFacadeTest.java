@@ -294,7 +294,7 @@ public class CustomerFacadeTest {
         ArrayList<Coupon> customer1Coupons = customerFacade[1].readCustomerCoupons(Category.SOFTWARE);
         assertEquals(1, customer1Coupons.size());
         expectedMacrohardCoupons[1].setAmount(expectedMacrohardCoupons[1].getAmount() - 1);
-        couponAssertion.accept(expectedMacrohardCoupons[1], customer1Coupons.get(1));
+        couponAssertion.accept(expectedMacrohardCoupons[1], customer1Coupons.get(0));
     }
 
     @Test
@@ -320,7 +320,7 @@ public class CustomerFacadeTest {
         ArrayList<Coupon> customer1Coupons = customerFacade[1].readCustomerCoupons(50);
         assertEquals(1, customer1Coupons.size());
         expectedMacrohardCoupons[1].setAmount(expectedMacrohardCoupons[1].getAmount() - 1);
-        couponAssertion.accept(expectedMacrohardCoupons[1], customer1Coupons.get(1));
+        couponAssertion.accept(expectedMacrohardCoupons[1], customer1Coupons.get(0));
     }
 
     @Test
