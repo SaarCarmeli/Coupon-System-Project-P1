@@ -250,7 +250,7 @@ public class CompanyFacadeTest {
     @Test
     public void printCompanyDetailsTest() throws Exception {
         companyFacade[0].addCoupon(macrohardCoupons[0]);
-        companyFacade[0].addCoupon(macrohardCoupons[2]);//todo how to fix??
+        companyFacade[0].addCoupon(macrohardCoupons[2]);
         TablePrinterUtil.print(companyFacade[0].getCompanyDetails());
     }
 }
