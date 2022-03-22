@@ -223,7 +223,12 @@ public class CustomerFacadeTest {
 
     @After
     public void finish() throws SQLException {
+        // Drop schema (database):
         System.out.println("Dropped schema: " + DBTools.runQuery(DBManager.DROP_SCHEMA));
+        // Reset Coupon amount:
+        expectedMacrohardCoupons[0].setAmount(2);
+        expectedMacrohardCoupons[1].setAmount(2);
+        expectedBananaCoupons[0].setAmount(3);
     }
 
     @Test
