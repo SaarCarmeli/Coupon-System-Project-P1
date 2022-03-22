@@ -146,7 +146,6 @@ public class CouponDBDAO implements CouponDAO {
             }
             return couponList;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new EntityCrudException(EntityType.COUPON, CrudOperation.READ);
         }
     }
