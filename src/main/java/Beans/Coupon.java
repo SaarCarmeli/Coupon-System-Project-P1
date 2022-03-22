@@ -3,6 +3,9 @@ package Beans;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * Class for Coupon record, includes attributes: id, companyId, amount, price, (enum) category, title, description, image, (sql.Date) startDate, (sql.Date) endDate
+ */
 public class Coupon {
     private Integer id;
     private int companyId, amount;

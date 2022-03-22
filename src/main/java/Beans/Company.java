@@ -3,6 +3,9 @@ package Beans;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Class for Company record, includes attributes: id, name, email, password, (list of) coupons
+ */
 public class Company {
     private Integer id;
     private String name, email, password;
