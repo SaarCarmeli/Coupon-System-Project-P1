@@ -1,13 +1,18 @@
 package DB;
 
-import DB.ConnectionPool;
-
 import java.sql.*;
 import java.util.Map;
 
+/**
+ * Class containing static generic methods for executing MySQL script in different contexts:
+ * no parameters -> return boolean,
+ * parameters -> return boolean,
+ * no parameters -> return ResultSet,
+ * parameters -> return ResultSet
+ */
 public class DBTools {
     /**
-     * Generic method for accepting SQL script and executing query.
+     * Static generic method for accepting SQL script and executing query.
      *
      * @param sql SQL script for execution
      * @return true if successful, false if failed
@@ -29,7 +34,7 @@ public class DBTools {
     }
 
     /**
-     * Generic method for accepting SQL script, parameters and executing query.
+     * Static generic method for accepting SQL script, parameters and executing query.
      *
      * @param sql    SQL script for execution
      * @param params parameter input for SQL script
@@ -75,7 +80,7 @@ public class DBTools {
     }
 
     /**
-     * Generic method for accepting SQL script and retrieving ResultSet.
+     * Static generic method for accepting SQL script and retrieving ResultSet.
      *
      * @param sql SQL script for execution
      * @return ResultSet if successful, else null
@@ -96,7 +101,7 @@ public class DBTools {
     }
 
     /**
-     * Generic method for accepting SQL script, parameters and retrieving ResultSet.
+     * Static generic method for accepting SQL script, parameters and retrieving ResultSet.
      *
      * @param sql    SQL script for execution
      * @param params parameter input for SQL script

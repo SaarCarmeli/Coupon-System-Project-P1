@@ -1,5 +1,8 @@
 package DB;
 
+/**
+ * Class containing all MySQL script used in the program.
+ */
 public class DBManager {
     // User info:
     public static final String SQL_URL = "jdbc:mysql://localhost:3306/";
@@ -74,19 +77,19 @@ public class DBManager {
     public static final String READ_ALL_COUPONS = "SELECT * FROM `coupon_project`.`coupons`";
     public static final String READ_COUPONS_BY_CUSTOMER_ID =
             "SELECT c.coupon_id, c.company_id, c.amount, c.price, c.category, c.title, c.description, c.image, c.start_date, c.end_date " +
-            "FROM `coupon_project`.`coupons` AS c " +
-            "JOIN `coupon_project`.`customer_to_coupon` AS ctc ON ctc.id_coupon = c.coupon_id " +
-            "WHERE ctc.id_customer = ?";
+                    "FROM `coupon_project`.`coupons` AS c " +
+                    "JOIN `coupon_project`.`customer_to_coupon` AS ctc ON ctc.id_coupon = c.coupon_id " +
+                    "WHERE ctc.id_customer = ?";
     public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_MAX_PRICE =
             "SELECT c.coupon_id, c.company_id, c.amount, c.price, c.category, c.title, c.description, c.image, c.start_date, c.end_date " +
-            "FROM `coupon_project`.`coupons` AS c " +
-            "JOIN `coupon_project`.`customer_to_coupon` AS ctc ON ctc.id_coupon = c.coupon_id " +
-            "WHERE ctc.id_customer = ?  AND c.price <= ?";
+                    "FROM `coupon_project`.`coupons` AS c " +
+                    "JOIN `coupon_project`.`customer_to_coupon` AS ctc ON ctc.id_coupon = c.coupon_id " +
+                    "WHERE ctc.id_customer = ?  AND c.price <= ?";
     public static final String READ_COUPONS_BY_CUSTOMER_ID_AND_CATEGORY =
             "SELECT c.coupon_id, c.company_id, c.amount, c.price, c.category, c.title, c.description, c.image, c.start_date, c.end_date " +
-            "FROM `coupon_project`.`coupons` AS c " +
-            "JOIN `coupon_project`.`customer_to_coupon` AS ctc ON ctc.id_coupon = c.coupon_id " +
-            "WHERE ctc.id_customer = ?  AND category = ?";
+                    "FROM `coupon_project`.`coupons` AS c " +
+                    "JOIN `coupon_project`.`customer_to_coupon` AS ctc ON ctc.id_coupon = c.coupon_id " +
+                    "WHERE ctc.id_customer = ?  AND category = ?";
     public static final String READ_COUPONS_BY_COMPANY_ID = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ?";
     public static final String READ_COUPONS_BY_COMPANY_ID_AND_MAX_PRICE = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ? AND price <= ?";
     public static final String READ_COUPONS_BY_COMPANY_ID_AND_CATEGORY = "SELECT * FROM `coupon_project`.`coupons` WHERE company_id = ? AND category = ?";

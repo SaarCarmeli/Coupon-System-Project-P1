@@ -42,8 +42,8 @@ public class ConnectionPool {
     }
 
     /**
-     * Opens all available connections to MySQL, using DBManager determined SQL_URL, SQL_USER (user name) and SQL_PASS (password),
-     * and pushes them into Stack collection.
+     * Opens all available Connections to MySQL, using DBManager determined SQL_URL, SQL_USER (user name) and SQL_PASS (password),
+     * and pushes them into Stack collection. To be used at the beginning of the program.
      *
      * @throws SQLException Thrown if failed to get connection
      */
@@ -54,6 +54,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Closes all open Connections and empties Stack collection.
+     *
+     * @throws InterruptedException Thrown if waiting Connections are interrupted
+     */
     public void closeAllConnections() throws InterruptedException {
         synchronized (connections) {
             while (connections.size() < NUMBER_OF_CONNECTIONS) {
@@ -63,6 +68,12 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Returns a Connection from the Connection Stack, if any are available. To be used when exchanging data with MySQL.
+     *
+     * @return MySQL Connection
+     * @throws InterruptedException Thrown if waiting for Connection is interrupted
+     */
     public Connection getConnection() throws InterruptedException {
         synchronized (connections) {
             if (connections.isEmpty()) {
@@ -72,6 +83,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Returns a Connection to the Connection Stack. To be used at the end of every use of getConnection() method in a "finally" block.
+     *
+     * @param connection MySQL Connection
+     */
     public void returnConnection(final Connection connection) {
         synchronized (connections) {
             if (connection == null) {
