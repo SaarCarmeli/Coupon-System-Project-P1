@@ -191,7 +191,7 @@ public class CouponDBDAO implements CouponDAO {
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
-    public List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String/*todo why not Category enum?*/ category) throws EntityCrudException {
+    public List<Coupon> readCouponsByCustomerIdAndCategory(Integer customerId, String category) throws EntityCrudException {
         ResultSet result;
         List<Coupon> couponList = new ArrayList<>();
         Map<Integer, Object> params = new HashMap<>();
@@ -267,7 +267,7 @@ public class CouponDBDAO implements CouponDAO {
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
      */
     @Override
-    public List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String/*todo why not Category enum?*/ category) throws EntityCrudException {
+    public List<Coupon> readCouponsByCompanyIdAndCategory(Integer companyId, String category) throws EntityCrudException {
         ResultSet result;
         List<Coupon> couponList = new ArrayList<>();
         Map<Integer, Object> params = new HashMap<>();
