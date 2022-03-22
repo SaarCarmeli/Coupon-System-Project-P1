@@ -11,9 +11,15 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class containing login method allowing registered users access to facades.
+ */
 public class LoginManager {
     private static LoginManager instance = null;
 
+    /**
+     * Private constructor for creating LoginManager instance.
+     */
     private LoginManager() {
     }
 
