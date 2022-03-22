@@ -5,17 +5,31 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Stack;
 
-
+/**
+ * Connection pool creates links from the program to MySQL database. Class is singleton.
+ */
 public class ConnectionPool {
     private static final int NUMBER_OF_CONNECTIONS = 10;
     private static ConnectionPool instance = null;
     private final Stack<Connection> connections = new Stack<>();
 
+    /**
+     * Private constructor to construct new instance of ConnectionPool
+     *
+     * @throws SQLException Thrown if failed to open connections
+     */
     private ConnectionPool() throws SQLException {
         System.out.println("Created new connection pool");
         openAllConnections();
     }
 
+    /**
+     * Static method for returning an instance of ConnectionPool.
+     * Constructs a new ConnectionPool if not exists, else returns existing instance.
+     *
+     * @return ConnectionPool instance
+     * @throws SQLException Thrown if failed to construct new ConnectionPool
+     */
     public static ConnectionPool getInstance() throws SQLException {
         if (instance == null) {
             synchronized (ConnectionPool.class) {
@@ -27,16 +41,22 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Opens all available connections to MySQL, using DBManager determined SQL_URL, SQL_USER (user name) and SQL_PASS (password),
+     * and pushes them into Stack collection.
+     *
+     * @throws SQLException Thrown if failed to get connection
+     */
     private void openAllConnections() throws SQLException {
         for (int counter = 0; counter < NUMBER_OF_CONNECTIONS; counter++) {
-            final Connection connection = DriverManager.getConnection(DBManager.SQL_URL ,DBManager.SQL_USER, DBManager.SQL_PASS);
+            final Connection connection = DriverManager.getConnection(DBManager.SQL_URL, DBManager.SQL_USER, DBManager.SQL_PASS);
             connections.push(connection);
         }
     }
 
     public void closeAllConnections() throws InterruptedException {
         synchronized (connections) {
-            while (connections.size() < NUMBER_OF_CONNECTIONS){
+            while (connections.size() < NUMBER_OF_CONNECTIONS) {
                 connections.wait();
             }
             connections.removeAllElements();
