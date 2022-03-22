@@ -80,7 +80,7 @@ public class CompanyDBDAO implements CompanyDAO {
     }
 
     /**
-     * Returns a List of all Companies in MySQL database
+     * Returns a List of all Companies in MySQL database.
      *
      * @return List of all Companies in MySQL database
      * @throws EntityCrudException Thrown if Read from MySQL was unsuccessful
@@ -92,7 +92,7 @@ public class CompanyDBDAO implements CompanyDAO {
         try {
             result = DBTools.runQueryForResult(DBManager.READ_ALL_COMPANIES);
             while (result.next()) {
-                companyList.add(ObjectExtractionUtil.resultSetToCompany(result));//todo CouponDBDAO.getInstance().readCouponsByCompanyId(ObjectExtractionUtil.resultSetToCompany(result).getId())??? too dangerous?
+                companyList.add(ObjectExtractionUtil.resultSetToCompany(result));
             }
             return companyList;
         } catch (SQLException e) {
