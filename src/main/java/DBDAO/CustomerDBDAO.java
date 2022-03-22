@@ -15,9 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class containing all Create-Read-Update-Delete methods for "customers" tables.
+ */
 public class CustomerDBDAO implements CustomerDAO {
     private static CustomerDBDAO instance;
 
+    /**
+     * Private constructor for CustomerDBDAO.
+     */
     private CustomerDBDAO() {
     }
 

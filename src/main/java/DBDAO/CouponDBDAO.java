@@ -16,9 +16,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class containing all Create-Read-Update-Delete methods for "coupons" and "customer_to_coupon" tables.
+ */
 public class CouponDBDAO implements CouponDAO {
     private static CouponDBDAO instance = null;
 
+    /**
+     * Private constructor for CouponDBDAO.
+     */
     private CouponDBDAO() {
     }
 

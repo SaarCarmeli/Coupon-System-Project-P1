@@ -15,9 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class containing all Create-Read-Update-Delete methods for "companies" table.
+ */
 public class CompanyDBDAO implements CompanyDAO {
     private static CompanyDBDAO instance = null;
 
+    /**
+     * Private constructor for CompanyDBDAO.
+     */
     private CompanyDBDAO() {
     }
 
