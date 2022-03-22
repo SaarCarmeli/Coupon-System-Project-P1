@@ -350,9 +350,9 @@ public class CustomerFacadeTest {
 
     @Test
     public void printCustomerDetailsTest() throws Exception {
-        Customer customer = customerFacade[3].getCustomerDetails();
         Coupon coupon = customerFacade[3].readCouponById(3);
         customerFacade[3].purchaseCoupon(coupon);
-        TablePrinterUtil.print(customer);// todo fix setCoupons
+        Customer customer = customerFacade[3].getCustomerDetails();
+        TablePrinterUtil.print(customer);
     }
 }
